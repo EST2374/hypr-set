@@ -4,6 +4,7 @@ SETTING=$1
 ARG=$2
 ARG2=$3
 VALUE=$4
+DEFAULT_CONF="$HOME/Work/hypr-set/default_hyprland.conf"
 CONFIG="$HOME/Work/hypr-set/hyprland.conf"
 #CONFIG_REAL="$HOME/.config/hypr/conf/style.conf"
 
@@ -75,7 +76,7 @@ set_monitor() {
         print_help "monitor"
     fi
 
-    # TODO 
+    # TODO
     # Multi Monitor setup
 
     CUR_MONITOR_CONF=$(grep "monitor =" "$CONFIG")
@@ -91,14 +92,14 @@ set_monitor() {
         RES_MONITOR_HEIGHT=$(hyprctl monitors -j | jq -r '.[].height')
         POS_MONITOR=$(hyprctl monitors -j | jq -r '.[].id')
         SCALE_MONITOR=$(hyprctl monitors -j | jq -r '.[].scale')
-    
+
         echo "Monitor(s): $ANZ_MONITOR"
         echo "Name(s): $NAME_MONITOR"
         echo "Current Resolution: "$RES_MONITOR_WIDTH"x"$RES_MONITOR_HEIGHT""
         echo "Current Position: $POS_MONITOR "
         echo "Current Scale: $SCALE_MONITOR"
     fi
-    
+
     # TODO
     # VALUE error handling
     if [[ "$ARG" == "set" ]]; then
@@ -109,7 +110,7 @@ set_monitor() {
         if [[ "$ARG2" == "position" ]]; then
             sed -i "s|$CUR_MONITOR_CONF|monitor = ${values[0]},${values[1]},$VALUE,${values[3]}|" "$CONFIG"
         fi
-        
+
         if [[ "$ARG2" == "resolution" ]]; then
             sed -i "s|$CUR_MONITOR_CONF|monitor = ${values[0]},$VALUE,${values[2]},${values[3]}|" "$CONFIG"
         fi
@@ -126,9 +127,9 @@ set_monitor() {
 
             sed -i "s|$CUR_MONITOR_CONF|monitor = $MONITOR_NAME,$MONITOR_RES,$MONITOR_POS,$MONITOR_SCALE|" "$CONFIG"
         fi
-    
+
     else echo "Current Config: $CUR_MONITOR_CONF"
- 
+
 
     fi
 }
@@ -149,7 +150,7 @@ set_autostart() {
     if [[ "$ARG" == "new" ]]; then
         last_line=$(grep -n "exec-once" "$CONFIG" | cut -d: -f1 | tail -n 1)
         if [ -n "$last_line" ]; then
-            sed -i "${last_line}a exec-once = $ARG2" "$CONFIG"
+            sed -i "${last_line}a exec-once = ${ARG2}" "$CONFIG"
         else
             echo "Error"
         fi
@@ -194,7 +195,7 @@ set_looks() {
     #TODO
     # Error handling
     if [[ "$ARG" == "set" ]]; then
-        
+
         if [[ "$ARG2" == "border_size" ]]; then
             CUR_BORDERSIZE=$(grep "border_size" "$CONFIG" | grep -v "^[[:space:]]*#")
             sed -i "s|$CUR_BORDERSIZE|\tborder_size = $VALUE|" "$CONFIG"
@@ -204,7 +205,7 @@ set_looks() {
             CUR_GAPSIN=$(grep "gaps_in" "$CONFIG")
             sed -i "s|$CUR_GAPSIN|\tgaps_in = $VALUE|" "$CONFIG"
         fi
-        
+
         if [[ "$ARG2" == "gaps_out" ]]; then
             CUR_GAPSOUT=$(grep "gaps_out" "$CONFIG")
             sed -i "s|$CUR_GAPSOUT|\tgaps_out = $VALUE|" "$CONFIG"
@@ -244,7 +245,7 @@ set_input() {
     # Error handling
     # More Options
     if [[ "$ARG" == "set" ]]; then
-        
+
         if [[ "$ARG2" == "layout" ]]; then
             CUR_KB_LAYOUT=$(grep "kb_layout" "$CONFIG")
             sed -i "s|$CUR_KB_LAYOUT|\tkb_layout = $VALUE|" "$CONFIG"
@@ -258,10 +259,94 @@ set_input() {
     fi
 }
 
+#TODO
+set_keybindings() {
+    if [[ -z "$ARG" || "$ARG" == "help" ]]; then
+        print_help "keybinding"
+    fi
 
+    # TODO Error handling
+    if [[ "$ARG" == "show" ]]; then
+        ALL_KEYBINDINGS=$(grep "bind" "$CONFIG" | grep -v "^[[:space:]]*#")
+        echo "$ALL_KEYBINDINGS"
+    fi
+
+    if [[ "$ARG" == "new" ]]; then
+
+            if [[ "$ARG2" == "keybinding" ]]; then
+                marker_line=$(grep -n "# Keybindings end" "$CONFIG" | cut -d: -f1)
+                if [[ -n "$marker_line" ]]; then
+                    insert_at=$(( marker_line - 1 ))
+                    sed -i "${insert_at}i bind = $VALUE" "$CONFIG"
+                else
+                    echo "Error: Could not find '# Keybindings end' marker"
+                fi
+            fi
+
+            if [[ "$ARG2" == "keymove" ]]; then
+                marker_line=$(grep -n "# keymove end" "$CONFIG" | cut -d: -f1)
+                if [[ -n "$marker_line" ]]; then
+                    insert_at=$(( marker_line - 1 ))
+                    sed -i "${insert_at}i bind = $VALUE" "$CONFIG"
+                else
+                    echo "Error: Could not find '# Keymove end' marker"
+                fi
+            fi
+
+            if [[ "$ARG2" == "keyworkspace" ]]; then
+                marker_line=$(grep -n "# keyworkspace end" "$CONFIG" | cut -d: -f1)
+                if [[ -n "$marker_line" ]]; then
+                    insert_at=$(( marker_line - 1 ))
+                    sed -i "${insert_at}i bind = $VALUE" "$CONFIG"
+                else
+                    echo "Error: Could not find '# keyworkspace end' marker"
+                fi
+            fi
+
+            if [[ "$ARG2" == "keymultimedia" ]]; then
+                marker_line=$(grep -n "# keymultimedia end" "$CONFIG" | cut -d: -f1)
+                if [[ -n "$marker_line" ]]; then
+                    insert_at=$(( marker_line - 1 ))
+                    sed -i "${insert_at}i bind = $VALUE" "$CONFIG"
+                else
+                    echo "Error: Could not find '# keymultimedia end' marker"
+                fi
+            fi
+
+    fi
+
+    if [[ "$ARG" == "delete" ]]; then
+        sed -i "/bind.*$ARG2*/d" "$CONFIG"
+    fi
+
+}
+
+
+set_windows() {
+
+}
+
+
+make_Marker() {
+    #TODO
+    # Not change everything
+    first_line=$(head -n 1 "$CONFIG")
+
+    if [[ "$first_line" == "#Marked" || "$first_line" == "# Marked" ]]; then
+        if [[ "$first_line" != "#Marked" ]]; then
+            sed -i "1s|.*|#Marked|" "$CONFIG"
+        fi
+        return
+    fi
+
+    cp "$DEFAULT_CONF" "$CONFIG"
+    sed -i "1s|.*|#Marked|" "$CONFIG"
+}
 
 
 main() {
+
+    make_Marker
 
     if [[ -z "$SETTING" || "$SETTING" == "help" || "$SETTING" == "--help" || "$SETTING" == "-h" ]]; then
         print_help "general"
