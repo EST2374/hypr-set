@@ -107,6 +107,7 @@ set_monitor() {
             sed -i "s|$CUR_MONITOR_CONF|monitor = ${values[0]},${values[1]},${values[2]},$VALUE|" "$CONFIG"
         fi
 
+        # NEED TO BE FIXED (WRONG IMPEMENTATION)
         if [[ "$ARG2" == "position" ]]; then
             sed -i "s|$CUR_MONITOR_CONF|monitor = ${values[0]},${values[1]},$VALUE,${values[3]}|" "$CONFIG"
         fi
