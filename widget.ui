@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Widget</class>
- <widget class="QWidget" name="Widget">
+ <widget class="QMainWindow" name="Widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,224 +11,247 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Hyprland Settings</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_10">
-   <item>
-    <widget class="QTabWidget" name="Menu_settings">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>751</width>
-       <height>571</height>
-      </size>
-     </property>
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="QWidget" name="monitor_tab">
-      <attribute name="title">
-       <string>Monitor</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Monitor: </string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="monitors_box"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Resolution</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="resolution_box"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Position</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="position_box"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Scale</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="scale_box"/>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="apply_button">
-           <property name="text">
-            <string>Apply</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="auto_tab">
-      <attribute name="title">
-       <string>Autostart</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QScrollArea" name="scrollArea">
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>709</width>
-                <height>435</height>
-               </rect>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_10">
+    <item>
+     <widget class="QTabWidget" name="Menu_settings">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>751</width>
+        <height>571</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="monitor_tab">
+       <attribute name="title">
+        <string>Monitor</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Monitor: </string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="monitors_box"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Resolution</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="resolution_box"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Position</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="position_box"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Scale</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="scale_box"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="apply_button">
+            <property name="text">
+             <string>Apply</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="auto_tab">
+       <attribute name="title">
+        <string>Autostart</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QListWidget" name="current_autostart"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="add_program_button">
+              <property name="text">
+               <string>Add Program</string>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
-                <widget class="QListWidget" name="current_autostart">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="add_program_button">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Add Program</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="add_script_button">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Add Script</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="del_autostart_button">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Delete Autostart</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="add_script_button">
+              <property name="text">
+               <string>Add Script</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="del_autostart_button">
+              <property name="text">
+               <string>Delete Autostart</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="env_tab">
+       <attribute name="title">
+        <string>Environment</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QListWidget" name="current_env"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="add_env_button">
+            <property name="text">
+             <string>Add Environment</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="del_env_button">
+            <property name="text">
+             <string>Delete Environment</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="look_tab">
+       <attribute name="title">
+        <string>Look and Feel</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="input_tab">
+       <attribute name="title">
+        <string>Input</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="keybinds_tab">
+       <attribute name="title">
+        <string>Keybindings</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="windowrules_tab">
+       <attribute name="title">
+        <string>Window Rules</string>
+       </attribute>
+      </widget>
      </widget>
-     <widget class="QWidget" name="env_tab">
-      <attribute name="title">
-       <string>Environment</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_5"/>
-     </widget>
-     <widget class="QWidget" name="look_tab">
-      <attribute name="title">
-       <string>Look and Feel</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_6"/>
-     </widget>
-     <widget class="QWidget" name="input_tab">
-      <attribute name="title">
-       <string>Input</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_8"/>
-     </widget>
-     <widget class="QWidget" name="keybinds_tab">
-      <attribute name="title">
-       <string>Keybindings</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="windowrules_tab">
-      <attribute name="title">
-       <string>Window Rules</string>
-      </attribute>
-     </widget>
-    </widget>
-   </item>
-  </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>890</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuTheme">
+    <property name="title">
+     <string>Themes</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="dark_theme_button"/>
+    <addaction name="light_theme_button"/>
+   </widget>
+   <widget class="QMenu" name="menu_Application">
+    <property name="title">
+     <string>Application</string>
+    </property>
+    <addaction name="quit_program"/>
+   </widget>
+   <addaction name="menuTheme"/>
+   <addaction name="menu_Application"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionThemes">
+   <property name="text">
+    <string>Themes</string>
+   </property>
+  </action>
+  <action name="dark_theme_button">
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="light_theme_button">
+   <property name="text">
+    <string>Light</string>
+   </property>
+  </action>
+  <action name="quit_program">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
