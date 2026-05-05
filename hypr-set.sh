@@ -323,9 +323,9 @@ set_keybindings() {
 }
 
 
-set_windows() {
-
-}
+# set_windows() {
+#
+# }
 
 
 make_Marker() {
