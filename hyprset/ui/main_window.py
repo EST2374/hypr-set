@@ -4,12 +4,13 @@ from PySide6.QtWidgets import (
 )
 
 from ..core.autostart import del_autostart, get_current_autostarts
+from ..core.environments import del_env, get_current_env
 from ..core.monitor import (
     apply_monitor_settings,
     get_monitor_names,
     get_monitor_resolution,
 )
-from .dialogs import AddProgramDialog, AddScriptDialog
+from .dialogs import AddEnvDialog, AddProgramDialog, AddScriptDialog
 from .generated.ui_widget import Ui_Widget
 
 
@@ -20,6 +21,9 @@ class Widget(QMainWindow, Ui_Widget):
         self.setWindowTitle("Hyprland Settings")
 
         # Menu Bar
+        # TODO
+        # Theme Switch
+        # Refresh Button
         self.quit_program.triggered.connect(QApplication.quit)
 
         # Monitor Settings
@@ -44,6 +48,12 @@ class Widget(QMainWindow, Ui_Widget):
         self.add_program_button.clicked.connect(self.add_new_autostart)
         self.add_script_button.clicked.connect(self.add_new_script)
 
+        # Environment Settings
+        self.current_env.addItems(get_current_env())
+        self.add_env_button.clicked.connect(self.add_new_env)
+        self.del_env_button.clicked.connect(lambda: del_env(self))
+
+    # Autostart add buttons
     def add_new_autostart(self):
         dialog = AddProgramDialog(self)
         dialog.center_on_parent()
@@ -51,5 +61,10 @@ class Widget(QMainWindow, Ui_Widget):
 
     def add_new_script(self):
         dialog = AddScriptDialog(self)
+        dialog.center_on_parent()
+        dialog.exec()
+
+    def add_new_env(self):
+        dialog = AddEnvDialog(self)
         dialog.center_on_parent()
         dialog.exec()

@@ -153,3 +153,55 @@ class AddScriptDialog(QDialog):
             parent.current_autostart.addItem(new_script)
 
         self.accept()
+
+
+class AddEnvDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Add Environment")
+        self.resize(800, 300)
+
+        env_label = QLabel("Add Environment: ")
+        self.env_edit_line = QLineEdit()
+        button_add = QPushButton("Add")
+        button_add.clicked.connect(self.add_env)
+
+        layout_h = QHBoxLayout()
+        layout_h.addWidget(env_label)
+        layout_h.addWidget(self.env_edit_line)
+
+        layout = QVBoxLayout()
+        layout.addLayout(layout_h)
+        layout.addWidget(button_add)
+        self.setLayout(layout)
+
+    def center_on_parent(self):
+        if self.parent():
+            parent_geo = self.parent().frameGeometry()
+            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
+            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
+            self.move(x, y)
+
+    def add_env(self):
+        new_env = self.env_edit_line.text()
+
+        new_line = f"env = {new_env}"
+
+        with open(CONFIG_FILE, "r") as f:
+            content = f.read()
+
+        if "# Envirnonment end" in content:
+            content = content.replace(
+                "# Envirnonment end", f"{new_line}\n# Envirnonment end"
+            )
+        else:
+            content += f"\n{new_line}"
+
+        with open(CONFIG_FILE, "w") as f:
+            f.write(content)
+
+        parent = self.parent()
+        if parent and hasattr(parent, "current_autostart"):
+            parent.current_env.addItem(new_env)
+
+        self.accept()

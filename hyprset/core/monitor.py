@@ -69,3 +69,9 @@ def apply_monitor_settings(mon_name, mon_res, mon_pos, mon_scale):
 
     with open(CONFIG_FILE, "w") as file:
         file.write(new_content)
+
+
+# TODO
+# Mirror
+# Rotation
+# Enable/Disable
