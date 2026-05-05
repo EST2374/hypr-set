@@ -1,0 +1,10 @@
+[project]
+name = "hypr-set"
+version = "0.1.0"
+dependencies = ["PySide6"]
+
+[project.scripts]
+hypr-set = "hyprset.main:main"
+
+[tool.setuptools.packages.find]
+include = ["hyprset*"]

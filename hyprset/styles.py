@@ -19,7 +19,9 @@ def load_stylesheet(path: str | None = None) -> str:
     Returns:
         The stylesheet string, or an empty string if the file is not found.
     """
-    qss_path = Path(path) if path else Path(__file__).parent / "style.qss"
+    qss_path = (
+        Path(path) if path else Path(__file__).parent.parent / "assets" / "style.qss"
+    )
 
     if not qss_path.exists():
         print(f"[styles] Warning: stylesheet not found at {qss_path}")
