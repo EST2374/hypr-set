@@ -401,21 +401,61 @@ QMenu::separator {
 
 /* ── Group Box ──────────────────────────────────────────── */
 QGroupBox {
-    border: 1px solid #21262d;
-    border-radius: 8px;
-    margin-top: 12px;
-    padding-top: 8px;
-    color: #8b949e;
+    background-color: #161c2d;
+    border: 1px solid #252f42;
+    border-radius: 10px;
+    margin-top: 14px;
+    padding: 14px 10px 10px 10px;
     font-size: 11px;
-    letter-spacing: 0.5px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
 QGroupBox::title {
     subcontrol-origin: margin;
     subcontrol-position: top left;
-    padding: 0 6px;
-    left: 12px;
-    color: #6e7681;
+    padding: 2px 8px;
+    left: 14px;
+    color: #58a6ff;
+    background-color: #0d1117;
+    border-radius: 4px;
+}
+
+/* Look-and-Feel tab: labels inside GroupBoxes are more prominent */
+QGroupBox QLabel {
+    color: #c9d1d9;
+    font-size: 12px;
+    min-width: 120px;
+}
+
+/* SpinBoxes and inputs inside GroupBoxes get a slightly raised bg */
+QGroupBox QSpinBox,
+QGroupBox QDoubleSpinBox {
+    background-color: #0d1117;
+    min-width: 80px;
+}
+
+QGroupBox QComboBox {
+    background-color: #0d1117;
+}
+
+/* Color picker buttons in GroupBox */
+QGroupBox QPushButton {
+    background-color: #1a2133;
+    border-color: #30363d;
+}
+
+QGroupBox QPushButton:hover {
+    background-color: #1f2d45;
+    border-color: #58a6ff;
+    color: #79c0ff;
+}
+
+/* Checkboxes inside GroupBox */
+QGroupBox QCheckBox {
+    color: #e6edf3;
+    font-size: 12px;
 }
 
 /* ── Status Bar ─────────────────────────────────────────── */

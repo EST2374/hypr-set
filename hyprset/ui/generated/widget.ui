@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>976</width>
-    <height>733</height>
+    <width>1074</width>
+    <height>846</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -197,194 +197,317 @@
            <attribute name="title">
             <string>Look and Feel</string>
            </attribute>
-           <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>50</x>
-              <y>60</y>
-              <width>311</width>
-              <height>411</height>
-             </rect>
+           <layout class="QVBoxLayout" name="look_outer_layout">
+            <property name="margin">
+             <number>12</number>
             </property>
-            <layout class="QVBoxLayout" name="general_look_layout">
-             <item>
-              <layout class="QHBoxLayout" name="gaps_in_layout">
-               <item>
-                <widget class="QLabel" name="gaps_in_label">
-                 <property name="text">
-                  <string>Gaps in: </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="gabs_in_spinBox"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="gaps_out_layout">
-               <item>
-                <widget class="QLabel" name="gaps_out_layout_2">
-                 <property name="text">
-                  <string>Gaps out: </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="gaps_out_spinBox"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="border_size_layout">
-               <item>
-                <widget class="QLabel" name="border_size_label">
-                 <property name="text">
-                  <string>Border size: </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="border_size_spinBox"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="border_col_1_layout">
-               <item>
-                <widget class="QLabel" name="border_col_1_label">
-                 <property name="text">
-                  <string>Border color (1): </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="set_color_1_button">
-                 <property name="text">
-                  <string>Set color 1</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="border_col_2_layout">
-               <item>
-                <widget class="QLabel" name="border_col_2_label">
-                 <property name="text">
-                  <string>Border color (2): </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="set_color_2_button">
-                 <property name="text">
-                  <string>Set color 2</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="angle_border_layout">
-               <item>
-                <widget class="QLabel" name="angle_label">
-                 <property name="text">
-                  <string>Angle: </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="angle_spinBox">
-                 <property name="maximum">
-                  <number>360</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="resize_checkbox">
-               <property name="text">
-                <string>Resize on border</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="allow_tearing_checkBox">
-               <property name="text">
-                <string>Allow tearing</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="layout_hyprland_layout">
-               <item>
-                <widget class="QLabel" name="layout_hyprland_label">
-                 <property name="text">
-                  <string>Layout:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="layout_comboBox"/>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QLabel" name="label">
-            <property name="geometry">
-             <rect>
-              <x>480</x>
-              <y>220</y>
-              <width>91</width>
-              <height>41</height>
-             </rect>
+            <property name="spacing">
+             <number>12</number>
             </property>
-            <property name="text">
-             <string>Active opacity</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_2">
-            <property name="geometry">
-             <rect>
-              <x>520</x>
-              <y>150</y>
-              <width>151</width>
-              <height>61</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Rounding power</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_3">
-            <property name="geometry">
-             <rect>
-              <x>570</x>
-              <y>110</y>
-              <width>101</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Rounding</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_4">
-            <property name="geometry">
-             <rect>
-              <x>470</x>
-              <y>280</y>
-              <width>91</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Inactive opacity</string>
-            </property>
-           </widget>
+            <item>
+             <layout class="QGridLayout" name="look_grid_layout">
+              <property name="horizontalSpacing">
+               <number>12</number>
+              </property>
+              <property name="verticalSpacing">
+               <number>12</number>
+              </property>
+              <!-- General Settings (row 0, col 0) -->
+              <item row="0" column="0">
+               <widget class="QGroupBox" name="general_group">
+                <property name="title">
+                 <string>General Settings</string>
+                </property>
+                <layout class="QFormLayout" name="general_form_layout">
+                 <property name="labelAlignment">
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>12</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>8</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="gaps_in_label">
+                   <property name="text">
+                    <string>Gaps in:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="gabs_in_spinBox"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="gaps_out_layout_2">
+                   <property name="text">
+                    <string>Gaps out:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="gaps_out_spinBox"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="border_size_label">
+                   <property name="text">
+                    <string>Border size:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="border_size_spinBox"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="border_col_1_label">
+                   <property name="text">
+                    <string>Border color (1):</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QPushButton" name="set_color_1_button">
+                   <property name="text">
+                    <string>Set color 1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="border_col_2_label">
+                   <property name="text">
+                    <string>Border color (2):</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QPushButton" name="set_color_2_button">
+                   <property name="text">
+                    <string>Set color 2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="angle_label">
+                   <property name="text">
+                    <string>Angle:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QSpinBox" name="angle_spinBox">
+                   <property name="maximum">
+                    <number>360</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="0" colspan="2">
+                  <widget class="QCheckBox" name="resize_checkbox">
+                   <property name="text">
+                    <string>Resize on border</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="0" colspan="2">
+                  <widget class="QCheckBox" name="allow_tearing_checkBox">
+                   <property name="text">
+                    <string>Allow tearing</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="0">
+                  <widget class="QLabel" name="layout_hyprland_label">
+                   <property name="text">
+                    <string>Layout:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="1">
+                  <widget class="QComboBox" name="layout_comboBox"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <!-- Decoration Settings (row 0, col 1) -->
+              <item row="0" column="1">
+               <widget class="QGroupBox" name="decoration_group">
+                <property name="title">
+                 <string>Decoration Settings</string>
+                </property>
+                <layout class="QFormLayout" name="decoration_form_layout">
+                 <property name="labelAlignment">
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>12</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>8</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="rounding_label">
+                   <property name="text">
+                    <string>Rounding:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="rounding_spin_box"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="rounding_power_label">
+                   <property name="text">
+                    <string>Rounding power:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="rounding_power_spin_box"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="active_op_label">
+                   <property name="text">
+                    <string>Active opacity:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="act_op_spin_box"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="inact_op_label">
+                   <property name="text">
+                    <string>Inactive opacity:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QSpinBox" name="inact_op_spin_box"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <!-- Shadow Settings (row 1, col 0) -->
+              <item row="1" column="0">
+               <widget class="QGroupBox" name="shadow_group">
+                <property name="title">
+                 <string>Shadow Settings</string>
+                </property>
+                <layout class="QFormLayout" name="shadow_form_layout">
+                 <property name="labelAlignment">
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>12</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>8</number>
+                 </property>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QCheckBox" name="shadow_enable_checkbox">
+                   <property name="layoutDirection">
+                    <enum>Qt::LayoutDirection::LeftToRight</enum>
+                   </property>
+                   <property name="text">
+                    <string>Enable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="shadow_range_label">
+                   <property name="text">
+                    <string>Range:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="shadow_range_spinbox"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="shadow_render_power_label">
+                   <property name="text">
+                    <string>Render power:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="shadow_range_power_spinbox"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="shadow_label_2">
+                   <property name="text">
+                    <string>Color:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QPushButton" name="shadow_color_button">
+                   <property name="text">
+                    <string>Set shadow color</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <!-- Blur Settings (row 1, col 1) -->
+              <item row="1" column="1">
+               <widget class="QGroupBox" name="blur_group">
+                <property name="title">
+                 <string>Blur Settings</string>
+                </property>
+                <layout class="QFormLayout" name="blur_form_layout">
+                 <property name="labelAlignment">
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>12</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>8</number>
+                 </property>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QCheckBox" name="blur_enable_checkBox">
+                   <property name="text">
+                    <string>Enable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="blur_size_label">
+                   <property name="text">
+                    <string>Size:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="blur_size_spinBox"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="blur_passes_label">
+                   <property name="text">
+                    <string>Passes:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="blur_passes_spinBox"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="blur_vibrancy_label">
+                   <property name="text">
+                    <string>Vibrancy:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QDoubleSpinBox" name="blur_vib_doubleSpinBox"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="input_tab">
            <attribute name="title">
@@ -430,7 +553,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>976</width>
+     <width>1074</width>
      <height>19</height>
     </rect>
    </property>
