@@ -2,7 +2,9 @@ import glob
 import os
 import re
 
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
+    QColorDialog,
     QDialog,
     QHBoxLayout,
     QLabel,
@@ -205,3 +207,13 @@ class AddEnvDialog(QDialog):
             parent.current_env.addItem(new_env)
 
         self.accept()
+
+
+class PickColorDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Choose color")
+        self.resize(300, 100)
+
+        layout = QVBoxLayout(self)
+        self.setLayout(layout)

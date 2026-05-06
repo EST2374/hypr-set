@@ -1,30 +1,50 @@
-"""
-styles.py — Hyprset stylesheet loader
+from __future__ import annotations
 
-Usage:
-    from styles import load_stylesheet
-    app.setStyleSheet(load_stylesheet())
-"""
-
+from enum import Enum, auto
 from pathlib import Path
 
+_ASSETS_DIR = Path(__file__).parent.parent / "assets"
 
-def load_stylesheet(path: str | None = None) -> str:
-    """Load and return the QSS stylesheet as a string.
+_THEME_FILES: dict[str, str] = {
+    "dark": "style_dark.qss",
+    "light": "style_light.qss",
+}
 
-    Args:
-        path: Optional custom path to a .qss file.
-              Defaults to style.qss next to this module.
 
-    Returns:
-        The stylesheet string, or an empty string if the file is not found.
-    """
-    qss_path = (
-        Path(path) if path else Path(__file__).parent.parent / "assets" / "style.qss"
-    )
+class Theme(Enum):
+    DARK = auto()
+    LIGHT = auto()
+
+
+def load_stylesheet(
+    theme: Theme = Theme.DARK,
+    *,
+    custom_path: str | Path | None = None,
+) -> str:
+
+    if custom_path is not None:
+        qss_path = Path(custom_path)
+    else:
+        filename = _THEME_FILES[theme.name.lower()]
+        qss_path = _ASSETS_DIR / filename
 
     if not qss_path.exists():
         print(f"[styles] Warning: stylesheet not found at {qss_path}")
         return ""
 
     return qss_path.read_text(encoding="utf-8")
+
+
+def apply_theme(app: object, theme: Theme = Theme.DARK) -> None:
+    qss = load_stylesheet(theme)
+    app.setStyleSheet(qss)  # type: ignore[attr-defined]
+
+
+def current_theme_name(theme: Theme) -> str:
+    return theme.name.capitalize()
+
+
+def toggle_theme(app, current_theme: Theme) -> Theme:
+    next_theme = Theme.LIGHT if current_theme == Theme.DARK else Theme.DARK
+    apply_theme(app, next_theme)
+    return next_theme
