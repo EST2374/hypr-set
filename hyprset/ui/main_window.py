@@ -31,8 +31,14 @@ class Widget(QMainWindow, Ui_Widget):
         self.setupUi(self)
         self.setWindowTitle("Hyprland Settings")
 
-        # Menu Bar
+        # TODO Overall
         # Set config file structure
+        # Network config -> Wlan, DNS, ... / Bluetooth
+        # Wallpaper (with preview ofc)
+        # ?Users?
+        # ?Update?
+
+        # Menu Bar
         self.quit_program.triggered.connect(QApplication.quit)
 
         # Theme Switch
@@ -71,6 +77,7 @@ class Widget(QMainWindow, Ui_Widget):
         self.del_env_button.clicked.connect(lambda: del_env(self))
 
         # Look and Feel
+        # General
         self.gabs_in_spinBox.setValue(get_cur_value("gaps_in"))
         self.gaps_out_spinBox.setValue(get_cur_value("gaps_out"))
         self.border_size_spinBox.setValue(get_cur_value("border_size"))
@@ -102,6 +109,12 @@ class Widget(QMainWindow, Ui_Widget):
         current = get_cur_layout()
         self.layout_comboBox.setCurrentText(current)
         self.layout_comboBox.currentTextChanged.connect(lambda: change_layout(self))
+
+        # Decorations
+        # TODO
+        # Rouding, rounding_power
+        # act-,inact_opacity
+        # shadow, blur
 
     # Autostart add buttons
     def add_new_autostart(self):

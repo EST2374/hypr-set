@@ -26,6 +26,9 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
       <widget class="QWidget" name="hyprland_tab">
        <attribute name="title">
         <string>Hyprland</string>
@@ -43,7 +46,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">
@@ -197,8 +200,8 @@
            <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
-              <x>24</x>
-              <y>13</y>
+              <x>50</x>
+              <y>60</y>
               <width>311</width>
               <height>411</height>
              </rect>
@@ -330,6 +333,58 @@
              </item>
             </layout>
            </widget>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>480</x>
+              <y>220</y>
+              <width>91</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Active opacity</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>520</x>
+              <y>150</y>
+              <width>151</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Rounding power</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_3">
+            <property name="geometry">
+             <rect>
+              <x>570</x>
+              <y>110</y>
+              <width>101</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Rounding</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_4">
+            <property name="geometry">
+             <rect>
+              <x>470</x>
+              <y>280</y>
+              <width>91</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Inactive opacity</string>
+            </property>
+           </widget>
           </widget>
           <widget class="QWidget" name="input_tab">
            <attribute name="title">
@@ -354,6 +409,16 @@
       <widget class="QWidget" name="network_tab">
        <attribute name="title">
         <string>Network</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="wallpaper_tab">
+       <attribute name="title">
+        <string>Wallpaper</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="update_tab">
+       <attribute name="title">
+        <string>Update</string>
        </attribute>
       </widget>
      </widget>
@@ -383,6 +448,7 @@
      <string>Application</string>
     </property>
     <addaction name="quit_program"/>
+    <addaction name="actionHelp"/>
    </widget>
    <addaction name="menuTheme"/>
    <addaction name="menu_Application"/>
@@ -411,6 +477,11 @@
   <action name="actionRefresh">
    <property name="text">
     <string>Refresh</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
    </property>
   </action>
  </widget>
