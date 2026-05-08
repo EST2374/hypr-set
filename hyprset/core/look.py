@@ -1,149 +1,123 @@
 import re
+from dataclasses import dataclass
+from typing import Callable
 
-from hyprset.config import CONFIG_FILE, REAL_CONFIG
+from hyprset.config import CONFIG_FILE
 
 
-def get_cur_value(setting: str) -> int:
+@dataclass
+class Setting:
+    config_key: str
+    pattern: str
+    template: str
+    type: Callable = int
+
+
+@dataclass
+class BoolSetting:
+    config_key: str
+    pattern: str
+    template: str
+
+
+SETTINGS: dict[str, Setting] = {
+    "gaps_in": Setting("gaps_in", r"^\s*gaps_in\s*=.*", "\tgaps_in = {value}"),
+    "gaps_out": Setting("gaps_out", r"^\s*gaps_out\s*=.*", "\tgaps_out = {value}"),
+    "border_size": Setting(
+        "border_size", r"^\s*border_size\s*=.*", "\tborder_size = {value}"
+    ),
+    "rounding": Setting("rounding", r"^\s*rounding\s*=.*", "\trounding = {value}"),
+    "rounding_power": Setting(
+        "rounding_power", r"^\s*rounding_power\s*=.*", "\trounding_power = {value}"
+    ),
+    "active_opacity": Setting(
+        "active_opacity",
+        r"^\s*active_opacity\s*=.*",
+        "\tactive_opacity = {value}",
+        float,
+    ),
+    "inactive_opacity": Setting(
+        "inactive_opacity",
+        r"^\s*inactive_opacity\s*=.*",
+        "\tinactive_opacity = {value}",
+        float,
+    ),
+    "angle": Setting(
+        "angle", r"(\s*col\.active_border\s*=.*?)\d+deg", r"\g<1>{value}deg"
+    ),
+}
+
+BOOL_SETTINGS: dict[str, BoolSetting] = {
+    "resize": BoolSetting(
+        "resize_on_border",
+        r"^\s*resize_on_border\s*=.*",
+        "\tresize_on_border = {value}",
+    ),
+    "tearing": BoolSetting(
+        "allow_tearing", r"^\s*allow_tearing\s*=.*", "\tallow_tearing = {value}"
+    ),
+}
+
+
+def replace_in_config(pattern: str, new_line: str):
+    with open(CONFIG_FILE, "r") as f:
+        content = f.read()
+    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
+    with open(CONFIG_FILE, "w") as f:
+        f.write(new_content)
+
+
+def get_cur_value(setting: str) -> int | float:
+    s = SETTINGS[setting]
     try:
-        with open(CONFIG_FILE, "r") as file:
-            for line in file:
+        with open(CONFIG_FILE, "r") as f:
+            for line in f:
                 line = line.strip()
                 if setting == "angle":
                     if "deg" in line:
-                        value_part = line.split("=", 1)[-1].strip().split()[-1]
-                        return int(value_part.replace("deg", ""))
-
-                if setting == "gaps_in":
-                    if line.startswith("gaps_in"):
-                        value = line.split("=", 1)[-1].strip()
-                        return int(value)
-
-                if setting == "gaps_out":
-                    if line.startswith("gaps_out"):
-                        value = line.split("=", 1)[-1].strip()
-                        return int(value)
-
-                if setting == "border_size":
-                    if line.startswith("border_size"):
-                        value = line.split("=", 1)[-1].strip()
-                        return int(value)
-
-        return 0
+                        return int(line.split()[-1].replace("deg", ""))
+                elif line.startswith(s.config_key):
+                    return s.type(line.split("=", 1)[-1].strip())
     except FileNotFoundError:
-        print(f"Error: {CONFIG_FILE} not found.")
-        return 45
+        return 0
+    return 0
 
 
-def set_gabs_in_box(self, setting: str):
+def get_state_check(setting: str) -> str:
+    s = BOOL_SETTINGS[setting]
+    try:
+        with open(CONFIG_FILE, "r") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith(s.config_key):
+                    return line.split("=", 1)[-1].strip()
+    except FileNotFoundError:
+        pass
+    return "false"
 
-    new_line = ""
-    pattern = ""
 
-    if setting == "angle":
-        number = self.angle_spinBox.value()
-        pattern = r"(\s*col\.active_border\s*=.*?)\d+deg"
-        new_line = rf"\g<1>{number}deg"
-
-    elif setting == "gaps_in":
-        number = self.gabs_in_spinBox.value()
-        pattern = r"^\s*gaps_in\s*=.*"
-        new_line = f"\tgaps_in = {number}"
-
-    elif setting == "gaps_out":
-        number = self.gaps_out_spinBox.value()
-        pattern = r"^\s*gaps_out\s*=.*"
-        new_line = f"\tgaps_out = {number}"
-
-    elif setting == "border_size":
-        number = self.border_size_spinBox.value()
-        pattern = r"^\s*border_size\s*=.*"
-        new_line = f"\tborder_size = {number}"
-
-    with open(CONFIG_FILE, "r") as file:
-        content = file.read()
-
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-
-    with open(CONFIG_FILE, "w") as file:
-        file.write(new_content)
+def write_setting(setting: str, value: int | float):
+    s = SETTINGS[setting]
+    replace_in_config(s.pattern, s.template.format(value=value))
 
 
 def change_bool_check(setting: str):
-    new_line = ""
-    pattern = ""
-
-    if setting == "resize":
-        state = get_state_check("resize")
-        if state == "true":
-            state = "false"
-        else:
-            state = "true"
-
-        pattern = r"^\s*resize_on_border\s*=.*"
-        new_line = f"\tresize_on_border = {state}"
-
-    elif setting == "tearing":
-        state = get_state_check("tearing")
-        if state == "true":
-            state = "false"
-        else:
-            state = "true"
-
-        pattern = r"^\s*allow_tearing\s*=.*"
-        new_line = f"\tallow_tearing = {state}"
-
-    with open(CONFIG_FILE, "r") as file:
-        content = file.read()
-
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-
-    with open(CONFIG_FILE, "w") as file:
-        file.write(new_content)
+    s = BOOL_SETTINGS[setting]
+    new_state = "false" if get_state_check(setting) == "true" else "true"
+    replace_in_config(s.pattern, s.template.format(value=new_state))
 
 
-def get_state_check(setting: str):
-    try:
-        with open(CONFIG_FILE, "r") as file:
-            for line in file:
-                line = line.strip()
-                if setting == "resize":
-                    if line.startswith("resize_on_border"):
-                        value = line.split("=", 1)[-1].strip()
-                        return value
-                if setting == "tearing":
-                    if line.startswith("allow_tearing"):
-                        value = line.split("=", 1)[-1].strip()
-                        return value
-    except FileNotFoundError:
-        print(f"Error: {CONFIG_FILE} not found.")
-        return "false"
-
-
-def change_layout(self):
-    new_layout = self.layout_comboBox.currentText().lower()
-
-    pattern = r"^\s*layout\s*=.*"
-    new_line = f"\tlayout = {new_layout}"
-
-    with open(CONFIG_FILE, "r") as file:
-        content = file.read()
-
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-
-    with open(CONFIG_FILE, "w") as file:
-        file.write(new_content)
+def change_layout(layout_name: str):
+    replace_in_config(r"^\s*layout\s*=.*", f"\tlayout = {layout_name.lower()}")
 
 
 def get_cur_layout() -> str:
-    value = ""
     try:
-        with open(CONFIG_FILE, "r") as file:
-            for line in file:
+        with open(CONFIG_FILE, "r") as f:
+            for line in f:
                 line = line.strip()
                 if line.startswith("layout"):
-                    value = line.split("=", 1)[-1].strip()
-
-        return value.capitalize()
+                    return line.split("=", 1)[-1].strip().capitalize()
     except FileNotFoundError:
-        print(f"Error: {CONFIG_FILE} not found.")
-        return ""
+        pass
+    return ""

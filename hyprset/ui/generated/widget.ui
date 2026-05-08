@@ -198,21 +198,17 @@
             <string>Look and Feel</string>
            </attribute>
            <layout class="QVBoxLayout" name="look_outer_layout">
-            <property name="margin">
+            <property name="spacing">
              <number>12</number>
             </property>
-            <property name="spacing">
+            <property name="margin" stdset="0">
              <number>12</number>
             </property>
             <item>
              <layout class="QGridLayout" name="look_grid_layout">
-              <property name="horizontalSpacing">
+              <property name="spacing">
                <number>12</number>
               </property>
-              <property name="verticalSpacing">
-               <number>12</number>
-              </property>
-              <!-- General Settings (row 0, col 0) -->
               <item row="0" column="0">
                <widget class="QGroupBox" name="general_group">
                 <property name="title">
@@ -220,7 +216,7 @@
                 </property>
                 <layout class="QFormLayout" name="general_form_layout">
                  <property name="labelAlignment">
-                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                  </property>
                  <property name="horizontalSpacing">
                   <number>12</number>
@@ -327,7 +323,6 @@
                 </layout>
                </widget>
               </item>
-              <!-- Decoration Settings (row 0, col 1) -->
               <item row="0" column="1">
                <widget class="QGroupBox" name="decoration_group">
                 <property name="title">
@@ -335,7 +330,7 @@
                 </property>
                 <layout class="QFormLayout" name="decoration_form_layout">
                  <property name="labelAlignment">
-                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                  </property>
                  <property name="horizontalSpacing">
                   <number>12</number>
@@ -370,9 +365,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="1">
-                  <widget class="QSpinBox" name="act_op_spin_box"/>
-                 </item>
                  <item row="3" column="0">
                   <widget class="QLabel" name="inact_op_label">
                    <property name="text">
@@ -380,13 +372,23 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="1">
+                  <widget class="QDoubleSpinBox" name="act_op_spin_box">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="3" column="1">
-                  <widget class="QSpinBox" name="inact_op_spin_box"/>
+                  <widget class="QDoubleSpinBox" name="inact_op_spin_box">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
               </item>
-              <!-- Shadow Settings (row 1, col 0) -->
               <item row="1" column="0">
                <widget class="QGroupBox" name="shadow_group">
                 <property name="title">
@@ -394,7 +396,7 @@
                 </property>
                 <layout class="QFormLayout" name="shadow_form_layout">
                  <property name="labelAlignment">
-                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                  </property>
                  <property name="horizontalSpacing">
                   <number>12</number>
@@ -449,7 +451,6 @@
                 </layout>
                </widget>
               </item>
-              <!-- Blur Settings (row 1, col 1) -->
               <item row="1" column="1">
                <widget class="QGroupBox" name="blur_group">
                 <property name="title">
@@ -457,7 +458,7 @@
                 </property>
                 <layout class="QFormLayout" name="blur_form_layout">
                  <property name="labelAlignment">
-                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                  </property>
                  <property name="horizontalSpacing">
                   <number>12</number>

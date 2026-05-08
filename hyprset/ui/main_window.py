@@ -13,7 +13,7 @@ from ..core.look import (
     get_cur_layout,
     get_cur_value,
     get_state_check,
-    set_gabs_in_box,
+    write_setting,
 )
 from ..core.monitor import (
     apply_monitor_settings,
@@ -32,6 +32,8 @@ class Widget(QMainWindow, Ui_Widget):
         self.setWindowTitle("Hyprland Settings")
 
         # TODO Overall
+        # Refactor code -> Lookup-Tables / Dicts (Maybe Dataclasses or NamedTuples)
+        # Read/Write-Zyklus imporve
         # Set config file structure
         # Network config -> Wlan, DNS, ... / Bluetooth
         # Wallpaper (with preview ofc)
@@ -77,21 +79,23 @@ class Widget(QMainWindow, Ui_Widget):
         self.del_env_button.clicked.connect(lambda: del_env(self))
 
         # Look and Feel
+        LOOK_SETTINGS = {
+            "gaps_in": "gabs_in_spinBox",
+            "gaps_out": "gaps_out_spinBox",
+            "border_size": "border_size_spinBox",
+            "angle": "angle_spinBox",
+            "rounding": "rounding_spin_box",
+            "rounding_power": "rounding_power_spin_box",
+            "active_opacity": "act_op_spin_box",
+            "inactive_opacity": "inact_op_spin_box",
+        }
+
         # General
-        self.gabs_in_spinBox.setValue(get_cur_value("gaps_in"))
-        self.gaps_out_spinBox.setValue(get_cur_value("gaps_out"))
-        self.border_size_spinBox.setValue(get_cur_value("border_size"))
-        self.angle_spinBox.setValue(get_cur_value("angle"))
-        self.gabs_in_spinBox.valueChanged.connect(
-            lambda: set_gabs_in_box(self, "gaps_in")
-        )
-        self.gaps_out_spinBox.valueChanged.connect(
-            lambda: set_gabs_in_box(self, "gaps_out")
-        )
-        self.border_size_spinBox.valueChanged.connect(
-            lambda: set_gabs_in_box(self, "border_size")
-        )
-        self.angle_spinBox.valueChanged.connect(lambda: set_gabs_in_box(self, "angle"))
+        for setting, widget_attr in LOOK_SETTINGS.items():
+            widget = getattr(self, widget_attr)
+            widget.setValue(get_cur_value(setting))
+            widget.valueChanged.connect(lambda val, s=setting: write_setting(s, val))
+
         self.set_color_1_button.clicked.connect(self.set_color_1)
         self.set_color_2_button.clicked.connect(self.set_color_2)
         if get_state_check("resize") == "true":
@@ -108,12 +112,9 @@ class Widget(QMainWindow, Ui_Widget):
         self.layout_comboBox.addItems(layouts)
         current = get_cur_layout()
         self.layout_comboBox.setCurrentText(current)
-        self.layout_comboBox.currentTextChanged.connect(lambda: change_layout(self))
+        self.layout_comboBox.currentTextChanged.connect(change_layout)
 
-        # Decorations
         # TODO
-        # Rouding, rounding_power
-        # act-,inact_opacity
         # shadow, blur
 
     # Autostart add buttons
