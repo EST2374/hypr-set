@@ -24,7 +24,7 @@ A companion shell script, `hypr-set.sh`, is also included for those who prefer t
 
 ---
 
-## Screenshots
+## Preview
 
 ![Preview](./assets/preview.png)
 
