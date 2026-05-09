@@ -1,10 +1,11 @@
 import re
 import webbrowser
 
+from PySide6.QtCore import QProcess
 from PySide6.QtGui import QColor, Qt
 from PySide6.QtWidgets import QApplication, QColorDialog, QMainWindow
 
-from hyprset.config import CONFIG_FILE, REAL_CONFIG
+from hyprset.config import CONFIG_FILE
 
 from ..core.autostart import del_autostart, get_current_autostarts
 from ..core.environments import del_env, get_current_env
@@ -93,7 +94,7 @@ class Widget(QMainWindow, Ui_Widget):
 
         # Autostart Settings
         self.current_autostart.addItems(get_current_autostarts())
-        self.del_autostart_button.clicked.connect(lambda: del_autostart(self))
+        self.del_autostart_button.clicked.connect(self.del_selected_autostart)
         self.add_program_button.clicked.connect(self.add_new_autostart)
         self.add_script_button.clicked.connect(self.add_new_script)
 
@@ -226,6 +227,14 @@ class Widget(QMainWindow, Ui_Widget):
         dialog.center_on_parent()
         dialog.exec()
 
+    def del_selected_autostart(self):
+        current_row = self.current_autostart.currentRow()
+        if current_row == -1:
+            return
+        item = self.current_autostart.currentItem()
+        if del_autostart(item.text()):
+            self.current_autostart.takeItem(current_row)
+
     def add_new_env(self):
         dialog = AddEnvDialog(self)
         dialog.center_on_parent()
@@ -294,20 +303,23 @@ class Widget(QMainWindow, Ui_Widget):
 
     def _handle_wifi_output(self):
         process = self.sender()
-        raw = process.readAllStandardOutput().data().decode()
-        networks = parse_wifi_list(raw)
-        self.wifi_list.clear()
-        self.wifi_list.addItems(
-            [f"{n['ssid']}  {n['signal']}  {n['security']}" for n in networks]
-        )
-        process.deleteLater()
+        if isinstance(process, QProcess):
+            raw_data = process.readAllStandardOutput().data()
+            raw = bytes(raw_data).decode("utf-8")
+
+            networks = parse_wifi_list(raw)
+            self.wifi_list.clear()
+            self.wifi_list.addItems(
+                [f"{n['ssid']}  {n['signal']}  {n['security']}" for n in networks]
+            )
+            process.deleteLater()
 
     def _refresh_wifi(self):
         self.wifi_list.clear()
         self._start_wifi_scan()
 
     def connect_to_wifi(self):
-        dialog = Connect_to_Wifi(self)
+        dialog = Connect_to_Wifi(ssid="", parent=self)
         dialog.center_on_parent()
         dialog.exec()
 

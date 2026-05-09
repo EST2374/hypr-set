@@ -14,12 +14,27 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QVBoxLayout,
+    QWidget,
 )
 
 from hyprset.config import CONFIG_FILE
+from hyprset.core.autostart import add_autostart
 
 
-class AddProgramDialog(QDialog):
+class BaseDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    def center_on_parent(self):
+        p = self.parent()
+        if isinstance(p, QWidget):
+            parent_geo = p.frameGeometry()
+            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
+            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
+            self.move(x, y)
+
+
+class AddProgramDialog(BaseDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Add Autostart Program")
@@ -35,13 +50,6 @@ class AddProgramDialog(QDialog):
         layout.addWidget(self.list_programs)
         layout.addWidget(button_add)
         self.setLayout(layout)
-
-    def center_on_parent(self):
-        if self.parent():
-            parent_geo = self.parent().frameGeometry()
-            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
-            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
-            self.move(x, y)
 
     def add_program(self):
         selected_item = self.list_programs.currentItem()
@@ -60,24 +68,12 @@ class AddProgramDialog(QDialog):
 
         exec_cmd = re.sub(r"%\w", "", exec_cmd).strip()
 
-        new_line = f"exec-once = {exec_cmd}"
-
-        with open(CONFIG_FILE, "r") as f:
-            content = f.read()
-
-        if "# Autostart end" in content:
-            content = content.replace("# Autostart end", f"{new_line}\n# Autostart end")
-        else:
-            content += f"\n{new_line}"
-
-        with open(CONFIG_FILE, "w") as f:
-            f.write(content)
-
-        parent = self.parent()
-        if parent and hasattr(parent, "current_autostart"):
-            parent.current_autostart.addItem(exec_cmd)
-
-        self.accept()
+        if add_autostart(exec_cmd):
+            parent = self.parent()
+            current_autostart = getattr(parent, "current_autostart", None)
+            if current_autostart is not None:
+                current_autostart.addItem(exec_cmd)
+            self.accept()
 
     def get_installed_apps(self):
         desktop_dirs = [
@@ -109,7 +105,7 @@ class AddProgramDialog(QDialog):
         return names
 
 
-class AddScriptDialog(QDialog):
+class AddScriptDialog(BaseDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Add Autostart Script")
@@ -129,37 +125,20 @@ class AddScriptDialog(QDialog):
         layout.addWidget(button_add)
         self.setLayout(layout)
 
-    def center_on_parent(self):
-        if self.parent():
-            parent_geo = self.parent().frameGeometry()
-            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
-            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
-            self.move(x, y)
-
     def add_script(self):
         new_script = self.script_edit_line.text()
+        if not new_script:
+            return
+        if add_autostart(new_script):
+            parent = self.parent()
+            current_autostart = getattr(parent, "current_autostart", None)
 
-        new_line = f"exec-once = {new_script}"
-
-        with open(CONFIG_FILE, "r") as f:
-            content = f.read()
-
-        if "# Autostart end" in content:
-            content = content.replace("# Autostart end", f"{new_line}\n# Autostart end")
-        else:
-            content += f"\n{new_line}"
-
-        with open(CONFIG_FILE, "w") as f:
-            f.write(content)
-
-        parent = self.parent()
-        if parent and hasattr(parent, "current_autostart"):
-            parent.current_autostart.addItem(new_script)
-
-        self.accept()
+            if current_autostart is not None:
+                current_autostart.addItem(new_script)
+            self.accept()
 
 
-class AddEnvDialog(QDialog):
+class AddEnvDialog(BaseDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Add Environment")
@@ -178,13 +157,6 @@ class AddEnvDialog(QDialog):
         layout.addLayout(layout_h)
         layout.addWidget(button_add)
         self.setLayout(layout)
-
-    def center_on_parent(self):
-        if self.parent():
-            parent_geo = self.parent().frameGeometry()
-            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
-            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
-            self.move(x, y)
 
     def add_env(self):
         new_env = self.env_edit_line.text()
@@ -205,8 +177,10 @@ class AddEnvDialog(QDialog):
             f.write(content)
 
         parent = self.parent()
-        if parent and hasattr(parent, "current_autostart"):
-            parent.current_env.addItem(new_env)
+        current_env = getattr(parent, "current_env", None)
+
+        if current_env is not None:
+            current_env.addItem(new_env)
 
         self.accept()
 
@@ -221,7 +195,7 @@ class PickColorDialog(QDialog):
         self.setLayout(layout)
 
 
-class Connect_to_Wifi(QDialog):
+class Connect_to_Wifi(BaseDialog):
     def __init__(self, ssid: str, parent=None):
         super().__init__(parent)
         self.ssid = ssid
@@ -255,13 +229,6 @@ class Connect_to_Wifi(QDialog):
         main_layout.addWidget(connect_button)
         self.setLayout(main_layout)
 
-    def center_on_parent(self):
-        if self.parent():
-            parent_geo = self.parent().frameGeometry()
-            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
-            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
-            self.move(x, y)
-
     def toggle_password_visibility(self, is_checked):
         mode = QLineEdit.EchoMode.Normal if is_checked else QLineEdit.EchoMode.Password
         self.password_line_edit.setEchoMode(mode)
@@ -279,8 +246,11 @@ class Connect_to_Wifi(QDialog):
         self.status_label.setText("Connecting…")
 
     def _handle_result(self, exit_code):
-        output = self._process.readAllStandardOutput().data().decode().strip()
-        error = self._process.readAllStandardError().data().decode().strip()
+        out_data = self._process.readAllStandardOutput().data()
+        err_data = self._process.readAllStandardError().data()
+
+        output = bytes(out_data).decode("utf-8").strip()
+        error = bytes(err_data).decode("utf-8").strip()
 
         if exit_code == 0:
             self.status_label.setText(f"Connected to {self.ssid}.")
@@ -289,7 +259,7 @@ class Connect_to_Wifi(QDialog):
             self.status_label.setText(f"Failed: {reason}")
 
 
-class Update(QDialog):
+class Update(BaseDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Update")
@@ -306,13 +276,6 @@ class Update(QDialog):
         layout.addWidget(self.list_programs)
         layout.addWidget(button_update_all)
         self.setLayout(layout)
-
-    def center_on_parent(self):
-        if self.parent():
-            parent_geo = self.parent().frameGeometry()
-            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
-            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
-            self.move(x, y)
 
     def get_updates(self) -> list[str]:
         updates_list = []
