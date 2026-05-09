@@ -59,3 +59,5 @@ test.py
 test.sh
 hypr_set.egg-info/
 __pycache__/
+*.pyc
+*.ui.bak
