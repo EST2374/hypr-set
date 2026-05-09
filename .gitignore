@@ -57,3 +57,5 @@ Thumbs.db
 # Project-specific scratch files
 test.py
 test.sh
+hypr_set.egg-info/
+__pycache__/
