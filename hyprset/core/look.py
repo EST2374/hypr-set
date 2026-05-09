@@ -45,6 +45,15 @@ SETTINGS: dict[str, Setting] = {
     "angle": Setting(
         "angle", r"(\s*col\.active_border\s*=.*?)\d+deg", r"\g<1>{value}deg"
     ),
+    "shadow_range": Setting("range", r"^\s*range\s*=.*", "\t\trange = {value}"),
+    "shadow_render_power": Setting(
+        "render_power", r"^\s*render_power\s*=.*", "\t\trender_power = {value}"
+    ),
+    "blur_size": Setting("size", r"^\s*size\s*=.*", "\t\tsize = {value}"),
+    "blur_passes": Setting("passes", r"^\s*passes\s*=.*", "\t\tpasses = {value}"),
+    "blur_vib": Setting(
+        "vibrancy", r"^\s*vibrancy\s*=.*", "\t\tvibrancy = {value}", float
+    ),
 }
 
 BOOL_SETTINGS: dict[str, BoolSetting] = {
@@ -55,6 +64,12 @@ BOOL_SETTINGS: dict[str, BoolSetting] = {
     ),
     "tearing": BoolSetting(
         "allow_tearing", r"^\s*allow_tearing\s*=.*", "\tallow_tearing = {value}"
+    ),
+    "blur_enable": BoolSetting(
+        "blur_enable", r"(blur\s*\{[^}]*?enabled\s*=\s*).*", "\t\tenabled = {value}"
+    ),
+    "shadow_enable": BoolSetting(
+        "shadow_a", r"(shadow\s*\{[^}]*?enabled\s*=\s*).*", "\t\tenabled = {value}"
     ),
 }
 

@@ -2,9 +2,9 @@ import glob
 import os
 import re
 
-from PySide6.QtGui import QColor
+from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import (
-    QColorDialog,
+    QCheckBox,
     QDialog,
     QHBoxLayout,
     QLabel,
@@ -217,3 +217,71 @@ class PickColorDialog(QDialog):
 
         layout = QVBoxLayout(self)
         self.setLayout(layout)
+
+
+class Connect_to_Wifi(QDialog):
+    def __init__(self, ssid: str, parent=None):
+        super().__init__(parent)
+        self.ssid = ssid
+        self.setWindowTitle(f"Connect to {ssid}")
+        self.resize(400, 160)
+
+        connect_label = QLabel(f"Connecting to: <b>{ssid}</b>")
+
+        password_label = QLabel("Password:")
+        self.password_line_edit = QLineEdit()
+        self.password_line_edit.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password_line_edit.setPlaceholderText("Leave empty for open networks")
+
+        password_layout = QHBoxLayout()
+        password_layout.addWidget(password_label)
+        password_layout.addWidget(self.password_line_edit)
+
+        self.show_password = QCheckBox("Show password")
+        self.show_password.toggled.connect(self.toggle_password_visibility)
+
+        self.status_label = QLabel("")
+
+        connect_button = QPushButton("Connect")
+        connect_button.clicked.connect(self.connect_to_wifi)
+
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(connect_label)
+        main_layout.addLayout(password_layout)
+        main_layout.addWidget(self.show_password)
+        main_layout.addWidget(self.status_label)
+        main_layout.addWidget(connect_button)
+        self.setLayout(main_layout)
+
+    def center_on_parent(self):
+        if self.parent():
+            parent_geo = self.parent().frameGeometry()
+            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
+            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
+            self.move(x, y)
+
+    def toggle_password_visibility(self, is_checked):
+        mode = QLineEdit.EchoMode.Normal if is_checked else QLineEdit.EchoMode.Password
+        self.password_line_edit.setEchoMode(mode)
+
+    def connect_to_wifi(self):
+        password = self.password_line_edit.text().strip()
+
+        args = ["dev", "wifi", "connect", self.ssid]
+        if password:
+            args += ["password", password]
+
+        self._process = QProcess(self)
+        self._process.finished.connect(self._handle_result)
+        self._process.start("nmcli", args)
+        self.status_label.setText("Connecting…")
+
+    def _handle_result(self, exit_code):
+        output = self._process.readAllStandardOutput().data().decode().strip()
+        error = self._process.readAllStandardError().data().decode().strip()
+
+        if exit_code == 0:
+            self.status_label.setText(f"Connected to {self.ssid}.")
+        else:
+            reason = error or output or "Unknown error"
+            self.status_label.setText(f"Failed: {reason}")
