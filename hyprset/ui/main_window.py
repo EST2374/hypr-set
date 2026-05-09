@@ -1,4 +1,5 @@
 import re
+import webbrowser
 
 from PySide6.QtGui import QColor, Qt
 from PySide6.QtWidgets import QApplication, QColorDialog, QMainWindow
@@ -34,7 +35,13 @@ from ..core.network import (
     set_networking,
 )
 from ..styles import Theme, toggle_theme
-from .dialogs import AddEnvDialog, AddProgramDialog, AddScriptDialog, Connect_to_Wifi
+from .dialogs import (
+    AddEnvDialog,
+    AddProgramDialog,
+    AddScriptDialog,
+    Connect_to_Wifi,
+    Update,
+)
 from .generated.ui_widget import Ui_Widget
 from .toggle_switch import ToggleSwitch
 
@@ -58,6 +65,7 @@ class Widget(QMainWindow, Ui_Widget):
 
         # Menu Bar
         self.quit_program.triggered.connect(QApplication.quit)
+        self.actionHelp.triggered.connect(self.open_help)
 
         # Theme Switch
         self.dark_theme_button.triggered.connect(
@@ -133,7 +141,6 @@ class Widget(QMainWindow, Ui_Widget):
             lambda: change_bool_check("tearing")
         )
 
-        # TODO FIX ENABLE
         if get_state_check("blur_enable") == "true":
             self.blur_enable_checkBox.setCheckState(Qt.CheckState.Checked)
         self.blur_enable_checkBox.checkStateChanged.connect(
@@ -201,8 +208,12 @@ class Widget(QMainWindow, Ui_Widget):
         self.wifi_list.itemDoubleClicked.connect(self._open_wifi_connect_dialog)
         self.wifi_disconnect_button.clicked.connect(self._disconnect_selected)
 
-    def on_change(self, text):
-        print(text)
+        # Update Tab
+        self.update_pushButton.clicked.connect(self.update_menu)
+
+    # Help Button
+    def open_help(self):
+        webbrowser.open("https://github.com/EST2374/hypr-set")
 
     # Autostart add buttons
     def add_new_autostart(self):
@@ -323,3 +334,8 @@ class Widget(QMainWindow, Ui_Widget):
             self._refresh_wifi()
         else:
             print(f"Disconnect failed: {msg}")
+
+    def update_menu(self):
+        dialog = Update(self)
+        dialog.center_on_parent()
+        dialog.exec()

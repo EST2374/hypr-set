@@ -1,6 +1,7 @@
 import glob
 import os
 import re
+import subprocess
 
 from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import (
@@ -10,6 +11,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QListWidget,
+    QMessageBox,
     QPushButton,
     QVBoxLayout,
 )
@@ -285,3 +287,72 @@ class Connect_to_Wifi(QDialog):
         else:
             reason = error or output or "Unknown error"
             self.status_label.setText(f"Failed: {reason}")
+
+
+class Update(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Update")
+        self.resize(800, 300)
+
+        self.list_programs = QListWidget()
+        self.list_programs.addItems(self.get_updates())
+        self.list_programs.itemDoubleClicked.connect(self.update_item)
+
+        button_update_all = QPushButton("Update All")
+        button_update_all.clicked.connect(self.update_all)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.list_programs)
+        layout.addWidget(button_update_all)
+        self.setLayout(layout)
+
+    def center_on_parent(self):
+        if self.parent():
+            parent_geo = self.parent().frameGeometry()
+            x = parent_geo.x() + (parent_geo.width() - self.width()) // 2
+            y = parent_geo.y() + (parent_geo.height() - self.height()) // 2
+            self.move(x, y)
+
+    def get_updates(self) -> list[str]:
+        updates_list = []
+        try:
+            result = subprocess.run(
+                ["checkupdates"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            updates_list = result.stdout.splitlines()
+            return updates_list
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 2:
+                return []
+            print(f"An error occurred: {e}")
+            return []
+
+    def update_all(self):
+        cmd = ["pkexec", "pacman", "-Syu", "--noconfirm"]
+        self._run_pacman_command(cmd, "System Update")
+
+    def update_item(self, item):
+        package_name = item.text().split()[0]
+        cmd = ["pkexec", "pacman", "-S", package_name, "--noconfirm"]
+        self._run_pacman_command(cmd, f"Update {package_name}")
+
+    def _run_pacman_command(self, cmd, title):
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+
+            info = QMessageBox()
+            info.resize(800, 300)
+            info.information(self, title, f"Finished!\n\n{result.stdout[-500:]}")
+            self.refresh_list()
+
+        except subprocess.CalledProcessError as e:
+            error_msg = e.stderr if e.stderr else "Error."
+            QMessageBox.critical(self, "Error", f"Details:\n{error_msg}")
+
+    def refresh_list(self):
+        self.list_programs.clear()
+        self.list_programs.addItems(self.get_updates())

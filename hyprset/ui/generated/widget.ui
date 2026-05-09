@@ -112,7 +112,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">
@@ -1438,7 +1438,17 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_2"/>
-      <widget class="QWidget" name="page_4"/>
+      <widget class="QWidget" name="update_page">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="update_pushButton">
+          <property name="text">
+           <string>UPDATE</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

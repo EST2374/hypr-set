@@ -791,9 +791,16 @@ class Ui_Widget(object):
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.stackedWidget.addWidget(self.page_2)
-        self.page_4 = QWidget()
-        self.page_4.setObjectName(u"page_4")
-        self.stackedWidget.addWidget(self.page_4)
+        self.update_page = QWidget()
+        self.update_page.setObjectName(u"update_page")
+        self.verticalLayout_2 = QVBoxLayout(self.update_page)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.update_pushButton = QPushButton(self.update_page)
+        self.update_pushButton.setObjectName(u"update_pushButton")
+
+        self.verticalLayout_2.addWidget(self.update_pushButton)
+
+        self.stackedWidget.addWidget(self.update_page)
 
         self.horizontalLayout.addWidget(self.stackedWidget)
 
@@ -820,7 +827,7 @@ class Ui_Widget(object):
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(3)
+        self.Hyprland_Menu_Settings.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -908,6 +915,7 @@ class Ui_Widget(object):
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
         self.wifi_refresh_button.setText(QCoreApplication.translate("Widget", u"Refresh", None))
         self.wifi_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
+        self.update_pushButton.setText(QCoreApplication.translate("Widget", u"UPDATE", None))
         self.menuTheme.setTitle(QCoreApplication.translate("Widget", u"Themes", None))
         self.menu_Application.setTitle(QCoreApplication.translate("Widget", u"Application", None))
     # retranslateUi
