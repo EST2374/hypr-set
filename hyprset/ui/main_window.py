@@ -109,6 +109,8 @@ class Widget(QMainWindow, Ui_Widget):
             "blur_size": "blur_size_spinBox",
             "blur_passes": "blur_passes_spinBox",
             "blur_vib": "blur_vib_doubleSpinBox",
+            # TEST FOR INPUT
+            "sensitivity": "mouse_sens_doubleSpinBox",
         }
 
         for setting, widget_attr in LOOK_SETTINGS.items():
@@ -155,8 +157,6 @@ class Widget(QMainWindow, Ui_Widget):
             "kb_variant": "kb_variant_comboBox",
         }
 
-        # TODO
-        # Fix so the current Value doesn't show up twice
         for setting_2, widget_attr_2 in INPUT_SETTINGS.items():
             widget_2 = getattr(self, widget_attr_2)
             widget_2.addItem(get_cur_item(setting_2))
@@ -175,9 +175,21 @@ class Widget(QMainWindow, Ui_Widget):
         self.follow_mouse_comboBox.currentTextChanged.connect(follow_mouse_change)
         self.mouse_sens_doubleSpinBox.setRange(-1.0, 1.0)
 
-        # Networking Tab
         # TODO
-        # Make it look nicer
+        # Sens and nat_scroll works, BUT
+        # In wrong file (and glob_nat_scroll is directly below input (not quite so nice))
+        if get_state_check("global_natural_scroll") == "true":
+            self.mouse_natural_scroll_checkBox.setCheckState(Qt.CheckState.Checked)
+        self.mouse_natural_scroll_checkBox.checkStateChanged.connect(
+            lambda: change_bool_check("global_natural_scroll")
+        )
+        if get_state_check("natural_scroll_touchpad") == "true":
+            self.touchpad_nat_scroll_checkbox.setCheckState(Qt.CheckState.Checked)
+        self.touchpad_nat_scroll_checkbox.checkStateChanged.connect(
+            lambda: change_bool_check("natural_scroll_touchpad")
+        )
+
+        # Networking Tab
         self._networking_toggle = ToggleSwitch(self, active_color="#00b0ff")
         self._networking_toggle.setChecked(True)
         self._networking_toggle.stateChanged.connect(self._on_networking_toggled)

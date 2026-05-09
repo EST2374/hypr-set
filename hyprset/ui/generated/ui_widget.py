@@ -819,8 +819,8 @@ class Ui_Widget(object):
 
         self.retranslateUi(Widget)
 
-        self.stackedWidget.setCurrentIndex(1)
-        self.Hyprland_Menu_Settings.setCurrentIndex(6)
+        self.stackedWidget.setCurrentIndex(0)
+        self.Hyprland_Menu_Settings.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(Widget)

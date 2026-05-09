@@ -84,7 +84,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="hyprland_page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -112,7 +112,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>6</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">

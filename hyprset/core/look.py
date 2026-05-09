@@ -1,4 +1,5 @@
 import re
+from curses import raw
 from dataclasses import dataclass
 from typing import Callable
 
@@ -54,6 +55,10 @@ SETTINGS: dict[str, Setting] = {
     "blur_vib": Setting(
         "vibrancy", r"^\s*vibrancy\s*=.*", "\t\tvibrancy = {value}", float
     ),
+    # TEST FOR INPUT
+    "sensitivity": Setting(
+        "sensitivity", r"^\s*sensitivity\s*=.*", "\tsensitivity = {value}", float
+    ),
 }
 
 BOOL_SETTINGS: dict[str, BoolSetting] = {
@@ -66,10 +71,22 @@ BOOL_SETTINGS: dict[str, BoolSetting] = {
         "allow_tearing", r"^\s*allow_tearing\s*=.*", "\tallow_tearing = {value}"
     ),
     "blur_enable": BoolSetting(
-        "blur_enable", r"(blur\s*\{[^}]*?enabled\s*=\s*).*", "\t\tenabled = {value}"
+        "blur_enable",
+        r"(blur\s*\{[^}]*?enabled\s*=\s*)[^\s#]+",
+        r"\g<1>{value}",
     ),
     "shadow_enable": BoolSetting(
-        "shadow_a", r"(shadow\s*\{[^}]*?enabled\s*=\s*).*", "\t\tenabled = {value}"
+        "shadow_a", r"(shadow\s*\{[^}]*?enabled\s*=\s*)[^\s#]+", r"\g<1>{value}"
+    ),
+    "global_natural_scroll": BoolSetting(
+        "natural_scroll",
+        r"(input\s*\{[^{]*?natural_scroll\s*=\s*)[^\s#]+",
+        r"\g<1>{value}",
+    ),
+    "natural_scroll_touchpad": BoolSetting(
+        "natural_scroll",
+        r"(touchpad\s*\{[^}]*?natural_scroll\s*=\s*)[^\s#]+",
+        r"\g<1>{value}",
     ),
 }
 
@@ -102,10 +119,11 @@ def get_state_check(setting: str) -> str:
     s = BOOL_SETTINGS[setting]
     try:
         with open(CONFIG_FILE, "r") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith(s.config_key):
-                    return line.split("=", 1)[-1].strip()
+            content = f.read()
+            match = re.search(s.pattern, content, flags=re.MULTILINE)
+            if match:
+                full_match = match.group(0)
+                return full_match.split("=", 1)[-1].strip()
     except FileNotFoundError:
         pass
     return "false"
