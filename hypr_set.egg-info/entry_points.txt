@@ -1,2 +1,0 @@
-[console_scripts]
-hypr-set = hyprset.main:main

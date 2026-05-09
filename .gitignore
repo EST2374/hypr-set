@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Distribution / Packaging
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+wheels/
+sdist/
+develop-eggs/
+.eggs/
+lib/
+lib64/
+parts/
+var/
+*.so
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Qt / PySide6
+*.ui.bak
+*.qmlc
+*.jsc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific scratch files
+test.py
+test.sh
