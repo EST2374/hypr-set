@@ -146,6 +146,11 @@ class Ui_Widget(object):
 
         self.monitor_apply_hl = QHBoxLayout()
         self.monitor_apply_hl.setObjectName(u"monitor_apply_hl")
+        self.set_default_monitor_button = QPushButton(self.monitor_tab)
+        self.set_default_monitor_button.setObjectName(u"set_default_monitor_button")
+
+        self.monitor_apply_hl.addWidget(self.set_default_monitor_button)
+
         self.monitor_apply_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.monitor_apply_hl.addItem(self.monitor_apply_spacer)
@@ -271,7 +276,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 848, 763))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 471, 664))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -566,6 +571,11 @@ class Ui_Widget(object):
 
         self.look_contents_vl.addLayout(self.look_row2_hl)
 
+        self.set_default_look_button = QPushButton(self.look_scroll_contents)
+        self.set_default_look_button.setObjectName(u"set_default_look_button")
+
+        self.look_contents_vl.addWidget(self.set_default_look_button)
+
         self.look_bottom_spacer = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.look_contents_vl.addItem(self.look_bottom_spacer)
@@ -726,6 +736,11 @@ class Ui_Widget(object):
 
         self.input_outer_vl.addLayout(self.input_row1_hl)
 
+        self.input_set_default_button = QPushButton(self.input_tab)
+        self.input_set_default_button.setObjectName(u"input_set_default_button")
+
+        self.input_outer_vl.addWidget(self.input_set_default_button)
+
         self.input_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.input_outer_vl.addItem(self.input_bottom_spacer)
@@ -739,42 +754,170 @@ class Ui_Widget(object):
         self.keybinds_tabWidget.setObjectName(u"keybinds_tabWidget")
         self.general_tab = QWidget()
         self.general_tab.setObjectName(u"general_tab")
-        self.verticalLayout_4 = QVBoxLayout(self.general_tab)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_8 = QVBoxLayout(self.general_tab)
+        self.verticalLayout_8.setSpacing(16)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(24, 24, 24, 24)
+        self.general_layout = QVBoxLayout()
+        self.general_layout.setSpacing(12)
+        self.general_layout.setObjectName(u"general_layout")
         self.general_list = QListWidget(self.general_tab)
         self.general_list.setObjectName(u"general_list")
 
-        self.verticalLayout_4.addWidget(self.general_list)
+        self.general_layout.addWidget(self.general_list)
+
+        self.general_button_layout = QHBoxLayout()
+        self.general_button_layout.setSpacing(8)
+        self.general_button_layout.setObjectName(u"general_button_layout")
+        self.set_default_general_keybind_button = QPushButton(self.general_tab)
+        self.set_default_general_keybind_button.setObjectName(u"set_default_general_keybind_button")
+
+        self.general_button_layout.addWidget(self.set_default_general_keybind_button)
+
+        self.general_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.general_button_layout.addItem(self.general_spacer)
+
+        self.delete_keybind_button = QPushButton(self.general_tab)
+        self.delete_keybind_button.setObjectName(u"delete_keybind_button")
+
+        self.general_button_layout.addWidget(self.delete_keybind_button)
+
+
+        self.general_layout.addLayout(self.general_button_layout)
+
+
+        self.verticalLayout_8.addLayout(self.general_layout)
+
+        self.general_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_8.addItem(self.general_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.general_tab, "")
         self.movement_tab = QWidget()
         self.movement_tab.setObjectName(u"movement_tab")
-        self.verticalLayout_5 = QVBoxLayout(self.movement_tab)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_14 = QVBoxLayout(self.movement_tab)
+        self.verticalLayout_14.setSpacing(16)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(24, 24, 24, 24)
+        self.movement_layout = QVBoxLayout()
+        self.movement_layout.setSpacing(12)
+        self.movement_layout.setObjectName(u"movement_layout")
         self.movement_list = QListWidget(self.movement_tab)
         self.movement_list.setObjectName(u"movement_list")
 
-        self.verticalLayout_5.addWidget(self.movement_list)
+        self.movement_layout.addWidget(self.movement_list)
+
+        self.movement_button_layout = QHBoxLayout()
+        self.movement_button_layout.setSpacing(8)
+        self.movement_button_layout.setObjectName(u"movement_button_layout")
+        self.set_default_movement_button = QPushButton(self.movement_tab)
+        self.set_default_movement_button.setObjectName(u"set_default_movement_button")
+
+        self.movement_button_layout.addWidget(self.set_default_movement_button)
+
+        self.movement_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.movement_button_layout.addItem(self.movement_spacer)
+
+        self.delete_movement_button = QPushButton(self.movement_tab)
+        self.delete_movement_button.setObjectName(u"delete_movement_button")
+
+        self.movement_button_layout.addWidget(self.delete_movement_button)
+
+
+        self.movement_layout.addLayout(self.movement_button_layout)
+
+
+        self.verticalLayout_14.addLayout(self.movement_layout)
+
+        self.movement_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_14.addItem(self.movement_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.movement_tab, "")
         self.workspaces_tab = QWidget()
         self.workspaces_tab.setObjectName(u"workspaces_tab")
-        self.verticalLayout_6 = QVBoxLayout(self.workspaces_tab)
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_15 = QVBoxLayout(self.workspaces_tab)
+        self.verticalLayout_15.setSpacing(16)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.verticalLayout_15.setContentsMargins(24, 24, 24, 24)
+        self.workspace_layout = QVBoxLayout()
+        self.workspace_layout.setSpacing(12)
+        self.workspace_layout.setObjectName(u"workspace_layout")
         self.workspaces_list = QListWidget(self.workspaces_tab)
         self.workspaces_list.setObjectName(u"workspaces_list")
 
-        self.verticalLayout_6.addWidget(self.workspaces_list)
+        self.workspace_layout.addWidget(self.workspaces_list)
+
+        self.workspace_button_layout = QHBoxLayout()
+        self.workspace_button_layout.setSpacing(8)
+        self.workspace_button_layout.setObjectName(u"workspace_button_layout")
+        self.set_default_workspace_button = QPushButton(self.workspaces_tab)
+        self.set_default_workspace_button.setObjectName(u"set_default_workspace_button")
+
+        self.workspace_button_layout.addWidget(self.set_default_workspace_button)
+
+        self.workspace_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.workspace_button_layout.addItem(self.workspace_spacer)
+
+        self.delete_workspace_button = QPushButton(self.workspaces_tab)
+        self.delete_workspace_button.setObjectName(u"delete_workspace_button")
+
+        self.workspace_button_layout.addWidget(self.delete_workspace_button)
+
+
+        self.workspace_layout.addLayout(self.workspace_button_layout)
+
+
+        self.verticalLayout_15.addLayout(self.workspace_layout)
+
+        self.workspace_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_15.addItem(self.workspace_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.workspaces_tab, "")
         self.multimedia_tab = QWidget()
         self.multimedia_tab.setObjectName(u"multimedia_tab")
-        self.verticalLayout_7 = QVBoxLayout(self.multimedia_tab)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_16 = QVBoxLayout(self.multimedia_tab)
+        self.verticalLayout_16.setSpacing(16)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.verticalLayout_16.setContentsMargins(24, 24, 24, 24)
+        self.multimedia_layout = QVBoxLayout()
+        self.multimedia_layout.setSpacing(12)
+        self.multimedia_layout.setObjectName(u"multimedia_layout")
         self.multimedia_list = QListWidget(self.multimedia_tab)
         self.multimedia_list.setObjectName(u"multimedia_list")
 
-        self.verticalLayout_7.addWidget(self.multimedia_list)
+        self.multimedia_layout.addWidget(self.multimedia_list)
+
+        self.multimedia_button_layout = QHBoxLayout()
+        self.multimedia_button_layout.setSpacing(8)
+        self.multimedia_button_layout.setObjectName(u"multimedia_button_layout")
+        self.set_default_multimedia_button = QPushButton(self.multimedia_tab)
+        self.set_default_multimedia_button.setObjectName(u"set_default_multimedia_button")
+
+        self.multimedia_button_layout.addWidget(self.set_default_multimedia_button)
+
+        self.multimedia_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.multimedia_button_layout.addItem(self.multimedia_spacer)
+
+        self.delete_multimedia_button = QPushButton(self.multimedia_tab)
+        self.delete_multimedia_button.setObjectName(u"delete_multimedia_button")
+
+        self.multimedia_button_layout.addWidget(self.delete_multimedia_button)
+
+
+        self.multimedia_layout.addLayout(self.multimedia_button_layout)
+
+
+        self.verticalLayout_16.addLayout(self.multimedia_layout)
+
+        self.multimedia_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_16.addItem(self.multimedia_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.multimedia_tab, "")
 
@@ -835,17 +978,24 @@ class Ui_Widget(object):
         self.verticalLayout_3.addItem(self.network_bottom_spacer)
 
         self.stackedWidget.addWidget(self.network_page)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.stackedWidget.addWidget(self.page_2)
+        self.wallpaper_page = QWidget()
+        self.wallpaper_page.setObjectName(u"wallpaper_page")
+        self.stackedWidget.addWidget(self.wallpaper_page)
         self.update_page = QWidget()
         self.update_page.setObjectName(u"update_page")
         self.verticalLayout_2 = QVBoxLayout(self.update_page)
+        self.verticalLayout_2.setSpacing(16)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(24, 24, 24, 24)
         self.update_pushButton = QPushButton(self.update_page)
         self.update_pushButton.setObjectName(u"update_pushButton")
+        self.update_pushButton.setMinimumSize(QSize(140, 36))
 
         self.verticalLayout_2.addWidget(self.update_pushButton)
+
+        self.update_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_2.addItem(self.update_bottom_spacer)
 
         self.stackedWidget.addWidget(self.update_page)
 
@@ -874,8 +1024,8 @@ class Ui_Widget(object):
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(5)
-        self.keybinds_tabWidget.setCurrentIndex(0)
+        self.Hyprland_Menu_Settings.setCurrentIndex(1)
+        self.keybinds_tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -905,6 +1055,7 @@ class Ui_Widget(object):
         self.monitor_res_label.setText(QCoreApplication.translate("Widget", u"Resolution:", None))
         self.monitor_pos_label.setText(QCoreApplication.translate("Widget", u"Position:", None))
         self.monitor_scale_label.setText(QCoreApplication.translate("Widget", u"Scale:", None))
+        self.set_default_monitor_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.apply_button.setText(QCoreApplication.translate("Widget", u"Apply Settings", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.monitor_tab), QCoreApplication.translate("Widget", u"Monitor", None))
         self.autostart_group.setTitle(QCoreApplication.translate("Widget", u"Autostart Entries", None))
@@ -944,6 +1095,7 @@ class Ui_Widget(object):
         self.blur_size_label.setText(QCoreApplication.translate("Widget", u"Size:", None))
         self.blur_passes_label.setText(QCoreApplication.translate("Widget", u"Passes:", None))
         self.blur_vibrancy_label.setText(QCoreApplication.translate("Widget", u"Vibrancy:", None))
+        self.set_default_look_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.look_tab), QCoreApplication.translate("Widget", u"Look & Feel", None))
         self.keyboard_groupBox.setTitle(QCoreApplication.translate("Widget", u"Keyboard", None))
         self.kb_layout_label.setText(QCoreApplication.translate("Widget", u"Layout:", None))
@@ -957,17 +1109,26 @@ class Ui_Widget(object):
         self.mouse_natural_scroll_checkBox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
         self.touchpad_groupbox.setTitle(QCoreApplication.translate("Widget", u"Touchpad", None))
         self.touchpad_nat_scroll_checkbox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
+        self.input_set_default_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.input_tab), QCoreApplication.translate("Widget", u"Input", None))
+        self.set_default_general_keybind_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.delete_keybind_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.general_tab), QCoreApplication.translate("Widget", u"General", None))
+        self.set_default_movement_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.delete_movement_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.movement_tab), QCoreApplication.translate("Widget", u"Movement", None))
+        self.set_default_workspace_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.delete_workspace_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.workspaces_tab), QCoreApplication.translate("Widget", u"Workspaces", None))
+        self.set_default_multimedia_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.delete_multimedia_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.multimedia_tab), QCoreApplication.translate("Widget", u"Multimedia", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.keybinds_tab), QCoreApplication.translate("Widget", u"Keybindings", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.windowrules_tab), QCoreApplication.translate("Widget", u"Window Rules", None))
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
         self.wifi_refresh_button.setText(QCoreApplication.translate("Widget", u"Refresh", None))
         self.wifi_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
-        self.update_pushButton.setText(QCoreApplication.translate("Widget", u"UPDATE", None))
+        self.update_pushButton.setText(QCoreApplication.translate("Widget", u"Check for Updates", None))
         self.menuTheme.setTitle(QCoreApplication.translate("Widget", u"Themes", None))
         self.menu_Application.setTitle(QCoreApplication.translate("Widget", u"Application", None))
     # retranslateUi

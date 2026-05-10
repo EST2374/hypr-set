@@ -112,7 +112,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>5</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">
@@ -234,6 +234,13 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="monitor_apply_hl">
+              <item>
+               <widget class="QPushButton" name="set_default_monitor_button">
+                <property name="text">
+                 <string>Set Default</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <spacer name="monitor_apply_spacer">
                 <property name="orientation">
@@ -509,8 +516,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>848</width>
-                 <height>763</height>
+                 <width>471</width>
+                 <height>664</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="look_contents_vl">
@@ -1020,6 +1027,13 @@
                  </layout>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="set_default_look_button">
+                  <property name="text">
+                   <string>Set Default</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <spacer name="look_bottom_spacer">
                   <property name="orientation">
                    <enum>Qt::Orientation::Vertical</enum>
@@ -1315,6 +1329,13 @@
              </layout>
             </item>
             <item>
+             <widget class="QPushButton" name="input_set_default_button">
+              <property name="text">
+               <string>Set Default</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="input_bottom_spacer">
               <property name="orientation">
                <enum>Qt::Orientation::Vertical</enum>
@@ -1337,15 +1358,84 @@
             <item>
              <widget class="QTabWidget" name="keybinds_tabWidget">
               <property name="currentIndex">
-               <number>0</number>
+               <number>2</number>
               </property>
               <widget class="QWidget" name="general_tab">
                <attribute name="title">
                 <string>General</string>
                </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="leftMargin">
+                 <number>24</number>
+                </property>
+                <property name="topMargin">
+                 <number>24</number>
+                </property>
+                <property name="rightMargin">
+                 <number>24</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>24</number>
+                </property>
                 <item>
-                 <widget class="QListWidget" name="general_list"/>
+                 <layout class="QVBoxLayout" name="general_layout">
+                  <property name="spacing">
+                   <number>12</number>
+                  </property>
+                  <item>
+                   <widget class="QListWidget" name="general_list"/>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="general_button_layout">
+                    <property name="spacing">
+                     <number>8</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="set_default_general_keybind_button">
+                      <property name="text">
+                       <string>Set Default</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="general_spacer">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="delete_keybind_button">
+                      <property name="text">
+                       <string>Delete</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="general_bottom_spacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1353,9 +1443,78 @@
                <attribute name="title">
                 <string>Movement</string>
                </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="leftMargin">
+                 <number>24</number>
+                </property>
+                <property name="topMargin">
+                 <number>24</number>
+                </property>
+                <property name="rightMargin">
+                 <number>24</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>24</number>
+                </property>
                 <item>
-                 <widget class="QListWidget" name="movement_list"/>
+                 <layout class="QVBoxLayout" name="movement_layout">
+                  <property name="spacing">
+                   <number>12</number>
+                  </property>
+                  <item>
+                   <widget class="QListWidget" name="movement_list"/>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="movement_button_layout">
+                    <property name="spacing">
+                     <number>8</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="set_default_movement_button">
+                      <property name="text">
+                       <string>Set Default</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="movement_spacer">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="delete_movement_button">
+                      <property name="text">
+                       <string>Delete</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="movement_bottom_spacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1363,9 +1522,78 @@
                <attribute name="title">
                 <string>Workspaces</string>
                </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="leftMargin">
+                 <number>24</number>
+                </property>
+                <property name="topMargin">
+                 <number>24</number>
+                </property>
+                <property name="rightMargin">
+                 <number>24</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>24</number>
+                </property>
                 <item>
-                 <widget class="QListWidget" name="workspaces_list"/>
+                 <layout class="QVBoxLayout" name="workspace_layout">
+                  <property name="spacing">
+                   <number>12</number>
+                  </property>
+                  <item>
+                   <widget class="QListWidget" name="workspaces_list"/>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="workspace_button_layout">
+                    <property name="spacing">
+                     <number>8</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="set_default_workspace_button">
+                      <property name="text">
+                       <string>Set Default</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="workspace_spacer">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="delete_workspace_button">
+                      <property name="text">
+                       <string>Delete</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="workspace_bottom_spacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1373,9 +1601,78 @@
                <attribute name="title">
                 <string>Multimedia</string>
                </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_7">
+               <layout class="QVBoxLayout" name="verticalLayout_16">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="leftMargin">
+                 <number>24</number>
+                </property>
+                <property name="topMargin">
+                 <number>24</number>
+                </property>
+                <property name="rightMargin">
+                 <number>24</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>24</number>
+                </property>
                 <item>
-                 <widget class="QListWidget" name="multimedia_list"/>
+                 <layout class="QVBoxLayout" name="multimedia_layout">
+                  <property name="spacing">
+                   <number>12</number>
+                  </property>
+                  <item>
+                   <widget class="QListWidget" name="multimedia_list"/>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="multimedia_button_layout">
+                    <property name="spacing">
+                     <number>8</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="set_default_multimedia_button">
+                      <property name="text">
+                       <string>Set Default</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="multimedia_spacer">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="delete_multimedia_button">
+                      <property name="text">
+                       <string>Delete</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="multimedia_bottom_spacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1486,15 +1783,49 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2"/>
+      <widget class="QWidget" name="wallpaper_page"/>
       <widget class="QWidget" name="update_page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>16</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>24</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>24</number>
+        </property>
         <item>
          <widget class="QPushButton" name="update_pushButton">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>36</height>
+           </size>
+          </property>
           <property name="text">
-           <string>UPDATE</string>
+           <string>Check for Updates</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="update_bottom_spacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
