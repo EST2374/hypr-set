@@ -1,16 +1,22 @@
+import re
+from typing import Callable
+
 from PySide6.QtCore import QProcess
 
 
 def parse_wifi_list(raw_output: str) -> list[dict]:
     networks = []
     for line in raw_output.strip().split("\n"):
-        parts = line.split(":")
-        if len(parts) >= 2:
-            ssid = parts[0]
-            signal = parts[1]
-            security = parts[2] if len(parts) > 2 else "Open"
-            if ssid:
-                networks.append({"ssid": ssid, "signal": signal, "security": security})
+        parts = re.split(r"(?<!\\):", line)
+        parts = [p.replace(r"\:", ":") for p in parts]
+        if len(parts) >= 2 and parts[0]:
+            networks.append(
+                {
+                    "ssid": parts[0],
+                    "signal": parts[1],
+                    "security": parts[2] if len(parts) > 2 else "Open",
+                }
+            )
     return networks
 
 
@@ -20,19 +26,36 @@ def build_wifi_scan_process() -> QProcess:
     return process
 
 
-def set_networking(enabled: bool) -> None:
-    """nmcli networking on/off"""
+def set_networking(
+    enabled: bool, on_done: Callable[[bool], None] | None = None
+) -> None:
     state = "on" if enabled else "off"
     process = QProcess()
+
+    def _finished(exit_code, _exit_status):
+        if on_done:
+            on_done(exit_code == 0)
+        process.deleteLater()
+
+    process.finished.connect(_finished)
     process.start("nmcli", ["networking", state])
-    process.waitForFinished(3000)
 
 
-def disconnect_wifi(ssid: str) -> tuple[bool, str]:
-    """Disconnect from a specific wifi network."""
+def disconnect_wifi(
+    ssid: str, on_done: Callable[[bool, str], None] | None = None
+) -> None:
     process = QProcess()
+
+    def _finished(exit_code, _exit_status):
+        ok = exit_code == 0
+        msg = (
+            bytes(process.readAllStandardError().data())
+            .decode("utf-8", errors="replace")
+            .strip()
+        )
+        if on_done:
+            on_done(ok, msg)
+        process.deleteLater()
+
+    process.finished.connect(_finished)
     process.start("nmcli", ["connection", "down", ssid])
-    process.waitForFinished(5000)
-    ok = process.exitCode() == 0
-    msg = process.readAllStandardError().data().decode().strip()
-    return ok, msg

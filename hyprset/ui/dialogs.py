@@ -11,14 +11,13 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QListWidget,
-    QMessageBox,
     QPushButton,
     QVBoxLayout,
     QWidget,
 )
 
-from hyprset.config import CONFIG_FILE
 from hyprset.core.autostart import add_autostart
+from hyprset.core.environments import add_env
 
 
 class BaseDialog(QDialog):
@@ -35,7 +34,8 @@ class BaseDialog(QDialog):
 
 
 class AddProgramDialog(BaseDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, on_added=None):
+        self._on_added = on_added
         super().__init__(parent)
         self.setWindowTitle("Add Autostart Program")
         self.resize(800, 300)
@@ -68,12 +68,9 @@ class AddProgramDialog(BaseDialog):
 
         exec_cmd = re.sub(r"%\w", "", exec_cmd).strip()
 
-        if add_autostart(exec_cmd):
-            parent = self.parent()
-            current_autostart = getattr(parent, "current_autostart", None)
-            if current_autostart is not None:
-                current_autostart.addItem(exec_cmd)
-            self.accept()
+        if add_autostart(exec_cmd) and self._on_added:
+            self._on_added(exec_cmd)
+        self.accept()
 
     def get_installed_apps(self):
         desktop_dirs = [
@@ -106,7 +103,8 @@ class AddProgramDialog(BaseDialog):
 
 
 class AddScriptDialog(BaseDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, on_added=None):
+        self._on_added = on_added
         super().__init__(parent)
         self.setWindowTitle("Add Autostart Script")
         self.resize(800, 300)
@@ -129,17 +127,14 @@ class AddScriptDialog(BaseDialog):
         new_script = self.script_edit_line.text()
         if not new_script:
             return
-        if add_autostart(new_script):
-            parent = self.parent()
-            current_autostart = getattr(parent, "current_autostart", None)
-
-            if current_autostart is not None:
-                current_autostart.addItem(new_script)
-            self.accept()
+        if add_autostart(new_script) and self._on_added:
+            self._on_added(new_script)
+        self.accept()
 
 
 class AddEnvDialog(BaseDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, on_added=None):
+        self._on_added = on_added
         super().__init__(parent)
         self.setWindowTitle("Add Environment")
         self.resize(800, 300)
@@ -160,39 +155,11 @@ class AddEnvDialog(BaseDialog):
 
     def add_env(self):
         new_env = self.env_edit_line.text()
-
-        new_line = f"env = {new_env}"
-
-        with open(CONFIG_FILE, "r") as f:
-            content = f.read()
-
-        if "# Envirnonment end" in content:
-            content = content.replace(
-                "# Envirnonment end", f"{new_line}\n# Envirnonment end"
-            )
-        else:
-            content += f"\n{new_line}"
-
-        with open(CONFIG_FILE, "w") as f:
-            f.write(content)
-
-        parent = self.parent()
-        current_env = getattr(parent, "current_env", None)
-
-        if current_env is not None:
-            current_env.addItem(new_env)
-
+        if not new_env:
+            return
+        if add_env(new_env) and self._on_added:
+            self._on_added(new_env)
         self.accept()
-
-
-class PickColorDialog(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("Choose color")
-        self.resize(300, 100)
-
-        layout = QVBoxLayout(self)
-        self.setLayout(layout)
 
 
 class Connect_to_Wifi(BaseDialog):
@@ -269,12 +236,17 @@ class Update(BaseDialog):
         self.list_programs.addItems(self.get_updates())
         self.list_programs.itemDoubleClicked.connect(self.update_item)
 
+        self.status_label = QLabel("")
+        self.output_box = QListWidget()
+
         button_update_all = QPushButton("Update All")
         button_update_all.clicked.connect(self.update_all)
 
         layout = QVBoxLayout(self)
         layout.addWidget(self.list_programs)
         layout.addWidget(button_update_all)
+        layout.addWidget(self.status_label)
+        layout.addWidget(self.output_box)
         self.setLayout(layout)
 
     def get_updates(self) -> list[str]:
@@ -291,30 +263,60 @@ class Update(BaseDialog):
         except subprocess.CalledProcessError as e:
             if e.returncode == 2:
                 return []
-            print(f"An error occurred: {e}")
+            print(f"Unexpected return code: {e}")
+            return []
+        except FileNotFoundError:
+            print("checkupdates not found")
+            return []
+        except Exception as e:
+            print(f"Fehler: {e}")
             return []
 
     def update_all(self):
-        cmd = ["pkexec", "pacman", "-Syu", "--noconfirm"]
-        self._run_pacman_command(cmd, "System Update")
+        self._run_pacman_command(["pkexec", "pacman", "-Syu", "--noconfirm"])
 
     def update_item(self, item):
         package_name = item.text().split()[0]
-        cmd = ["pkexec", "pacman", "-S", package_name, "--noconfirm"]
-        self._run_pacman_command(cmd, f"Update {package_name}")
+        self._run_pacman_command(
+            ["pkexec", "pacman", "-S", package_name, "--noconfirm"]
+        )
 
-    def _run_pacman_command(self, cmd, title):
-        try:
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    def _run_pacman_command(self, cmd: list[str]):
+        self.output_box.clear()
+        self.status_label.setText("Running…")
 
-            info = QMessageBox()
-            info.resize(800, 300)
-            info.information(self, title, f"Finished!\n\n{result.stdout[-500:]}")
+        self._process = QProcess(self)
+        self._process.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
+
+        self._process.readyReadStandardOutput.connect(self._handle_output)
+        self._process.finished.connect(self._handle_finished)
+        self._process.errorOccurred.connect(self._handle_error)
+
+        self._process.start(cmd[0], cmd[1:])
+
+    def _handle_output(self):
+        raw = self._process.readAllStandardOutput().data()
+        text = bytes(raw).decode("utf-8", errors="replace").strip()
+        for line in text.splitlines():
+            if line:
+                self.output_box.addItem(line)
+                self.output_box.scrollToBottom()
+
+    def _handle_finished(self, exit_code, exit_status):
+        if exit_code == 0:
+            self.status_label.setText("Finished.")
             self.refresh_list()
+        else:
+            self.status_label.setText(f"Error (exit code {exit_code}).")
 
-        except subprocess.CalledProcessError as e:
-            error_msg = e.stderr if e.stderr else "Error."
-            QMessageBox.critical(self, "Error", f"Details:\n{error_msg}")
+    def _handle_error(self, error):
+        errors = {
+            QProcess.ProcessError.FailedToStart: "Process could not start (pkexec installed?)",
+            QProcess.ProcessError.Crashed: "Process crashed.",
+            QProcess.ProcessError.Timedout: "Timeout.",
+        }
+        msg = errors.get(error, "Error.")
+        self.status_label.setText(msg)
 
     def refresh_list(self):
         self.list_programs.clear()

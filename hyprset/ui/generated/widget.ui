@@ -569,7 +569,7 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="QSpinBox" name="gabs_in_spinBox">
+                      <widget class="QSpinBox" name="gaps_in_spinBox">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                          <horstretch>0</horstretch>

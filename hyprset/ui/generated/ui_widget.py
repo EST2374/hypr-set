@@ -292,12 +292,12 @@ class Ui_Widget(object):
 
         self.general_form_layout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.gaps_in_label)
 
-        self.gabs_in_spinBox = QSpinBox(self.general_group)
-        self.gabs_in_spinBox.setObjectName(u"gabs_in_spinBox")
-        sizePolicy2.setHeightForWidth(self.gabs_in_spinBox.sizePolicy().hasHeightForWidth())
-        self.gabs_in_spinBox.setSizePolicy(sizePolicy2)
+        self.gaps_in_spinBox = QSpinBox(self.general_group)
+        self.gaps_in_spinBox.setObjectName(u"gaps_in_spinBox")
+        sizePolicy2.setHeightForWidth(self.gaps_in_spinBox.sizePolicy().hasHeightForWidth())
+        self.gaps_in_spinBox.setSizePolicy(sizePolicy2)
 
-        self.general_form_layout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.gabs_in_spinBox)
+        self.general_form_layout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.gaps_in_spinBox)
 
         self.gaps_out_label = QLabel(self.general_group)
         self.gaps_out_label.setObjectName(u"gaps_out_label")

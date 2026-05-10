@@ -5,6 +5,8 @@ from typing import Callable
 
 from hyprset.config import CONFIG_FILE
 
+from .config_utils import replace_in_config
+
 
 @dataclass
 class Setting:
@@ -27,14 +29,6 @@ FOLLOW_MOUSE: dict[str, str] = {
     "Semi-Automatic": "2",
     "Locked": "3",
 }
-
-
-def replace_in_config(pattern: str, new_line: str):
-    with open(CONFIG_FILE, "r") as f:
-        content = f.read()
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-    with open(CONFIG_FILE, "w") as f:
-        f.write(new_content)
 
 
 def write_setting_input(setting: str, value: str):
@@ -65,7 +59,7 @@ def get_kb_variants() -> list[str]:
             check=True,
         )
         variants = result.stdout.strip().split("\n")
-        return variants
+        return [v for v in variants if v]
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
         return []
@@ -88,16 +82,5 @@ def get_cur_follow_mouse():
 
 
 def follow_mouse_change(text):
-    s = FOLLOW_MOUSE[text]
-
-    new_line = f"\tfollow_mouse = {s}"
-
-    pattern = r"^\s*follow_mouse\s*=.*"
-
-    with open(CONFIG_FILE, "r") as file:
-        content = file.read()
-
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-
-    with open(CONFIG_FILE, "w") as file:
-        file.write(new_content)
+    code = FOLLOW_MOUSE[text]
+    replace_in_config(r"^\s*follow_mouse\s*=.*", f"\tfollow_mouse = {code}")

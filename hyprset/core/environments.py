@@ -17,16 +17,39 @@ def get_current_env() -> list[str]:
         return all_env
 
 
-def del_env(window):
-    current_row = window.current_env.currentRow()
-    if current_row != -1:
-        item = window.current_env.takeItem(current_row)
-        target = f"env = {item.text()}"
+def add_env(command: str) -> bool:
+    try:
+        with open(CONFIG_FILE, "r") as f:
+            content = f.read()
+
+        if f"env = {command}" in content:
+            return False
+
+        new_entry = f"env = {command}\n"
+        if "# Envirnonment end" in content:
+            content = content.replace(
+                "# Envirnonment end", f"{new_entry}# Envirnonment end"
+            )
+        else:
+            content += new_entry
+
+        with open(CONFIG_FILE, "w") as f:
+            f.write(content)
+        return True
+    except OSError as e:
+        print(f"Error writing config: {e}")
+        return False
+
+
+def del_env(entry: str) -> bool:
+    target = f"env = {entry}"
+    try:
         with open(CONFIG_FILE, "r") as f:
             lines = f.readlines()
-
         with open(CONFIG_FILE, "w") as f:
             for line in lines:
                 if not line.strip().startswith(target):
                     f.write(line)
-        del item
+        return True
+    except Exception:
+        return False

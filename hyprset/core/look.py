@@ -1,9 +1,10 @@
 import re
-from curses import raw
 from dataclasses import dataclass
 from typing import Callable
 
 from hyprset.config import CONFIG_FILE
+
+from .config_utils import replace_in_config
 
 
 @dataclass
@@ -89,14 +90,6 @@ BOOL_SETTINGS: dict[str, BoolSetting] = {
         r"\g<1>{value}",
     ),
 }
-
-
-def replace_in_config(pattern: str, new_line: str):
-    with open(CONFIG_FILE, "r") as f:
-        content = f.read()
-    new_content = re.sub(pattern, new_line, content, flags=re.MULTILINE)
-    with open(CONFIG_FILE, "w") as f:
-        f.write(new_content)
 
 
 def get_cur_value(setting: str) -> int | float:
