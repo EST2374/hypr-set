@@ -24,17 +24,21 @@ from ..core.input import (
     write_setting_input,
 )
 from ..core.look import (
+    BOOL_DEFAULTS,
+    DEFAULTS,
     change_bool_check,
     change_layout,
     get_cur_layout,
     get_cur_value,
     get_state_check,
+    reset_to_defaults,
     write_setting,
 )
 from ..core.monitor import (
     apply_monitor_settings,
     get_monitor_names,
     get_monitor_resolution,
+    set_default_monitors_button,
 )
 from ..core.network import (
     build_wifi_scan_process,
@@ -53,6 +57,29 @@ from .dialogs import (
 )
 from .generated.ui_widget import Ui_Widget
 from .toggle_switch import ToggleSwitch
+
+LOOK_SETTINGS = {
+    "gaps_in": "gaps_in_spinBox",
+    "gaps_out": "gaps_out_spinBox",
+    "border_size": "border_size_spinBox",
+    "angle": "angle_spinBox",
+    "rounding": "rounding_spin_box",
+    "rounding_power": "rounding_power_spin_box",
+    "active_opacity": "act_op_spin_box",
+    "inactive_opacity": "inact_op_spin_box",
+    "shadow_range": "shadow_range_spinbox",
+    "shadow_render_power": "shadow_render_power_spinbox",
+    "blur_size": "blur_size_spinBox",
+    "blur_passes": "blur_passes_spinBox",
+    "blur_vib": "blur_vib_doubleSpinBox",
+    # TEST FOR INPUT
+    "sensitivity": "mouse_sens_doubleSpinBox",
+}
+
+INPUT_SETTINGS = {
+    "kb_layout": "kb_layout_comboBox",
+    "kb_variant": "kb_variant_comboBox",
+}
 
 
 class Widget(QMainWindow, Ui_Widget):
@@ -100,6 +127,9 @@ class Widget(QMainWindow, Ui_Widget):
                 self.scale_box.currentText(),
             )
         )
+        self.set_default_monitor_button.clicked.connect(
+            lambda: set_default_monitors_button()
+        )
 
         # Autostart Settings
         self.current_autostart.addItems(get_current_autostarts())
@@ -113,23 +143,6 @@ class Widget(QMainWindow, Ui_Widget):
         self.del_env_button.clicked.connect(self.del_selected_env)
 
         # Look and Feel
-        LOOK_SETTINGS = {
-            "gaps_in": "gaps_in_spinBox",
-            "gaps_out": "gaps_out_spinBox",
-            "border_size": "border_size_spinBox",
-            "angle": "angle_spinBox",
-            "rounding": "rounding_spin_box",
-            "rounding_power": "rounding_power_spin_box",
-            "active_opacity": "act_op_spin_box",
-            "inactive_opacity": "inact_op_spin_box",
-            "shadow_range": "shadow_range_spinbox",
-            "shadow_render_power": "shadow_render_power_spinbox",
-            "blur_size": "blur_size_spinBox",
-            "blur_passes": "blur_passes_spinBox",
-            "blur_vib": "blur_vib_doubleSpinBox",
-            # TEST FOR INPUT
-            "sensitivity": "mouse_sens_doubleSpinBox",
-        }
 
         for setting, widget_attr in LOOK_SETTINGS.items():
             widget = getattr(self, widget_attr)
@@ -168,12 +181,9 @@ class Widget(QMainWindow, Ui_Widget):
         self.layout_comboBox.setCurrentText(current)
         self.layout_comboBox.currentTextChanged.connect(change_layout)
 
-        # Input
-        INPUT_SETTINGS = {
-            "kb_layout": "kb_layout_comboBox",
-            "kb_variant": "kb_variant_comboBox",
-        }
+        self.set_default_look_button.clicked.connect(self._reset_look_to_defaults)
 
+        # Input
         for setting_2, widget_attr_2 in INPUT_SETTINGS.items():
             widget_2 = getattr(self, widget_attr_2)
             widget_2.addItem(get_cur_item(setting_2))
@@ -320,6 +330,32 @@ class Widget(QMainWindow, Ui_Widget):
 
                 else:
                     f.write(line)
+
+    def _reset_look_to_defaults(self):
+        reset_to_defaults()
+
+        for setting, widget_attr in LOOK_SETTINGS.items():
+            if setting in DEFAULTS:
+                widget = getattr(self, widget_attr)
+                widget.blockSignals(True)
+                widget.setValue(DEFAULTS[setting])
+                widget.blockSignals(False)
+
+        BOOL_WIDGET_MAP = {
+            "resize": self.resize_checkbox,
+            "tearing": self.allow_tearing_checkBox,
+            "blur_enable": self.blur_enable_checkBox,
+            "shadow_enable": self.shadow_enable_checkbox,
+        }
+        for setting, widget in BOOL_WIDGET_MAP.items():
+            widget.blockSignals(True)
+            state = (
+                Qt.CheckState.Checked
+                if BOOL_DEFAULTS[setting] == "true"
+                else Qt.CheckState.Unchecked
+            )
+            widget.setCheckState(state)
+            widget.blockSignals(False)
 
     # Input
     def update_variant(self):

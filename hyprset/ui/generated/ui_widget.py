@@ -276,7 +276,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 471, 664))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 848, 763))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -736,11 +736,6 @@ class Ui_Widget(object):
 
         self.input_outer_vl.addLayout(self.input_row1_hl)
 
-        self.input_set_default_button = QPushButton(self.input_tab)
-        self.input_set_default_button.setObjectName(u"input_set_default_button")
-
-        self.input_outer_vl.addWidget(self.input_set_default_button)
-
         self.input_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.input_outer_vl.addItem(self.input_bottom_spacer)
@@ -1024,7 +1019,7 @@ class Ui_Widget(object):
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(1)
+        self.Hyprland_Menu_Settings.setCurrentIndex(4)
         self.keybinds_tabWidget.setCurrentIndex(2)
 
 
@@ -1109,7 +1104,6 @@ class Ui_Widget(object):
         self.mouse_natural_scroll_checkBox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
         self.touchpad_groupbox.setTitle(QCoreApplication.translate("Widget", u"Touchpad", None))
         self.touchpad_nat_scroll_checkbox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
-        self.input_set_default_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.input_tab), QCoreApplication.translate("Widget", u"Input", None))
         self.set_default_general_keybind_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.delete_keybind_button.setText(QCoreApplication.translate("Widget", u"Delete", None))

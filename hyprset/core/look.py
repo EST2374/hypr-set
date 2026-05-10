@@ -92,6 +92,30 @@ BOOL_SETTINGS: dict[str, BoolSetting] = {
 }
 
 
+DEFAULTS: dict[str, int | float] = {
+    "gaps_in": 5,
+    "gaps_out": 20,
+    "border_size": 2,
+    "rounding": 10,
+    "rounding_power": 2,
+    "active_opacity": 1.0,
+    "inactive_opacity": 1.0,
+    "angle": 45,
+    "shadow_range": 4,
+    "shadow_render_power": 3,
+    "blur_size": 3,
+    "blur_passes": 1,
+    "blur_vib": 0.1696,
+}
+
+BOOL_DEFAULTS: dict[str, str] = {
+    "resize": "false",
+    "tearing": "false",
+    "blur_enable": "true",
+    "shadow_enable": "true",
+}
+
+
 def get_cur_value(setting: str) -> int | float:
     s = SETTINGS[setting]
     try:
@@ -147,3 +171,11 @@ def get_cur_layout() -> str:
     except FileNotFoundError:
         pass
     return ""
+
+
+def reset_to_defaults():
+    for setting, value in DEFAULTS.items():
+        write_setting(setting, value)
+    for setting, value in BOOL_DEFAULTS.items():
+        s = BOOL_SETTINGS[setting]
+        replace_in_config(s.pattern, s.template.format(value=value))

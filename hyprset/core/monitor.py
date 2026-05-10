@@ -97,6 +97,34 @@ def apply_monitor_settings(mon_name, mon_res, mon_pos, mon_scale):
         file.write(new_content)
 
 
+def set_default_monitors_button():
+    data = get_monitor_data()
+    if data is None:
+        return
+    try:
+        with open(CONFIG_FILE, "r") as f:
+            content = f.read()
+
+        lines_to_add = []
+        for monitor in data:
+            name = monitor["name"]
+            lines_to_add.append(f"monitor = {name},auto,auto,1.0")
+
+        new_entries = "\n".join(lines_to_add) + "\n" if lines_to_add else ""
+
+        new_content = re.sub(
+            r"(# Monitor begin\n).*?(# Monitor end)",
+            rf"\g<1>{new_entries}\2",
+            content,
+            flags=re.DOTALL,
+        )
+
+        with open(CONFIG_FILE, "w") as f:
+            f.write(new_content)
+    except OSError as e:
+        print(f"Error writing config: {e}")
+
+
 # TODO
 # Mirror
 # Rotation
