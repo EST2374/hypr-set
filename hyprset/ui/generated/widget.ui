@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>980</width>
-    <height>820</height>
+    <width>1012</width>
+    <height>832</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -112,7 +112,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>5</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">
@@ -509,8 +509,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>816</width>
-                 <height>751</height>
+                 <width>848</width>
+                 <height>763</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="look_contents_vl">
@@ -1333,6 +1333,55 @@
            <attribute name="title">
             <string>Keybindings</string>
            </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QTabWidget" name="keybinds_tabWidget">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="general_tab">
+               <attribute name="title">
+                <string>General</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QListWidget" name="general_list"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="movement_tab">
+               <attribute name="title">
+                <string>Movement</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QListWidget" name="movement_list"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="workspaces_tab">
+               <attribute name="title">
+                <string>Workspaces</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="QListWidget" name="workspaces_list"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="multimedia_tab">
+               <attribute name="title">
+                <string>Multimedia</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QListWidget" name="multimedia_list"/>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="windowrules_tab">
            <attribute name="title">
@@ -1458,7 +1507,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>980</width>
+     <width>1012</width>
      <height>19</height>
     </rect>
    </property>

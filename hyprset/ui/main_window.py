@@ -6,6 +6,13 @@ from PySide6.QtGui import QColor, Qt
 from PySide6.QtWidgets import QApplication, QColorDialog, QMainWindow
 
 from hyprset.config import CONFIG_FILE
+from hyprset.core.keybindings import (
+    get_general_keybindings,
+    get_movement_keybindings,
+    get_multimedia_keybindings,
+    get_workspace_keybindings,
+    update_keybinding,
+)
 
 from ..core.autostart import del_autostart, get_current_autostarts
 from ..core.environments import del_env, get_current_env
@@ -41,6 +48,7 @@ from .dialogs import (
     AddProgramDialog,
     AddScriptDialog,
     Connect_to_Wifi,
+    EditKeybindingDialog,
     Update,
 )
 from .generated.ui_widget import Ui_Widget
@@ -60,6 +68,7 @@ class Widget(QMainWindow, Ui_Widget):
         # Wallpaper (with preview ofc)
         # ?Users?
         # ?Update?
+        # Keybindings improvement (delelet/add Buttons)
 
         # SideBar
         self.listWidget.currentRowChanged.connect(self.stackedWidget.setCurrentIndex)
@@ -197,6 +206,20 @@ class Widget(QMainWindow, Ui_Widget):
             lambda: change_bool_check("natural_scroll_touchpad")
         )
 
+        # Keybindings
+        self.general_list.addItems(get_general_keybindings())
+        self.movement_list.addItems(get_movement_keybindings())
+        self.workspaces_list.addItems(get_workspace_keybindings())
+        self.multimedia_list.addItems(get_multimedia_keybindings())
+
+        for list_widget in (
+            self.general_list,
+            self.movement_list,
+            self.workspaces_list,
+            self.multimedia_list,
+        ):
+            list_widget.itemDoubleClicked.connect(self._edit_keybinding)
+
         # Networking Tab
         self._networking_toggle = ToggleSwitch(self, active_color="#00b0ff")
         self._networking_toggle.setChecked(True)
@@ -304,6 +327,14 @@ class Widget(QMainWindow, Ui_Widget):
         self.kb_variant_comboBox.clear()
         self.kb_variant_comboBox.addItem("")
         self.kb_variant_comboBox.addItems(variants)
+
+    # Keybindings
+    def _edit_keybinding(self, item):
+        dialog = EditKeybindingDialog(item.text(), parent=self)
+        if dialog.exec() == EditKeybindingDialog.DialogCode.Accepted:
+            new_line = dialog.get_result()
+            if update_keybinding(item.text(), new_line):
+                item.setText(new_line)
 
     # Networking
     def _start_wifi_scan(self):

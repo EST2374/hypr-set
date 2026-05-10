@@ -27,7 +27,7 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(980, 820)
+        Widget.resize(1012, 832)
         self.dark_theme_button = QAction(Widget)
         self.dark_theme_button.setObjectName(u"dark_theme_button")
         self.light_theme_button = QAction(Widget)
@@ -271,7 +271,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 816, 751))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 848, 763))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -733,6 +733,53 @@ class Ui_Widget(object):
         self.Hyprland_Menu_Settings.addTab(self.input_tab, "")
         self.keybinds_tab = QWidget()
         self.keybinds_tab.setObjectName(u"keybinds_tab")
+        self.horizontalLayout_2 = QHBoxLayout(self.keybinds_tab)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.keybinds_tabWidget = QTabWidget(self.keybinds_tab)
+        self.keybinds_tabWidget.setObjectName(u"keybinds_tabWidget")
+        self.general_tab = QWidget()
+        self.general_tab.setObjectName(u"general_tab")
+        self.verticalLayout_4 = QVBoxLayout(self.general_tab)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.general_list = QListWidget(self.general_tab)
+        self.general_list.setObjectName(u"general_list")
+
+        self.verticalLayout_4.addWidget(self.general_list)
+
+        self.keybinds_tabWidget.addTab(self.general_tab, "")
+        self.movement_tab = QWidget()
+        self.movement_tab.setObjectName(u"movement_tab")
+        self.verticalLayout_5 = QVBoxLayout(self.movement_tab)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.movement_list = QListWidget(self.movement_tab)
+        self.movement_list.setObjectName(u"movement_list")
+
+        self.verticalLayout_5.addWidget(self.movement_list)
+
+        self.keybinds_tabWidget.addTab(self.movement_tab, "")
+        self.workspaces_tab = QWidget()
+        self.workspaces_tab.setObjectName(u"workspaces_tab")
+        self.verticalLayout_6 = QVBoxLayout(self.workspaces_tab)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.workspaces_list = QListWidget(self.workspaces_tab)
+        self.workspaces_list.setObjectName(u"workspaces_list")
+
+        self.verticalLayout_6.addWidget(self.workspaces_list)
+
+        self.keybinds_tabWidget.addTab(self.workspaces_tab, "")
+        self.multimedia_tab = QWidget()
+        self.multimedia_tab.setObjectName(u"multimedia_tab")
+        self.verticalLayout_7 = QVBoxLayout(self.multimedia_tab)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.multimedia_list = QListWidget(self.multimedia_tab)
+        self.multimedia_list.setObjectName(u"multimedia_list")
+
+        self.verticalLayout_7.addWidget(self.multimedia_list)
+
+        self.keybinds_tabWidget.addTab(self.multimedia_tab, "")
+
+        self.horizontalLayout_2.addWidget(self.keybinds_tabWidget)
+
         self.Hyprland_Menu_Settings.addTab(self.keybinds_tab, "")
         self.windowrules_tab = QWidget()
         self.windowrules_tab.setObjectName(u"windowrules_tab")
@@ -807,7 +854,7 @@ class Ui_Widget(object):
         Widget.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Widget)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 980, 19))
+        self.menubar.setGeometry(QRect(0, 0, 1012, 19))
         self.menuTheme = QMenu(self.menubar)
         self.menuTheme.setObjectName(u"menuTheme")
         self.menu_Application = QMenu(self.menubar)
@@ -827,7 +874,8 @@ class Ui_Widget(object):
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(0)
+        self.Hyprland_Menu_Settings.setCurrentIndex(5)
+        self.keybinds_tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -910,6 +958,10 @@ class Ui_Widget(object):
         self.touchpad_groupbox.setTitle(QCoreApplication.translate("Widget", u"Touchpad", None))
         self.touchpad_nat_scroll_checkbox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.input_tab), QCoreApplication.translate("Widget", u"Input", None))
+        self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.general_tab), QCoreApplication.translate("Widget", u"General", None))
+        self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.movement_tab), QCoreApplication.translate("Widget", u"Movement", None))
+        self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.workspaces_tab), QCoreApplication.translate("Widget", u"Workspaces", None))
+        self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.multimedia_tab), QCoreApplication.translate("Widget", u"Multimedia", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.keybinds_tab), QCoreApplication.translate("Widget", u"Keybindings", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.windowrules_tab), QCoreApplication.translate("Widget", u"Window Rules", None))
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
