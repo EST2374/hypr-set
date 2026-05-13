@@ -27,7 +27,7 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(1012, 832)
+        Widget.resize(835, 660)
         self.dark_theme_button = QAction(Widget)
         self.dark_theme_button.setObjectName(u"dark_theme_button")
         self.light_theme_button = QAction(Widget)
@@ -36,6 +36,8 @@ class Ui_Widget(object):
         self.quit_program.setObjectName(u"quit_program")
         self.actionHelp = QAction(Widget)
         self.actionHelp.setObjectName(u"actionHelp")
+        self.actionRestart = QAction(Widget)
+        self.actionRestart.setObjectName(u"actionRestart")
         self.centralwidget = QWidget(Widget)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -43,6 +45,9 @@ class Ui_Widget(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.listWidget = QListWidget(self.centralwidget)
+        QListWidgetItem(self.listWidget)
+        QListWidgetItem(self.listWidget)
+        QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
@@ -141,6 +146,27 @@ class Ui_Widget(object):
 
         self.monitor_form_layout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.scale_box)
 
+        self.mirror_label = QLabel(self.monitor_group)
+        self.mirror_label.setObjectName(u"mirror_label")
+
+        self.monitor_form_layout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.mirror_label)
+
+        self.mirror_comboBox = QComboBox(self.monitor_group)
+        self.mirror_comboBox.addItem("")
+        self.mirror_comboBox.setObjectName(u"mirror_comboBox")
+
+        self.monitor_form_layout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.mirror_comboBox)
+
+        self.rotation_comboBox = QComboBox(self.monitor_group)
+        self.rotation_comboBox.setObjectName(u"rotation_comboBox")
+
+        self.monitor_form_layout.setWidget(6, QFormLayout.ItemRole.FieldRole, self.rotation_comboBox)
+
+        self.rotation_label = QLabel(self.monitor_group)
+        self.rotation_label.setObjectName(u"rotation_label")
+
+        self.monitor_form_layout.setWidget(6, QFormLayout.ItemRole.LabelRole, self.rotation_label)
+
 
         self.monitor_outer_vl.addWidget(self.monitor_group)
 
@@ -148,6 +174,7 @@ class Ui_Widget(object):
         self.monitor_apply_hl.setObjectName(u"monitor_apply_hl")
         self.set_default_monitor_button = QPushButton(self.monitor_tab)
         self.set_default_monitor_button.setObjectName(u"set_default_monitor_button")
+        self.set_default_monitor_button.setMinimumSize(QSize(120, 34))
 
         self.monitor_apply_hl.addWidget(self.set_default_monitor_button)
 
@@ -191,11 +218,13 @@ class Ui_Widget(object):
         self.auto_btn_hl.setObjectName(u"auto_btn_hl")
         self.add_program_button = QPushButton(self.autostart_group)
         self.add_program_button.setObjectName(u"add_program_button")
+        self.add_program_button.setMinimumSize(QSize(0, 34))
 
         self.auto_btn_hl.addWidget(self.add_program_button)
 
         self.add_script_button = QPushButton(self.autostart_group)
         self.add_script_button.setObjectName(u"add_script_button")
+        self.add_script_button.setMinimumSize(QSize(0, 34))
 
         self.auto_btn_hl.addWidget(self.add_script_button)
 
@@ -205,6 +234,7 @@ class Ui_Widget(object):
 
         self.del_autostart_button = QPushButton(self.autostart_group)
         self.del_autostart_button.setObjectName(u"del_autostart_button")
+        self.del_autostart_button.setMinimumSize(QSize(0, 34))
 
         self.auto_btn_hl.addWidget(self.del_autostart_button)
 
@@ -241,6 +271,7 @@ class Ui_Widget(object):
         self.env_btn_hl.setObjectName(u"env_btn_hl")
         self.add_env_button = QPushButton(self.env_group)
         self.add_env_button.setObjectName(u"add_env_button")
+        self.add_env_button.setMinimumSize(QSize(0, 34))
 
         self.env_btn_hl.addWidget(self.add_env_button)
 
@@ -250,6 +281,7 @@ class Ui_Widget(object):
 
         self.del_env_button = QPushButton(self.env_group)
         self.del_env_button.setObjectName(u"del_env_button")
+        self.del_env_button.setMinimumSize(QSize(0, 34))
 
         self.env_btn_hl.addWidget(self.del_env_button)
 
@@ -276,7 +308,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 848, 763))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 657, 664))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -571,10 +603,21 @@ class Ui_Widget(object):
 
         self.look_contents_vl.addLayout(self.look_row2_hl)
 
+        self.look_default_hl = QHBoxLayout()
+        self.look_default_hl.setSpacing(8)
+        self.look_default_hl.setObjectName(u"look_default_hl")
         self.set_default_look_button = QPushButton(self.look_scroll_contents)
         self.set_default_look_button.setObjectName(u"set_default_look_button")
+        self.set_default_look_button.setMinimumSize(QSize(120, 34))
 
-        self.look_contents_vl.addWidget(self.set_default_look_button)
+        self.look_default_hl.addWidget(self.set_default_look_button)
+
+        self.look_default_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.look_default_hl.addItem(self.look_default_spacer)
+
+
+        self.look_contents_vl.addLayout(self.look_default_hl)
 
         self.look_bottom_spacer = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -766,6 +809,7 @@ class Ui_Widget(object):
         self.general_button_layout.setObjectName(u"general_button_layout")
         self.set_default_general_keybind_button = QPushButton(self.general_tab)
         self.set_default_general_keybind_button.setObjectName(u"set_default_general_keybind_button")
+        self.set_default_general_keybind_button.setMinimumSize(QSize(120, 34))
 
         self.general_button_layout.addWidget(self.set_default_general_keybind_button)
 
@@ -773,8 +817,15 @@ class Ui_Widget(object):
 
         self.general_button_layout.addItem(self.general_spacer)
 
+        self.general_add_button = QPushButton(self.general_tab)
+        self.general_add_button.setObjectName(u"general_add_button")
+        self.general_add_button.setMinimumSize(QSize(80, 34))
+
+        self.general_button_layout.addWidget(self.general_add_button)
+
         self.delete_keybind_button = QPushButton(self.general_tab)
         self.delete_keybind_button.setObjectName(u"delete_keybind_button")
+        self.delete_keybind_button.setMinimumSize(QSize(80, 34))
 
         self.general_button_layout.addWidget(self.delete_keybind_button)
 
@@ -808,6 +859,7 @@ class Ui_Widget(object):
         self.movement_button_layout.setObjectName(u"movement_button_layout")
         self.set_default_movement_button = QPushButton(self.movement_tab)
         self.set_default_movement_button.setObjectName(u"set_default_movement_button")
+        self.set_default_movement_button.setMinimumSize(QSize(120, 34))
 
         self.movement_button_layout.addWidget(self.set_default_movement_button)
 
@@ -815,8 +867,15 @@ class Ui_Widget(object):
 
         self.movement_button_layout.addItem(self.movement_spacer)
 
+        self.movement_add_button = QPushButton(self.movement_tab)
+        self.movement_add_button.setObjectName(u"movement_add_button")
+        self.movement_add_button.setMinimumSize(QSize(80, 34))
+
+        self.movement_button_layout.addWidget(self.movement_add_button)
+
         self.delete_movement_button = QPushButton(self.movement_tab)
         self.delete_movement_button.setObjectName(u"delete_movement_button")
+        self.delete_movement_button.setMinimumSize(QSize(80, 34))
 
         self.movement_button_layout.addWidget(self.delete_movement_button)
 
@@ -850,6 +909,7 @@ class Ui_Widget(object):
         self.workspace_button_layout.setObjectName(u"workspace_button_layout")
         self.set_default_workspace_button = QPushButton(self.workspaces_tab)
         self.set_default_workspace_button.setObjectName(u"set_default_workspace_button")
+        self.set_default_workspace_button.setMinimumSize(QSize(120, 34))
 
         self.workspace_button_layout.addWidget(self.set_default_workspace_button)
 
@@ -857,8 +917,15 @@ class Ui_Widget(object):
 
         self.workspace_button_layout.addItem(self.workspace_spacer)
 
+        self.workspace_add_button = QPushButton(self.workspaces_tab)
+        self.workspace_add_button.setObjectName(u"workspace_add_button")
+        self.workspace_add_button.setMinimumSize(QSize(80, 34))
+
+        self.workspace_button_layout.addWidget(self.workspace_add_button)
+
         self.delete_workspace_button = QPushButton(self.workspaces_tab)
         self.delete_workspace_button.setObjectName(u"delete_workspace_button")
+        self.delete_workspace_button.setMinimumSize(QSize(80, 34))
 
         self.workspace_button_layout.addWidget(self.delete_workspace_button)
 
@@ -892,6 +959,7 @@ class Ui_Widget(object):
         self.multimedia_button_layout.setObjectName(u"multimedia_button_layout")
         self.set_default_multimedia_button = QPushButton(self.multimedia_tab)
         self.set_default_multimedia_button.setObjectName(u"set_default_multimedia_button")
+        self.set_default_multimedia_button.setMinimumSize(QSize(120, 34))
 
         self.multimedia_button_layout.addWidget(self.set_default_multimedia_button)
 
@@ -899,8 +967,15 @@ class Ui_Widget(object):
 
         self.multimedia_button_layout.addItem(self.multimedia_spacer)
 
+        self.multimedia_add_button = QPushButton(self.multimedia_tab)
+        self.multimedia_add_button.setObjectName(u"multimedia_add_button")
+        self.multimedia_add_button.setMinimumSize(QSize(80, 34))
+
+        self.multimedia_button_layout.addWidget(self.multimedia_add_button)
+
         self.delete_multimedia_button = QPushButton(self.multimedia_tab)
         self.delete_multimedia_button.setObjectName(u"delete_multimedia_button")
+        self.delete_multimedia_button.setMinimumSize(QSize(80, 34))
 
         self.multimedia_button_layout.addWidget(self.delete_multimedia_button)
 
@@ -923,11 +998,218 @@ class Ui_Widget(object):
         self.windowrules_tab.setObjectName(u"windowrules_tab")
         self.verticalLayout_9 = QVBoxLayout(self.windowrules_tab)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(24, 24, 24, 24)
+        self.windowrules_placeholder_label = QLabel(self.windowrules_tab)
+        self.windowrules_placeholder_label.setObjectName(u"windowrules_placeholder_label")
+        self.windowrules_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_9.addWidget(self.windowrules_placeholder_label)
+
         self.Hyprland_Menu_Settings.addTab(self.windowrules_tab, "")
+        self.files_tab = QWidget()
+        self.files_tab.setObjectName(u"files_tab")
+        self.verticalLayout_10 = QVBoxLayout(self.files_tab)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_5 = QVBoxLayout()
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.config_files_group = QGroupBox(self.files_tab)
+        self.config_files_group.setObjectName(u"config_files_group")
+        self.configs_form_layout = QFormLayout(self.config_files_group)
+        self.configs_form_layout.setObjectName(u"configs_form_layout")
+        self.configs_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.configs_form_layout.setHorizontalSpacing(16)
+        self.configs_form_layout.setVerticalSpacing(14)
+        self.configs_form_layout.setContentsMargins(20, 24, 20, 20)
+        self.current_config_file_label = QLabel(self.config_files_group)
+        self.current_config_file_label.setObjectName(u"current_config_file_label")
+
+        self.configs_form_layout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.current_config_file_label)
+
+        self.config_file_button_layout = QHBoxLayout()
+        self.config_file_button_layout.setSpacing(10)
+        self.config_file_button_layout.setObjectName(u"config_file_button_layout")
+        self.choose_config_file_button = QPushButton(self.config_files_group)
+        self.choose_config_file_button.setObjectName(u"choose_config_file_button")
+
+        self.config_file_button_layout.addWidget(self.choose_config_file_button)
+
+        self.current_config_path_label = QLabel(self.config_files_group)
+        self.current_config_path_label.setObjectName(u"current_config_path_label")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.current_config_path_label.sizePolicy().hasHeightForWidth())
+        self.current_config_path_label.setSizePolicy(sizePolicy3)
+
+        self.config_file_button_layout.addWidget(self.current_config_path_label)
+
+
+        self.configs_form_layout.setLayout(0, QFormLayout.ItemRole.FieldRole, self.config_file_button_layout)
+
+        self.cur_hyprlock_label = QLabel(self.config_files_group)
+        self.cur_hyprlock_label.setObjectName(u"cur_hyprlock_label")
+
+        self.configs_form_layout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.cur_hyprlock_label)
+
+        self.hyprlock_button_layout = QHBoxLayout()
+        self.hyprlock_button_layout.setSpacing(10)
+        self.hyprlock_button_layout.setObjectName(u"hyprlock_button_layout")
+        self.choose_hyprlock_button = QPushButton(self.config_files_group)
+        self.choose_hyprlock_button.setObjectName(u"choose_hyprlock_button")
+
+        self.hyprlock_button_layout.addWidget(self.choose_hyprlock_button)
+
+        self.cur_hyprlock_file_label = QLabel(self.config_files_group)
+        self.cur_hyprlock_file_label.setObjectName(u"cur_hyprlock_file_label")
+        sizePolicy3.setHeightForWidth(self.cur_hyprlock_file_label.sizePolicy().hasHeightForWidth())
+        self.cur_hyprlock_file_label.setSizePolicy(sizePolicy3)
+
+        self.hyprlock_button_layout.addWidget(self.cur_hyprlock_file_label)
+
+
+        self.configs_form_layout.setLayout(1, QFormLayout.ItemRole.FieldRole, self.hyprlock_button_layout)
+
+        self.cur_hyprsunset_label = QLabel(self.config_files_group)
+        self.cur_hyprsunset_label.setObjectName(u"cur_hyprsunset_label")
+
+        self.configs_form_layout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.cur_hyprsunset_label)
+
+        self.hyprsunset_button_layout = QHBoxLayout()
+        self.hyprsunset_button_layout.setSpacing(10)
+        self.hyprsunset_button_layout.setObjectName(u"hyprsunset_button_layout")
+        self.choose_hypersunset_button = QPushButton(self.config_files_group)
+        self.choose_hypersunset_button.setObjectName(u"choose_hypersunset_button")
+
+        self.hyprsunset_button_layout.addWidget(self.choose_hypersunset_button)
+
+        self.hyprsunset_file_label = QLabel(self.config_files_group)
+        self.hyprsunset_file_label.setObjectName(u"hyprsunset_file_label")
+        sizePolicy3.setHeightForWidth(self.hyprsunset_file_label.sizePolicy().hasHeightForWidth())
+        self.hyprsunset_file_label.setSizePolicy(sizePolicy3)
+
+        self.hyprsunset_button_layout.addWidget(self.hyprsunset_file_label)
+
+
+        self.configs_form_layout.setLayout(2, QFormLayout.ItemRole.FieldRole, self.hyprsunset_button_layout)
+
+        self.cur_hyprpaper_label = QLabel(self.config_files_group)
+        self.cur_hyprpaper_label.setObjectName(u"cur_hyprpaper_label")
+
+        self.configs_form_layout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.cur_hyprpaper_label)
+
+        self.hyprpaper_button_layout = QHBoxLayout()
+        self.hyprpaper_button_layout.setSpacing(10)
+        self.hyprpaper_button_layout.setObjectName(u"hyprpaper_button_layout")
+        self.choose_hyperpaper_file_button = QPushButton(self.config_files_group)
+        self.choose_hyperpaper_file_button.setObjectName(u"choose_hyperpaper_file_button")
+
+        self.hyprpaper_button_layout.addWidget(self.choose_hyperpaper_file_button)
+
+        self.cur_hyprpaper_file_label = QLabel(self.config_files_group)
+        self.cur_hyprpaper_file_label.setObjectName(u"cur_hyprpaper_file_label")
+        sizePolicy3.setHeightForWidth(self.cur_hyprpaper_file_label.sizePolicy().hasHeightForWidth())
+        self.cur_hyprpaper_file_label.setSizePolicy(sizePolicy3)
+
+        self.hyprpaper_button_layout.addWidget(self.cur_hyprpaper_file_label)
+
+
+        self.configs_form_layout.setLayout(3, QFormLayout.ItemRole.FieldRole, self.hyprpaper_button_layout)
+
+        self.hypridle_label = QLabel(self.config_files_group)
+        self.hypridle_label.setObjectName(u"hypridle_label")
+
+        self.configs_form_layout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.hypridle_label)
+
+        self.hypridle_button_layout = QHBoxLayout()
+        self.hypridle_button_layout.setSpacing(10)
+        self.hypridle_button_layout.setObjectName(u"hypridle_button_layout")
+        self.choose_hypridle_button = QPushButton(self.config_files_group)
+        self.choose_hypridle_button.setObjectName(u"choose_hypridle_button")
+
+        self.hypridle_button_layout.addWidget(self.choose_hypridle_button)
+
+        self.cur_hypridle_label = QLabel(self.config_files_group)
+        self.cur_hypridle_label.setObjectName(u"cur_hypridle_label")
+        sizePolicy3.setHeightForWidth(self.cur_hypridle_label.sizePolicy().hasHeightForWidth())
+        self.cur_hypridle_label.setSizePolicy(sizePolicy3)
+
+        self.hypridle_button_layout.addWidget(self.cur_hypridle_label)
+
+
+        self.configs_form_layout.setLayout(4, QFormLayout.ItemRole.FieldRole, self.hypridle_button_layout)
+
+
+        self.verticalLayout_5.addWidget(self.config_files_group)
+
+        self.files_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_5.addItem(self.files_bottom_spacer)
+
+
+        self.verticalLayout_10.addLayout(self.verticalLayout_5)
+
+        self.Hyprland_Menu_Settings.addTab(self.files_tab, "")
 
         self.verticalLayout.addWidget(self.Hyprland_Menu_Settings)
 
         self.stackedWidget.addWidget(self.hyprland_page)
+        self.defaul_apps_page = QWidget()
+        self.defaul_apps_page.setObjectName(u"defaul_apps_page")
+        self.label = QLabel(self.defaul_apps_page)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(220, 270, 191, 41))
+        self.stackedWidget.addWidget(self.defaul_apps_page)
+        self.ecosystem_page = QWidget()
+        self.ecosystem_page.setObjectName(u"ecosystem_page")
+        self.verticalLayout_4 = QVBoxLayout(self.ecosystem_page)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.ecosystem_tabWidget = QTabWidget(self.ecosystem_page)
+        self.ecosystem_tabWidget.setObjectName(u"ecosystem_tabWidget")
+        self.hyprlock_tab = QWidget()
+        self.hyprlock_tab.setObjectName(u"hyprlock_tab")
+        self.hyprlock_tab_vl = QVBoxLayout(self.hyprlock_tab)
+        self.hyprlock_tab_vl.setObjectName(u"hyprlock_tab_vl")
+        self.hyprlock_tab_vl.setContentsMargins(24, 24, 24, 24)
+        self.hyprlock_placeholder_label = QLabel(self.hyprlock_tab)
+        self.hyprlock_placeholder_label.setObjectName(u"hyprlock_placeholder_label")
+        self.hyprlock_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.hyprlock_tab_vl.addWidget(self.hyprlock_placeholder_label)
+
+        self.ecosystem_tabWidget.addTab(self.hyprlock_tab, "")
+        self.hypridle_tab = QWidget()
+        self.hypridle_tab.setObjectName(u"hypridle_tab")
+        self.ecosystem_tabWidget.addTab(self.hypridle_tab, "")
+        self.hyprsunset_tab = QWidget()
+        self.hyprsunset_tab.setObjectName(u"hyprsunset_tab")
+        self.hyprsunset_tab_vl = QVBoxLayout(self.hyprsunset_tab)
+        self.hyprsunset_tab_vl.setObjectName(u"hyprsunset_tab_vl")
+        self.hyprsunset_tab_vl.setContentsMargins(24, 24, 24, 24)
+        self.hyprsunset_placeholder_label = QLabel(self.hyprsunset_tab)
+        self.hyprsunset_placeholder_label.setObjectName(u"hyprsunset_placeholder_label")
+        self.hyprsunset_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.hyprsunset_tab_vl.addWidget(self.hyprsunset_placeholder_label)
+
+        self.ecosystem_tabWidget.addTab(self.hyprsunset_tab, "")
+        self.hyprpaper_tab = QWidget()
+        self.hyprpaper_tab.setObjectName(u"hyprpaper_tab")
+        self.hyprpaper_tab_vl = QVBoxLayout(self.hyprpaper_tab)
+        self.hyprpaper_tab_vl.setObjectName(u"hyprpaper_tab_vl")
+        self.hyprpaper_tab_vl.setContentsMargins(24, 24, 24, 24)
+        self.hyprpaper_placeholder_label = QLabel(self.hyprpaper_tab)
+        self.hyprpaper_placeholder_label.setObjectName(u"hyprpaper_placeholder_label")
+        self.hyprpaper_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.hyprpaper_tab_vl.addWidget(self.hyprpaper_placeholder_label)
+
+        self.ecosystem_tabWidget.addTab(self.hyprpaper_tab, "")
+
+        self.verticalLayout_4.addWidget(self.ecosystem_tabWidget)
+
+        self.stackedWidget.addWidget(self.ecosystem_page)
         self.network_page = QWidget()
         self.network_page.setObjectName(u"network_page")
         self.verticalLayout_3 = QVBoxLayout(self.network_page)
@@ -975,7 +1257,97 @@ class Ui_Widget(object):
         self.stackedWidget.addWidget(self.network_page)
         self.wallpaper_page = QWidget()
         self.wallpaper_page.setObjectName(u"wallpaper_page")
+        self.verticalLayout_6 = QVBoxLayout(self.wallpaper_page)
+        self.verticalLayout_6.setSpacing(12)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(24, 20, 24, 24)
+        self.wallpaper_layout = QVBoxLayout()
+        self.wallpaper_layout.setSpacing(12)
+        self.wallpaper_layout.setObjectName(u"wallpaper_layout")
+        self.choose_folder_layout = QHBoxLayout()
+        self.choose_folder_layout.setObjectName(u"choose_folder_layout")
+        self.choose_folder_button = QPushButton(self.wallpaper_page)
+        self.choose_folder_button.setObjectName(u"choose_folder_button")
+        self.choose_folder_button.setMinimumSize(QSize(0, 36))
+
+        self.choose_folder_layout.addWidget(self.choose_folder_button)
+
+        self.folder_label = QLabel(self.wallpaper_page)
+        self.folder_label.setObjectName(u"folder_label")
+
+        self.choose_folder_layout.addWidget(self.folder_label)
+
+        self.choose_folder_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.choose_folder_layout.addItem(self.choose_folder_horizontalSpacer)
+
+
+        self.wallpaper_layout.addLayout(self.choose_folder_layout)
+
+        self.gallery = QListWidget(self.wallpaper_page)
+        self.gallery.setObjectName(u"gallery")
+
+        self.wallpaper_layout.addWidget(self.gallery)
+
+
+        self.verticalLayout_6.addLayout(self.wallpaper_layout)
+
         self.stackedWidget.addWidget(self.wallpaper_page)
+        self.plugins_page = QWidget()
+        self.plugins_page.setObjectName(u"plugins_page")
+        self.verticalLayout_7 = QVBoxLayout(self.plugins_page)
+        self.verticalLayout_7.setSpacing(16)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(24, 20, 24, 24)
+        self.plugins_layout = QVBoxLayout()
+        self.plugins_layout.setSpacing(12)
+        self.plugins_layout.setObjectName(u"plugins_layout")
+        self.plugins_list = QListWidget(self.plugins_page)
+        QListWidgetItem(self.plugins_list)
+        QListWidgetItem(self.plugins_list)
+        QListWidgetItem(self.plugins_list)
+        QListWidgetItem(self.plugins_list)
+        self.plugins_list.setObjectName(u"plugins_list")
+
+        self.plugins_layout.addWidget(self.plugins_list)
+
+        self.plugins_button_layout = QHBoxLayout()
+        self.plugins_button_layout.setObjectName(u"plugins_button_layout")
+        self.install_button = QPushButton(self.plugins_page)
+        self.install_button.setObjectName(u"install_button")
+        self.install_button.setMinimumSize(QSize(0, 36))
+
+        self.plugins_button_layout.addWidget(self.install_button)
+
+        self.uninstall_button = QPushButton(self.plugins_page)
+        self.uninstall_button.setObjectName(u"uninstall_button")
+        self.uninstall_button.setMinimumSize(QSize(0, 36))
+
+        self.plugins_button_layout.addWidget(self.uninstall_button)
+
+        self.plugins_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.plugins_button_layout.addItem(self.plugins_button_spacer)
+
+        self.enable_button = QPushButton(self.plugins_page)
+        self.enable_button.setObjectName(u"enable_button")
+        self.enable_button.setMinimumSize(QSize(0, 36))
+
+        self.plugins_button_layout.addWidget(self.enable_button)
+
+        self.disable_button = QPushButton(self.plugins_page)
+        self.disable_button.setObjectName(u"disable_button")
+        self.disable_button.setMinimumSize(QSize(0, 36))
+
+        self.plugins_button_layout.addWidget(self.disable_button)
+
+
+        self.plugins_layout.addLayout(self.plugins_button_layout)
+
+
+        self.verticalLayout_7.addLayout(self.plugins_layout)
+
+        self.stackedWidget.addWidget(self.plugins_page)
         self.update_page = QWidget()
         self.update_page.setObjectName(u"update_page")
         self.verticalLayout_2 = QVBoxLayout(self.update_page)
@@ -999,7 +1371,7 @@ class Ui_Widget(object):
         Widget.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Widget)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1012, 19))
+        self.menubar.setGeometry(QRect(0, 0, 835, 19))
         self.menuTheme = QMenu(self.menubar)
         self.menuTheme.setObjectName(u"menuTheme")
         self.menu_Application = QMenu(self.menubar)
@@ -1013,14 +1385,16 @@ class Ui_Widget(object):
         self.menubar.addAction(self.menu_Application.menuAction())
         self.menuTheme.addAction(self.dark_theme_button)
         self.menuTheme.addAction(self.light_theme_button)
-        self.menu_Application.addAction(self.quit_program)
+        self.menu_Application.addAction(self.actionRestart)
         self.menu_Application.addAction(self.actionHelp)
+        self.menu_Application.addAction(self.quit_program)
 
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(4)
-        self.keybinds_tabWidget.setCurrentIndex(2)
+        self.Hyprland_Menu_Settings.setCurrentIndex(0)
+        self.keybinds_tabWidget.setCurrentIndex(0)
+        self.ecosystem_tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -1032,17 +1406,24 @@ class Ui_Widget(object):
         self.light_theme_button.setText(QCoreApplication.translate("Widget", u"Light", None))
         self.quit_program.setText(QCoreApplication.translate("Widget", u"Quit", None))
         self.actionHelp.setText(QCoreApplication.translate("Widget", u"Help", None))
+        self.actionRestart.setText(QCoreApplication.translate("Widget", u"Restart", None))
 
         __sortingEnabled = self.listWidget.isSortingEnabled()
         self.listWidget.setSortingEnabled(False)
         ___qlistwidgetitem = self.listWidget.item(0)
         ___qlistwidgetitem.setText(QCoreApplication.translate("Widget", u"Hyprland", None))
         ___qlistwidgetitem1 = self.listWidget.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("Widget", u"Network", None))
+        ___qlistwidgetitem1.setText(QCoreApplication.translate("Widget", u"Default Apps", None))
         ___qlistwidgetitem2 = self.listWidget.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("Widget", u"Wallpaper", None))
+        ___qlistwidgetitem2.setText(QCoreApplication.translate("Widget", u"Ecosystem", None))
         ___qlistwidgetitem3 = self.listWidget.item(3)
-        ___qlistwidgetitem3.setText(QCoreApplication.translate("Widget", u"Update", None))
+        ___qlistwidgetitem3.setText(QCoreApplication.translate("Widget", u"Network", None))
+        ___qlistwidgetitem4 = self.listWidget.item(4)
+        ___qlistwidgetitem4.setText(QCoreApplication.translate("Widget", u"Wallpaper", None))
+        ___qlistwidgetitem5 = self.listWidget.item(5)
+        ___qlistwidgetitem5.setText(QCoreApplication.translate("Widget", u"Plugins", None))
+        ___qlistwidgetitem6 = self.listWidget.item(6)
+        ___qlistwidgetitem6.setText(QCoreApplication.translate("Widget", u"Update", None))
         self.listWidget.setSortingEnabled(__sortingEnabled)
 
         self.monitor_group.setTitle(QCoreApplication.translate("Widget", u"Display Configuration", None))
@@ -1050,6 +1431,10 @@ class Ui_Widget(object):
         self.monitor_res_label.setText(QCoreApplication.translate("Widget", u"Resolution:", None))
         self.monitor_pos_label.setText(QCoreApplication.translate("Widget", u"Position:", None))
         self.monitor_scale_label.setText(QCoreApplication.translate("Widget", u"Scale:", None))
+        self.mirror_label.setText(QCoreApplication.translate("Widget", u"Mirror:", None))
+        self.mirror_comboBox.setItemText(0, QCoreApplication.translate("Widget", u"None", None))
+
+        self.rotation_label.setText(QCoreApplication.translate("Widget", u"Rotation:", None))
         self.set_default_monitor_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
         self.apply_button.setText(QCoreApplication.translate("Widget", u"Apply Settings", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.monitor_tab), QCoreApplication.translate("Widget", u"Monitor", None))
@@ -1091,7 +1476,7 @@ class Ui_Widget(object):
         self.blur_passes_label.setText(QCoreApplication.translate("Widget", u"Passes:", None))
         self.blur_vibrancy_label.setText(QCoreApplication.translate("Widget", u"Vibrancy:", None))
         self.set_default_look_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
-        self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.look_tab), QCoreApplication.translate("Widget", u"Look & Feel", None))
+        self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.look_tab), QCoreApplication.translate("Widget", u"Look / Feel", None))
         self.keyboard_groupBox.setTitle(QCoreApplication.translate("Widget", u"Keyboard", None))
         self.kb_layout_label.setText(QCoreApplication.translate("Widget", u"Layout:", None))
         self.kb_variant_label.setText(QCoreApplication.translate("Widget", u"Variant:", None))
@@ -1106,22 +1491,71 @@ class Ui_Widget(object):
         self.touchpad_nat_scroll_checkbox.setText(QCoreApplication.translate("Widget", u"Natural scroll", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.input_tab), QCoreApplication.translate("Widget", u"Input", None))
         self.set_default_general_keybind_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.general_add_button.setText(QCoreApplication.translate("Widget", u"Add", None))
         self.delete_keybind_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.general_tab), QCoreApplication.translate("Widget", u"General", None))
         self.set_default_movement_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.movement_add_button.setText(QCoreApplication.translate("Widget", u"Add", None))
         self.delete_movement_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.movement_tab), QCoreApplication.translate("Widget", u"Movement", None))
         self.set_default_workspace_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.workspace_add_button.setText(QCoreApplication.translate("Widget", u"Add", None))
         self.delete_workspace_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.workspaces_tab), QCoreApplication.translate("Widget", u"Workspaces", None))
         self.set_default_multimedia_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.multimedia_add_button.setText(QCoreApplication.translate("Widget", u"Add", None))
         self.delete_multimedia_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.multimedia_tab), QCoreApplication.translate("Widget", u"Multimedia", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.keybinds_tab), QCoreApplication.translate("Widget", u"Keybindings", None))
+        self.windowrules_placeholder_label.setText(QCoreApplication.translate("Widget", u"Window Rules \u2014 coming soon", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.windowrules_tab), QCoreApplication.translate("Widget", u"Window Rules", None))
+        self.config_files_group.setTitle(QCoreApplication.translate("Widget", u"Config File Paths", None))
+        self.current_config_file_label.setText(QCoreApplication.translate("Widget", u"Hyprland:", None))
+        self.choose_config_file_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
+        self.current_config_path_label.setText("")
+        self.cur_hyprlock_label.setText(QCoreApplication.translate("Widget", u"Hyprlock:", None))
+        self.choose_hyprlock_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
+        self.cur_hyprlock_file_label.setText("")
+        self.cur_hyprsunset_label.setText(QCoreApplication.translate("Widget", u"Hyprsunset:", None))
+        self.choose_hypersunset_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
+        self.hyprsunset_file_label.setText("")
+        self.cur_hyprpaper_label.setText(QCoreApplication.translate("Widget", u"Hyprpaper:", None))
+        self.choose_hyperpaper_file_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
+        self.cur_hyprpaper_file_label.setText("")
+        self.hypridle_label.setText(QCoreApplication.translate("Widget", u"Hypridle:", None))
+        self.choose_hypridle_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
+        self.cur_hypridle_label.setText("")
+        self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.files_tab), QCoreApplication.translate("Widget", u"Config Files", None))
+        self.label.setText(QCoreApplication.translate("Widget", u"Defaul Apps - coming soon", None))
+        self.hyprlock_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprlock configuration \u2014 coming soon", None))
+        self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprlock_tab), QCoreApplication.translate("Widget", u"Hyprlock", None))
+        self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hypridle_tab), QCoreApplication.translate("Widget", u"Hypridle", None))
+        self.hyprsunset_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprsunset configuration \u2014 coming soon", None))
+        self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprsunset_tab), QCoreApplication.translate("Widget", u"Hyprsunset", None))
+        self.hyprpaper_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprpaper configuration \u2014 coming soon", None))
+        self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprpaper_tab), QCoreApplication.translate("Widget", u"Hyprpaper", None))
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
         self.wifi_refresh_button.setText(QCoreApplication.translate("Widget", u"Refresh", None))
         self.wifi_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
+        self.choose_folder_button.setText(QCoreApplication.translate("Widget", u"Choose Folder", None))
+        self.folder_label.setText("")
+
+        __sortingEnabled1 = self.plugins_list.isSortingEnabled()
+        self.plugins_list.setSortingEnabled(False)
+        ___qlistwidgetitem7 = self.plugins_list.item(0)
+        ___qlistwidgetitem7.setText(QCoreApplication.translate("Widget", u"Hyprbars", None))
+        ___qlistwidgetitem8 = self.plugins_list.item(1)
+        ___qlistwidgetitem8.setText(QCoreApplication.translate("Widget", u"Hy3", None))
+        ___qlistwidgetitem9 = self.plugins_list.item(2)
+        ___qlistwidgetitem9.setText(QCoreApplication.translate("Widget", u"Hyprexpo", None))
+        ___qlistwidgetitem10 = self.plugins_list.item(3)
+        ___qlistwidgetitem10.setText(QCoreApplication.translate("Widget", u"Hyprgrass", None))
+        self.plugins_list.setSortingEnabled(__sortingEnabled1)
+
+        self.install_button.setText(QCoreApplication.translate("Widget", u"Install", None))
+        self.uninstall_button.setText(QCoreApplication.translate("Widget", u"Uninstall", None))
+        self.enable_button.setText(QCoreApplication.translate("Widget", u"Enable", None))
+        self.disable_button.setText(QCoreApplication.translate("Widget", u"Disable", None))
         self.update_pushButton.setText(QCoreApplication.translate("Widget", u"Check for Updates", None))
         self.menuTheme.setTitle(QCoreApplication.translate("Widget", u"Themes", None))
         self.menu_Application.setTitle(QCoreApplication.translate("Widget", u"Application", None))

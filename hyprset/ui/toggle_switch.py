@@ -28,7 +28,7 @@ class ToggleSwitch(QCheckBox):
         self._active_color = active_color
         self._circle_color = circle_color
 
-        self._circle_pos = 3  # starting x of the circle
+        self._circle_pos = 3
 
         self._animation = QPropertyAnimation(self, b"circle_pos", self)
         self._animation.setEasingCurve(animation_curve)
@@ -36,7 +36,6 @@ class ToggleSwitch(QCheckBox):
 
         self.stateChanged.connect(self._start_animation)
 
-    # --- Animated property ---
     def _get_circle_pos(self):
         return self._circle_pos
 
@@ -53,7 +52,6 @@ class ToggleSwitch(QCheckBox):
         self._animation.setEndValue(end)
         self._animation.start()
 
-    # --- Drawing ---
     def sizeHint(self):
         return QSize(60, 28)
 
@@ -62,12 +60,10 @@ class ToggleSwitch(QCheckBox):
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.setPen(Qt.PenStyle.NoPen)
 
-        # Track
         track_color = QColor(self._active_color if self.isChecked() else self._bg_color)
         p.setBrush(track_color)
         p.drawRoundedRect(0, 0, self.width(), self.height(), 14, 14)
 
-        # Circle
         p.setBrush(QColor(self._circle_color))
         p.drawEllipse(self._circle_pos, 3, 22, 22)
 

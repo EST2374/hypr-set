@@ -6,6 +6,7 @@ import subprocess
 from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import (
     QCheckBox,
+    QComboBox,
     QDialog,
     QDialogButtonBox,
     QHBoxLayout,
@@ -325,9 +326,11 @@ class Update(BaseDialog):
 
 
 class EditKeybindingDialog(BaseDialog):
-    def __init__(self, bind_string: str, parent=None):
+    BIND_TYPES = ["bind", "bindel", "bindl", "bindm", "binde", "bindr"]
+
+    def __init__(self, bind_string: str = "", parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Edit Keybinding")
+        self.setWindowTitle("Edit Keybinding" if bind_string else "Add Keybinding")
         self.original = bind_string
         self._build_ui(bind_string)
         self.resize(800, 300)
@@ -335,14 +338,28 @@ class EditKeybindingDialog(BaseDialog):
     def _build_ui(self, bind_string: str):
         layout = QVBoxLayout(self)
 
-        parts = [p.strip() for p in bind_string.split("=", 1)]
-        bind_type = parts[0].strip()
-        rest = parts[1] if len(parts) > 1 else ""
-        tokens = [t.strip() for t in rest.split(",")]
+        if bind_string:
+            parts = [p.strip() for p in bind_string.split("=", 1)]
+            bind_type = parts[0].strip()
+            rest = parts[1] if len(parts) > 1 else ""
+            tokens = [t.strip() for t in rest.split(",")]
+        else:
+            bind_type = "bind"
+            tokens = []
 
         self._fields = {}
+
+        type_row = QHBoxLayout()
+        type_row.addWidget(QLabel("Typ:"))
+        self._type_combo = QComboBox()
+        self._type_combo.addItems(self.BIND_TYPES)
+        self._type_combo.setCurrentText(
+            bind_type if bind_type in self.BIND_TYPES else "bind"
+        )
+        type_row.addWidget(self._type_combo)
+        layout.addLayout(type_row)
+
         field_defs = [
-            ("Typ", bind_type),
             ("Modifier", tokens[0] if len(tokens) > 0 else ""),
             ("Key", tokens[1] if len(tokens) > 1 else ""),
             ("Action", tokens[2] if len(tokens) > 2 else ""),
@@ -352,15 +369,10 @@ class EditKeybindingDialog(BaseDialog):
         for label_text, default in field_defs:
             row = QHBoxLayout()
             row.addWidget(QLabel(f"{label_text}:"))
-            if label_text == "Typ":
-                lbl = QLabel(default)
-                lbl.setStyleSheet("font-style: italic;")
-                row.addWidget(lbl)
-                self._bind_type = default
-            else:
-                edit = QLineEdit(default)
-                row.addWidget(edit)
-                self._fields[label_text] = edit
+            edit = QLineEdit(default)
+            edit.setPlaceholderText(label_text)
+            row.addWidget(edit)
+            self._fields[label_text] = edit
             layout.addLayout(row)
 
         buttons = QDialogButtonBox(
@@ -371,6 +383,7 @@ class EditKeybindingDialog(BaseDialog):
         layout.addWidget(buttons)
 
     def get_result(self) -> str:
+        bind_type = self._type_combo.currentText()
         mod = self._fields["Modifier"].text().strip()
         key = self._fields["Key"].text().strip()
         action = self._fields["Action"].text().strip()
@@ -379,4 +392,4 @@ class EditKeybindingDialog(BaseDialog):
         parts = [mod, key, action]
         if params:
             parts.append(params)
-        return f"{self._bind_type} = {', '.join(parts)}"
+        return f"{bind_type} = {', '.join(parts)}"

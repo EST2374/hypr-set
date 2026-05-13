@@ -1,5 +1,5 @@
 /* ============================================================
-   Hyprset — Dark Theme  (v3)
+   Hyprset — Dark Theme  (v4)
    ============================================================
    bg-base:    #0d1117   surface:    #161c2d
    bg-raised:  #1a2133   border:     #252f42
@@ -38,6 +38,7 @@ QPushButton {
     font-size: 13px;
     letter-spacing: 0.2px;
     outline: none;
+    min-height: 30px;
 }
 
 QPushButton:hover {
@@ -71,6 +72,7 @@ QPushButton#apply_button {
     border-radius: 7px;
     font-weight: bold;
     letter-spacing: 0.4px;
+    min-height: 36px;
 }
 
 QPushButton#apply_button:hover {
@@ -122,23 +124,158 @@ QPushButton#wifi_disconnect_button:pressed {
 /* ── Secondary action buttons (Set Default / Update) ────── */
 QPushButton#set_default_look_button,
 QPushButton#input_set_default_button,
+QPushButton#set_default_monitor_button,
+QPushButton#set_default_general_keybind_button,
+QPushButton#set_default_movement_button,
+QPushButton#set_default_workspace_button,
+QPushButton#set_default_multimedia_button,
 QPushButton#update_pushButton {
-    min-width: 140px;
-    min-height: 36px;
+    min-width: 120px;
+    min-height: 34px;
     background-color: #1a2133;
     color: #c9d1d9;
     border: 1px solid #252f42;
     border-radius: 7px;
     font-weight: 500;
     letter-spacing: 0.3px;
+    padding: 7px 18px;
 }
 
 QPushButton#set_default_look_button:hover,
 QPushButton#input_set_default_button:hover,
+QPushButton#set_default_monitor_button:hover,
+QPushButton#set_default_general_keybind_button:hover,
+QPushButton#set_default_movement_button:hover,
+QPushButton#set_default_workspace_button:hover,
+QPushButton#set_default_multimedia_button:hover,
 QPushButton#update_pushButton:hover {
     background-color: #1f2d45;
     border-color: #58a6ff;
     color: #79c0ff;
+}
+
+/* ── Add buttons (inline actions) ───────────────────────── */
+QPushButton#general_add_button,
+QPushButton#movement_add_button,
+QPushButton#workspace_add_button,
+QPushButton#multimedia_add_button,
+QPushButton#add_program_button,
+QPushButton#add_script_button,
+QPushButton#add_env_button,
+QPushButton#wifi_refresh_button {
+    background-color: #162032;
+    color: #58a6ff;
+    border: 1px solid #1f3a5c;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#general_add_button:hover,
+QPushButton#movement_add_button:hover,
+QPushButton#workspace_add_button:hover,
+QPushButton#multimedia_add_button:hover,
+QPushButton#add_program_button:hover,
+QPushButton#add_script_button:hover,
+QPushButton#add_env_button:hover,
+QPushButton#wifi_refresh_button:hover {
+    background-color: #1a2d46;
+    border-color: #58a6ff;
+    color: #79c0ff;
+}
+
+QPushButton#general_add_button:pressed,
+QPushButton#movement_add_button:pressed,
+QPushButton#workspace_add_button:pressed,
+QPushButton#multimedia_add_button:pressed,
+QPushButton#add_program_button:pressed,
+QPushButton#add_script_button:pressed,
+QPushButton#add_env_button:pressed,
+QPushButton#wifi_refresh_button:pressed {
+    background-color: #1f3a6e;
+    border-color: #58a6ff;
+}
+
+/* ── File chooser buttons ────────────────────────────────── */
+QPushButton#choose_config_file_button,
+QPushButton#choose_hyprlock_button,
+QPushButton#choose_hypersunset_button,
+QPushButton#choose_hyperpaper_file_button,
+QPushButton#choose_hypridle_button {
+    background-color: #1a2133;
+    color: #c9d1d9;
+    border: 1px solid #2d3a50;
+    border-radius: 7px;
+    font-weight: 500;
+    padding: 6px 16px;
+    min-height: 30px;
+}
+
+QPushButton#choose_config_file_button:hover,
+QPushButton#choose_hyprlock_button:hover,
+QPushButton#choose_hypersunset_button:hover,
+QPushButton#choose_hyperpaper_file_button:hover,
+QPushButton#choose_hypridle_button:hover {
+    background-color: #1f2d45;
+    border-color: #58a6ff;
+    color: #e6edf3;
+}
+
+QPushButton#choose_config_file_button:pressed,
+QPushButton#choose_hyprlock_button:pressed,
+QPushButton#choose_hypersunset_button:pressed,
+QPushButton#choose_hyperpaper_file_button:pressed,
+QPushButton#choose_hypridle_button:pressed {
+    background-color: #1f3a6e;
+    border-color: #58a6ff;
+}
+
+/* ── Success / Install / Enable buttons ─────────────────── */
+QPushButton#choose_folder_button,
+QPushButton#install_button,
+QPushButton#enable_button {
+    background-color: #122318;
+    color: #3fb950;
+    border: 1px solid #1f4a2a;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#choose_folder_button:hover,
+QPushButton#install_button:hover,
+QPushButton#enable_button:hover {
+    background-color: #1a3324;
+    border-color: #3fb950;
+    color: #56d364;
+}
+
+QPushButton#choose_folder_button:pressed,
+QPushButton#install_button:pressed,
+QPushButton#enable_button:pressed {
+    background-color: #22472e;
+    border-color: #3fb950;
+}
+
+/* ── Neutral-danger / Uninstall / Disable buttons ───────── */
+QPushButton#uninstall_button,
+QPushButton#disable_button {
+    background-color: #2a1215;
+    color: #f85149;
+    border: 1px solid #6e2626;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#uninstall_button:hover,
+QPushButton#disable_button:hover {
+    background-color: #3d1a1a;
+    border-color: #f85149;
+    color: #ff6b63;
+}
+
+QPushButton#uninstall_button:pressed,
+QPushButton#disable_button:pressed {
+    background-color: #521c1c;
+    border-color: #f85149;
 }
 
 /* ── Color-picker buttons ───────────────────────────────── */
@@ -174,8 +311,9 @@ QComboBox {
     color: #e6edf3;
     border: 1px solid #252f42;
     border-radius: 7px;
-    padding: 5px 10px;
+    padding: 5px 32px 5px 10px;
     min-width: 100px;
+    selection-background-color: transparent;
 }
 
 QComboBox:hover {
@@ -188,19 +326,32 @@ QComboBox:focus {
 }
 
 QComboBox::drop-down {
-    border: none;
-    width: 22px;
-    subcontrol-origin: padding;
+    subcontrol-origin: border;
     subcontrol-position: right center;
+    width: 28px;
+    border: none;
+    border-left: 1px solid #252f42;
+    background-color: transparent;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
-QComboBox::hover {
-    border-color: #58a6ff;
+QComboBox:hover::drop-down {
+    border-left-color: #58a6ff;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #58a6ff;
+    width: 0;
+    height: 0;
 }
 
 QComboBox QAbstractItemView {
     background-color: #161c2d;
-    border: 1px solid #252f42;
+    border: 1px solid #30363d;
     border-radius: 7px;
     color: #e6edf3;
     selection-background-color: #1f3a6e;
@@ -215,7 +366,7 @@ QListWidget#listWidget {
     border: none;
     border-right: 1px solid #1c2433;
     border-radius: 0;
-    padding: 8px 0;
+    padding: 10px 0;
     outline: none;
     font-size: 12px;
     font-weight: 500;
@@ -224,7 +375,7 @@ QListWidget#listWidget {
 
 QListWidget#listWidget::item {
     color: #7d8590;
-    padding: 12px 20px 12px 20px;
+    padding: 13px 20px;
     border-radius: 0;
     border-left: 3px solid transparent;
 }
@@ -252,7 +403,7 @@ QTabWidget#Hyprland_Menu_Settings > QTabBar::tab {
     border: 1px solid #252f42;
     border-bottom: none;
     border-radius: 7px 7px 0 0;
-    padding: 7px 18px;
+    padding: 8px 20px;
     margin-right: 3px;
     font-size: 12px;
     letter-spacing: 0.3px;
@@ -277,6 +428,32 @@ QTabWidget::pane {
     border-radius: 0 0 8px 8px;
 }
 
+/* ── Secondary tab bar (keybinds, ecosystem) ─────────────── */
+QTabWidget#keybinds_tabWidget > QTabBar::tab,
+QTabWidget#ecosystem_tabWidget > QTabBar::tab {
+    background-color: #0d1117;
+    color: #7d8590;
+    border: 1px solid #252f42;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    padding: 6px 16px;
+    margin-right: 3px;
+    font-size: 12px;
+}
+
+QTabWidget#keybinds_tabWidget > QTabBar::tab:selected,
+QTabWidget#ecosystem_tabWidget > QTabBar::tab:selected {
+    background-color: #161c2d;
+    color: #58a6ff;
+    border-bottom: 2px solid #58a6ff;
+}
+
+QTabWidget#keybinds_tabWidget > QTabBar::tab:hover:!selected,
+QTabWidget#ecosystem_tabWidget > QTabBar::tab:hover:!selected {
+    background-color: #131921;
+    color: #c9d1d9;
+}
+
 /* ── Content List Widgets (autostart, env, wifi) ────────── */
 QListWidget {
     background-color: #161c2d;
@@ -289,7 +466,7 @@ QListWidget {
 }
 
 QListWidget::item {
-    padding: 8px 12px;
+    padding: 9px 12px;
     border-radius: 5px;
     color: #c9d1d9;
 }
@@ -413,7 +590,7 @@ QDoubleSpinBox {
     color: #e6edf3;
     border: 1px solid #252f42;
     border-radius: 7px;
-    padding: 5px 8px;
+    padding: 5px 4px 5px 8px;
 }
 
 QSpinBox:hover,
@@ -427,24 +604,42 @@ QDoubleSpinBox:focus {
     background-color: #0d1520;
 }
 
-QSpinBox::up-button, QDoubleSpinBox::up-button,
-QSpinBox::down-button, QDoubleSpinBox::down-button {
+QSpinBox::up-button, QDoubleSpinBox::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
     background-color: #1a2133;
-    width: 16px;
+    width: 20px;
+    height: 50%;
     border: none;
+    border-left: 1px solid #252f42;
+    border-bottom: 1px solid #252f42;
+    border-top-right-radius: 6px;
+}
+
+QSpinBox::down-button, QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    background-color: #1a2133;
+    width: 20px;
+    height: 50%;
+    border: none;
+    border-left: 1px solid #252f42;
+    border-bottom-right-radius: 6px;
 }
 
 QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
-    border-left: 4px solid none;
-    border-right: 4px solid none;
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
     border-bottom: 5px solid #58a6ff;
     width: 0;
     height: 0;
 }
 
 QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
-    border-left: 4px solid none;
-    border-right: 4px solid none;
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
     border-top: 5px solid #58a6ff;
     width: 0;
     height: 0;
@@ -518,8 +713,8 @@ QGroupBox {
     background-color: #161c2d;
     border: 1px solid #252f42;
     border-radius: 10px;
-    margin-top: 16px;
-    padding-top: 6px;
+    margin-top: 18px;
+    padding-top: 8px;
     font-size: 11px;
     font-weight: bold;
     letter-spacing: 0.8px;
@@ -569,6 +764,16 @@ QGroupBox QCheckBox {
     color: #e6edf3;
     font-size: 12px;
     letter-spacing: 0;
+}
+
+/* ── Placeholder labels (coming soon tabs) ───────────────── */
+QLabel#windowrules_placeholder_label,
+QLabel#hyprlock_placeholder_label,
+QLabel#hyprsunset_placeholder_label,
+QLabel#hyprpaper_placeholder_label {
+    color: #3d444d;
+    font-size: 13px;
+    letter-spacing: 0.3px;
 }
 
 /* ── Status Bar ─────────────────────────────────────────── */

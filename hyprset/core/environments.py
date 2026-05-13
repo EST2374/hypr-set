@@ -1,39 +1,42 @@
-from hyprset.config import CONFIG_FILE
+import re
+
+import hyprset.config as app_config
 
 
 def get_current_env() -> list[str]:
     all_env = []
 
     try:
-        with open(CONFIG_FILE, "r") as file:
+        with open(app_config.CONFIG_FILE, "r") as file:
             for line in file:
                 line = line.strip()
-                if line.startswith("env") and not line.startswith("#"):
-                    command = line.split("=", 1)[-1].strip()
+                if line.startswith("hl.env") and not line.startswith("#"):
+                    command = line.split("(", 1)[-1].split(")", 1)[0].strip(" \"'")
                     all_env.append(command)
         return all_env
     except FileNotFoundError:
-        print(f"Error: {CONFIG_FILE} not found.")
+        print(f"Error: {app_config.CONFIG_FILE} not found.")
         return all_env
 
 
 def add_env(command: str) -> bool:
     try:
-        with open(CONFIG_FILE, "r") as f:
+        with open(app_config.CONFIG_FILE, "r") as f:
             content = f.read()
 
-        if f"env = {command}" in content:
+        if f"hl.env({command})" in content:
             return False
 
-        new_entry = f"env = {command}\n"
-        if "# Envirnonment end" in content:
-            content = content.replace(
-                "# Envirnonment end", f"{new_entry}# Envirnonment end"
-            )
-        else:
-            content += new_entry
+        new_entry = f'hl.env("{command}")\n'
+        pattern = r"(.*hl\.env\(.*\)\s*\n)(?![\s\S]*hl\.env)"
 
-        with open(CONFIG_FILE, "w") as f:
+        match = re.search(pattern, content)
+        if match:
+            content = re.sub(pattern, r"\1" + new_entry, content)
+        else:
+            content += "\n" + new_entry
+
+        with open(app_config.CONFIG_FILE, "w") as f:
             f.write(content)
         return True
     except OSError as e:
@@ -42,11 +45,11 @@ def add_env(command: str) -> bool:
 
 
 def del_env(entry: str) -> bool:
-    target = f"env = {entry}"
+    target = f'hl.env("{entry}")'
     try:
-        with open(CONFIG_FILE, "r") as f:
+        with open(app_config.CONFIG_FILE, "r") as f:
             lines = f.readlines()
-        with open(CONFIG_FILE, "w") as f:
+        with open(app_config.CONFIG_FILE, "w") as f:
             for line in lines:
                 if not line.strip().startswith(target):
                     f.write(line)

@@ -1,96 +1,11 @@
 import re
-from dataclasses import dataclass
-from typing import Callable
 
-from hyprset.config import CONFIG_FILE
+import hyprset.config as app_config
 
 from .config_utils import replace_in_config
 
-
-@dataclass
-class Setting:
-    config_key: str
-    pattern: str
-    template: str
-    type: Callable = int
-
-
-@dataclass
-class BoolSetting:
-    config_key: str
-    pattern: str
-    template: str
-
-
-SETTINGS: dict[str, Setting] = {
-    "gaps_in": Setting("gaps_in", r"^\s*gaps_in\s*=.*", "\tgaps_in = {value}"),
-    "gaps_out": Setting("gaps_out", r"^\s*gaps_out\s*=.*", "\tgaps_out = {value}"),
-    "border_size": Setting(
-        "border_size", r"^\s*border_size\s*=.*", "\tborder_size = {value}"
-    ),
-    "rounding": Setting("rounding", r"^\s*rounding\s*=.*", "\trounding = {value}"),
-    "rounding_power": Setting(
-        "rounding_power", r"^\s*rounding_power\s*=.*", "\trounding_power = {value}"
-    ),
-    "active_opacity": Setting(
-        "active_opacity",
-        r"^\s*active_opacity\s*=.*",
-        "\tactive_opacity = {value}",
-        float,
-    ),
-    "inactive_opacity": Setting(
-        "inactive_opacity",
-        r"^\s*inactive_opacity\s*=.*",
-        "\tinactive_opacity = {value}",
-        float,
-    ),
-    "angle": Setting(
-        "angle", r"(\s*col\.active_border\s*=.*?)\d+deg", r"\g<1>{value}deg"
-    ),
-    "shadow_range": Setting("range", r"^\s*range\s*=.*", "\t\trange = {value}"),
-    "shadow_render_power": Setting(
-        "render_power", r"^\s*render_power\s*=.*", "\t\trender_power = {value}"
-    ),
-    "blur_size": Setting("size", r"^\s*size\s*=.*", "\t\tsize = {value}"),
-    "blur_passes": Setting("passes", r"^\s*passes\s*=.*", "\t\tpasses = {value}"),
-    "blur_vib": Setting(
-        "vibrancy", r"^\s*vibrancy\s*=.*", "\t\tvibrancy = {value}", float
-    ),
-    # TEST FOR INPUT
-    "sensitivity": Setting(
-        "sensitivity", r"^\s*sensitivity\s*=.*", "\tsensitivity = {value}", float
-    ),
-}
-
-BOOL_SETTINGS: dict[str, BoolSetting] = {
-    "resize": BoolSetting(
-        "resize_on_border",
-        r"^\s*resize_on_border\s*=.*",
-        "\tresize_on_border = {value}",
-    ),
-    "tearing": BoolSetting(
-        "allow_tearing", r"^\s*allow_tearing\s*=.*", "\tallow_tearing = {value}"
-    ),
-    "blur_enable": BoolSetting(
-        "blur_enable",
-        r"(blur\s*\{[^}]*?enabled\s*=\s*)[^\s#]+",
-        r"\g<1>{value}",
-    ),
-    "shadow_enable": BoolSetting(
-        "shadow_a", r"(shadow\s*\{[^}]*?enabled\s*=\s*)[^\s#]+", r"\g<1>{value}"
-    ),
-    "global_natural_scroll": BoolSetting(
-        "natural_scroll",
-        r"(input\s*\{[^{]*?natural_scroll\s*=\s*)[^\s#]+",
-        r"\g<1>{value}",
-    ),
-    "natural_scroll_touchpad": BoolSetting(
-        "natural_scroll",
-        r"(touchpad\s*\{[^}]*?natural_scroll\s*=\s*)[^\s#]+",
-        r"\g<1>{value}",
-    ),
-}
-
+# TODO
+# ADD INACTIVE COLOR BUTTON
 
 DEFAULTS: dict[str, int | float] = {
     "gaps_in": 5,
@@ -115,67 +30,197 @@ BOOL_DEFAULTS: dict[str, str] = {
     "shadow_enable": "true",
 }
 
+LUA_SETTING_MAP: dict[str, tuple[str, str]] = {
+    "gaps_in": ("general", "gaps_in"),
+    "gaps_out": ("general", "gaps_out"),
+    "border_size": ("general", "border_size"),
+    "rounding": ("decoration", "rounding"),
+    "rounding_power": ("decoration", "rounding_power"),
+    "active_opacity": ("decoration", "active_opacity"),
+    "inactive_opacity": ("decoration", "inactive_opacity"),
+    "shadow_range": ("shadow", "range"),
+    "shadow_render_power": ("shadow", "render_power"),
+    "blur_size": ("blur", "size"),
+    "blur_passes": ("blur", "passes"),
+    "blur_vib": ("blur", "vibrancy"),
+    "sensitivity": ("input", "sensitivity"),
+}
 
-def get_cur_value(setting: str) -> int | float:
-    s = SETTINGS[setting]
+LUA_BOOL_MAP: dict[str, tuple[str, str]] = {
+    "resize": ("general", "resize_on_border"),
+    "tearing": ("general", "allow_tearing"),
+    "blur_enable": ("blur", "enabled"),
+    "shadow_enable": ("shadow", "enabled"),
+    "global_natural_scroll": ("input", "natural_scroll"),
+    "natural_scroll_touchpad": ("touchpad", "natural_scroll"),
+}
+
+
+def _find_block_span(content: str, block_name: str) -> tuple[int, int] | None:
+    pattern = rf"\b{re.escape(block_name)}\s*=\s*\{{"
+    m = re.search(pattern, content)
+    if not m:
+        return None
+
+    brace_start = m.end() - 1
+    depth = 0
+
+    for i, ch in enumerate(content[brace_start:], start=brace_start):
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return (m.start(), i + 1)
+
+    return None
+
+
+def _replace_key_in_block(content: str, block: str, lua_key: str, new_value) -> str:
+    span = _find_block_span(content, block)
+    if not span:
+        return content
+
+    start, end = span
+    block_text = content[start:end]
+
+    new_block = re.sub(
+        rf"(\b{re.escape(lua_key)}\s*=\s*)[^\s,\n]+(,?)",
+        rf"\g<1>{new_value}\g<2>",
+        block_text,
+        count=1,
+    )
+
+    return content[:start] + new_block + content[end:]
+
+
+def _read_value_in_block(block: str, lua_key: str) -> str | None:
     try:
-        with open(CONFIG_FILE, "r") as f:
-            for line in f:
-                line = line.strip()
-                if setting == "angle":
-                    if "deg" in line:
-                        return int(line.split()[-1].replace("deg", ""))
-                elif line.startswith(s.config_key):
-                    return s.type(line.split("=", 1)[-1].strip())
-    except FileNotFoundError:
-        return 0
-    return 0
-
-
-def get_state_check(setting: str) -> str:
-    s = BOOL_SETTINGS[setting]
-    try:
-        with open(CONFIG_FILE, "r") as f:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
             content = f.read()
-            match = re.search(s.pattern, content, flags=re.MULTILINE)
-            if match:
-                full_match = match.group(0)
-                return full_match.split("=", 1)[-1].strip()
     except FileNotFoundError:
-        pass
-    return "false"
+        return None
+
+    span = _find_block_span(content, block)
+    if not span:
+        return None
+
+    block_text = content[span[0] : span[1]]
+    m = re.search(rf"\b{re.escape(lua_key)}\s*=\s*([^\s,\n]+)", block_text)
+    if m:
+        return m.group(1).strip('"')
+    return None
 
 
-def write_setting(setting: str, value: int | float):
-    s = SETTINGS[setting]
-    replace_in_config(s.pattern, s.template.format(value=value))
+def _read_bool_lua(block: str, key: str) -> bool:
+    value = _read_value_in_block(block, key)
+    return value == "true"
 
 
-def change_bool_check(setting: str):
-    s = BOOL_SETTINGS[setting]
-    new_state = "false" if get_state_check(setting) == "true" else "true"
-    replace_in_config(s.pattern, s.template.format(value=new_state))
+def better_cur_value(setting: str) -> int | float:
+    if setting not in LUA_SETTING_MAP:
+        return 0.0
+    block, lua_key = LUA_SETTING_MAP[setting]
+    value = _read_value_in_block(block, lua_key)
+    if value is None:
+        return DEFAULTS.get(setting, 0.0)
+    try:
+        return float(value)
+    except ValueError:
+        return DEFAULTS.get(setting, 0.0)
+
+
+def better_cur_status(setting: str) -> str:
+    LUA_STATUS_MAP = {
+        "resize_on_border": ("general", "resize_on_border"),
+        "allow_tearing": ("general", "allow_tearing"),
+    }
+    if setting not in LUA_STATUS_MAP:
+        return ""
+    block, lua_key = LUA_STATUS_MAP[setting]
+    return _read_value_in_block(block, lua_key) or ""
+
+
+def better_cur_enabled(block: str) -> bool:
+    return _read_bool_lua(block, "enabled")
+
+
+def read_bool_lua(setting: str) -> bool:
+    if setting not in LUA_BOOL_MAP:
+        return False
+    block, lua_key = LUA_BOOL_MAP[setting]
+    return _read_bool_lua(block, lua_key)
+
+
+def get_angle() -> int:
+    value = _read_value_in_block("active_border", "angle")
+    try:
+        return int(value) if value is not None else int(DEFAULTS["angle"])
+    except ValueError:
+        return int(DEFAULTS["angle"])
+
+
+def change_angle_value(value: int):
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+    except FileNotFoundError:
+        return
+
+    content = _replace_key_in_block(content, "active_border", "angle", value)
+
+    with open(app_config.CONFIG_FILE_LUA, "w") as f:
+        f.write(content)
 
 
 def change_layout(layout_name: str):
-    replace_in_config(r"^\s*layout\s*=.*", f"\tlayout = {layout_name.lower()}")
+    replace_in_config(r"^\s*layout\s*=.*", f'\t\tlayout = "{layout_name.lower()}"')
+
+
+def change_inactive_border_col(new_color: str):
+    replace_in_config(
+        r"^\s*inactive_border\s*=.*", f'\t\t\tinactive_border = "{new_color}"'
+    )
 
 
 def get_cur_layout() -> str:
+    value = _read_value_in_block("general", "layout")
+    return value.strip('"').capitalize() if value else ""
+
+
+def write_setting_lua(setting: str, value: int | float):
+    if setting not in LUA_SETTING_MAP:
+        return
+
+    block, lua_key = LUA_SETTING_MAP[setting]
+
     try:
-        with open(CONFIG_FILE, "r") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("layout"):
-                    return line.split("=", 1)[-1].strip().capitalize()
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
     except FileNotFoundError:
-        pass
-    return ""
+        return
+
+    content = _replace_key_in_block(content, block, lua_key, value)
+
+    with open(app_config.CONFIG_FILE_LUA, "w") as f:
+        f.write(content)
 
 
-def reset_to_defaults():
-    for setting, value in DEFAULTS.items():
-        write_setting(setting, value)
-    for setting, value in BOOL_DEFAULTS.items():
-        s = BOOL_SETTINGS[setting]
-        replace_in_config(s.pattern, s.template.format(value=value))
+def change_bool_lua(setting: str):
+    if setting not in LUA_BOOL_MAP:
+        return
+
+    block, lua_key = LUA_BOOL_MAP[setting]
+    current = _read_bool_lua(block, lua_key)
+    new_value = "false" if current else "true"
+
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+    except FileNotFoundError:
+        return
+
+    content = _replace_key_in_block(content, block, lua_key, new_value)
+
+    with open(app_config.CONFIG_FILE_LUA, "w") as f:
+        f.write(content)

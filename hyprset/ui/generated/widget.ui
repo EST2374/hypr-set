@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1012</width>
-    <height>832</height>
+    <width>835</width>
+    <height>660</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,12 +66,27 @@
       </item>
       <item>
        <property name="text">
+        <string>Default Apps</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Ecosystem</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Network</string>
        </property>
       </item>
       <item>
        <property name="text">
         <string>Wallpaper</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Plugins</string>
        </property>
       </item>
       <item>
@@ -112,7 +127,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="monitor_tab">
            <attribute name="title">
@@ -229,6 +244,32 @@
                  </property>
                 </widget>
                </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="mirror_label">
+                 <property name="text">
+                  <string>Mirror:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QComboBox" name="mirror_comboBox">
+                 <item>
+                  <property name="text">
+                   <string>None</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QComboBox" name="rotation_comboBox"/>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="rotation_label">
+                 <property name="text">
+                  <string>Rotation:</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -236,6 +277,12 @@
              <layout class="QHBoxLayout" name="monitor_apply_hl">
               <item>
                <widget class="QPushButton" name="set_default_monitor_button">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>34</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Set Default</string>
                 </property>
@@ -335,6 +382,12 @@
                  </property>
                  <item>
                   <widget class="QPushButton" name="add_program_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>34</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Add Program</string>
                    </property>
@@ -342,6 +395,12 @@
                  </item>
                  <item>
                   <widget class="QPushButton" name="add_script_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>34</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Add Script</string>
                    </property>
@@ -362,6 +421,12 @@
                  </item>
                  <item>
                   <widget class="QPushButton" name="del_autostart_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>34</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Delete Selected</string>
                    </property>
@@ -438,6 +503,12 @@
                  </property>
                  <item>
                   <widget class="QPushButton" name="add_env_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>34</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Add Variable</string>
                    </property>
@@ -458,6 +529,12 @@
                  </item>
                  <item>
                   <widget class="QPushButton" name="del_env_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>34</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Delete Selected</string>
                    </property>
@@ -485,7 +562,7 @@
           </widget>
           <widget class="QWidget" name="look_tab">
            <attribute name="title">
-            <string>Look &amp; Feel</string>
+            <string>Look / Feel</string>
            </attribute>
            <layout class="QVBoxLayout" name="look_scroll_vl">
             <property name="spacing">
@@ -516,8 +593,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>848</width>
-                 <height>763</height>
+                 <width>657</width>
+                 <height>664</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="look_contents_vl">
@@ -1027,11 +1104,37 @@
                  </layout>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="set_default_look_button">
-                  <property name="text">
-                   <string>Set Default</string>
+                 <layout class="QHBoxLayout" name="look_default_hl">
+                  <property name="spacing">
+                   <number>8</number>
                   </property>
-                 </widget>
+                  <item>
+                   <widget class="QPushButton" name="set_default_look_button">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>34</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Set Default</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="look_default_spacer">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                 <item>
                  <spacer name="look_bottom_spacer">
@@ -1351,7 +1454,7 @@
             <item>
              <widget class="QTabWidget" name="keybinds_tabWidget">
               <property name="currentIndex">
-               <number>2</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="general_tab">
                <attribute name="title">
@@ -1388,6 +1491,12 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="set_default_general_keybind_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Set Default</string>
                       </property>
@@ -1407,7 +1516,26 @@
                      </spacer>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="general_add_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Add</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="delete_keybind_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Delete</string>
                       </property>
@@ -1467,6 +1595,12 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="set_default_movement_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Set Default</string>
                       </property>
@@ -1486,7 +1620,26 @@
                      </spacer>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="movement_add_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Add</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="delete_movement_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Delete</string>
                       </property>
@@ -1546,6 +1699,12 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="set_default_workspace_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Set Default</string>
                       </property>
@@ -1565,7 +1724,26 @@
                      </spacer>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="workspace_add_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Add</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="delete_workspace_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Delete</string>
                       </property>
@@ -1625,6 +1803,12 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="set_default_multimedia_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>120</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Set Default</string>
                       </property>
@@ -1644,7 +1828,26 @@
                      </spacer>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="multimedia_add_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Add</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="delete_multimedia_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>80</width>
+                        <height>34</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Delete</string>
                       </property>
@@ -1677,7 +1880,387 @@
            <attribute name="title">
             <string>Window Rules</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_9"/>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <property name="leftMargin">
+             <number>24</number>
+            </property>
+            <property name="topMargin">
+             <number>24</number>
+            </property>
+            <property name="rightMargin">
+             <number>24</number>
+            </property>
+            <property name="bottomMargin">
+             <number>24</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="windowrules_placeholder_label">
+              <property name="text">
+               <string>Window Rules — coming soon</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="files_tab">
+           <attribute name="title">
+            <string>Config Files</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QGroupBox" name="config_files_group">
+                <property name="title">
+                 <string>Config File Paths</string>
+                </property>
+                <layout class="QFormLayout" name="configs_form_layout">
+                 <property name="labelAlignment">
+                  <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>16</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>14</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>24</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>20</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="current_config_file_label">
+                   <property name="text">
+                    <string>Hyprland:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <layout class="QHBoxLayout" name="config_file_button_layout">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="choose_config_file_button">
+                     <property name="text">
+                      <string>Choose File…</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="current_config_path_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="cur_hyprlock_label">
+                   <property name="text">
+                    <string>Hyprlock:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <layout class="QHBoxLayout" name="hyprlock_button_layout">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="choose_hyprlock_button">
+                     <property name="text">
+                      <string>Choose File…</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="cur_hyprlock_file_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="cur_hyprsunset_label">
+                   <property name="text">
+                    <string>Hyprsunset:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <layout class="QHBoxLayout" name="hyprsunset_button_layout">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="choose_hypersunset_button">
+                     <property name="text">
+                      <string>Choose File…</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="hyprsunset_file_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="cur_hyprpaper_label">
+                   <property name="text">
+                    <string>Hyprpaper:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <layout class="QHBoxLayout" name="hyprpaper_button_layout">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="choose_hyperpaper_file_button">
+                     <property name="text">
+                      <string>Choose File…</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="cur_hyprpaper_file_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="hypridle_label">
+                   <property name="text">
+                    <string>Hypridle:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <layout class="QHBoxLayout" name="hypridle_button_layout">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="choose_hypridle_button">
+                     <property name="text">
+                      <string>Choose File…</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="cur_hypridle_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="files_bottom_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="defaul_apps_page">
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>270</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Defaul Apps - coming soon</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="ecosystem_page">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTabWidget" name="ecosystem_tabWidget">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="hyprlock_tab">
+           <attribute name="title">
+            <string>Hyprlock</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="hyprlock_tab_vl">
+            <property name="leftMargin">
+             <number>24</number>
+            </property>
+            <property name="topMargin">
+             <number>24</number>
+            </property>
+            <property name="rightMargin">
+             <number>24</number>
+            </property>
+            <property name="bottomMargin">
+             <number>24</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="hyprlock_placeholder_label">
+              <property name="text">
+               <string>Hyprlock configuration — coming soon</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="hypridle_tab">
+           <attribute name="title">
+            <string>Hypridle</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="hyprsunset_tab">
+           <attribute name="title">
+            <string>Hyprsunset</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="hyprsunset_tab_vl">
+            <property name="leftMargin">
+             <number>24</number>
+            </property>
+            <property name="topMargin">
+             <number>24</number>
+            </property>
+            <property name="rightMargin">
+             <number>24</number>
+            </property>
+            <property name="bottomMargin">
+             <number>24</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="hyprsunset_placeholder_label">
+              <property name="text">
+               <string>Hyprsunset configuration — coming soon</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="hyprpaper_tab">
+           <attribute name="title">
+            <string>Hyprpaper</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="hyprpaper_tab_vl">
+            <property name="leftMargin">
+             <number>24</number>
+            </property>
+            <property name="topMargin">
+             <number>24</number>
+            </property>
+            <property name="rightMargin">
+             <number>24</number>
+            </property>
+            <property name="bottomMargin">
+             <number>24</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="hyprpaper_placeholder_label">
+              <property name="text">
+               <string>Hyprpaper configuration — coming soon</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -1776,7 +2359,191 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="wallpaper_page"/>
+      <widget class="QWidget" name="wallpaper_page">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <property name="spacing">
+         <number>12</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>24</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="wallpaper_layout">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="choose_folder_layout">
+            <item>
+             <widget class="QPushButton" name="choose_folder_button">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Choose Folder</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="folder_label">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="choose_folder_horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QListWidget" name="gallery"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="plugins_page">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="spacing">
+         <number>16</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>24</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="plugins_layout">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item>
+           <widget class="QListWidget" name="plugins_list">
+            <item>
+             <property name="text">
+              <string>Hyprbars</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Hy3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Hyprexpo</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Hyprgrass</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="plugins_button_layout">
+            <item>
+             <widget class="QPushButton" name="install_button">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Install</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="uninstall_button">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Uninstall</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="plugins_button_spacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="enable_button">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="disable_button">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Disable</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="update_page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -1831,7 +2598,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1012</width>
+     <width>835</width>
      <height>19</height>
     </rect>
    </property>
@@ -1846,8 +2613,9 @@
     <property name="title">
      <string>Application</string>
     </property>
-    <addaction name="quit_program"/>
+    <addaction name="actionRestart"/>
     <addaction name="actionHelp"/>
+    <addaction name="quit_program"/>
    </widget>
    <addaction name="menuTheme"/>
    <addaction name="menu_Application"/>
@@ -1871,6 +2639,11 @@
   <action name="actionHelp">
    <property name="text">
     <string>Help</string>
+   </property>
+  </action>
+  <action name="actionRestart">
+   <property name="text">
+    <string>Restart</string>
    </property>
   </action>
  </widget>

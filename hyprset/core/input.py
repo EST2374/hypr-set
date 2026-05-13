@@ -1,11 +1,11 @@
-import re
 import subprocess
 from dataclasses import dataclass
 from typing import Callable
 
-from hyprset.config import CONFIG_FILE
+import hyprset.config as app_config
 
 from .config_utils import replace_in_config
+from .look import _find_block_span, _read_value_in_block, _replace_key_in_block
 
 
 @dataclass
@@ -17,9 +17,11 @@ class Setting:
 
 
 SETTINGS_INPUT: dict[str, Setting] = {
-    "kb_layout": Setting("kb_layout", r"^\s*kb_layout\s*=.*", "\tkb_layout = {value}"),
+    "kb_layout": Setting(
+        "kb_layout", r"^\s*kb_layout\s*=.*", '\t\tkb_layout = "{value}",'
+    ),
     "kb_variant": Setting(
-        "kb_variant", r"^\s*kb_variant\s*=.*", "\tkb_variant = {value}"
+        "kb_variant", r"^\s*kb_variant\s*=.*", '\t\tkb_variant = "{value}",'
     ),
 }
 
@@ -39,11 +41,21 @@ def write_setting_input(setting: str, value: str):
 def get_cur_item(setting: str) -> str:
     s = SETTINGS_INPUT[setting]
     try:
-        with open(CONFIG_FILE, "r") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith(s.config_key):
-                    return s.type(line.split("=", 1)[-1].strip())
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+
+        span = _find_block_span(content, "input")
+        if not span:
+            return ""
+        block_text = content[span[0] : span[1]]
+
+        import re
+
+        m = re.search(
+            rf"\b{re.escape(s.config_key)}\s*=\s*\"?([^\s,\"\n]+)\"?", block_text
+        )
+        if m:
+            return m.group(1)
     except FileNotFoundError:
         return ""
     return ""
@@ -65,22 +77,40 @@ def get_kb_variants() -> list[str]:
         return []
 
 
-def get_cur_follow_mouse():
-    try:
-        with open(CONFIG_FILE, "r") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("follow_mouse"):
-                    val = line.split("=", 1)[-1].strip()
+def get_cur_follow_mouse() -> str:
+    import re
 
-                    for name, code in FOLLOW_MOUSE.items():
-                        if code == val:
-                            return name
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+
+        span = _find_block_span(content, "input")
+        if not span:
+            return ""
+        block_text = content[span[0] : span[1]]
+
+        m = re.search(r"\bfollow_mouse\s*=\s*(\d+)", block_text)
+        if m:
+            val = m.group(1)
+            for name, code in FOLLOW_MOUSE.items():
+                if code == val:
+                    return name
     except FileNotFoundError:
-        return ""
+        pass
     return ""
 
 
-def follow_mouse_change(text):
+def follow_mouse_change(text: str):
+    import re
+
     code = FOLLOW_MOUSE[text]
-    replace_in_config(r"^\s*follow_mouse\s*=.*", f"\tfollow_mouse = {code}")
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+    except FileNotFoundError:
+        return
+
+    content = _replace_key_in_block(content, "input", "follow_mouse", code)
+
+    with open(app_config.CONFIG_FILE_LUA, "w") as f:
+        f.write(content)
