@@ -3,10 +3,9 @@ import os
 import re
 import subprocess
 
-from PySide6.QtCore import QProcess
+from PySide6.QtCore import QProcess, Qt
 from PySide6.QtWidgets import (
     QCheckBox,
-    QComboBox,
     QDialog,
     QDialogButtonBox,
     QHBoxLayout,
@@ -18,6 +17,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+import hyprset.config as app_config
 from hyprset.core.autostart import add_autostart
 from hyprset.core.environments import add_env
 
@@ -326,54 +326,72 @@ class Update(BaseDialog):
 
 
 class EditKeybindingDialog(BaseDialog):
-    BIND_TYPES = ["bind", "bindel", "bindl", "bindm", "binde", "bindr"]
-
     def __init__(self, bind_string: str = "", parent=None):
         super().__init__(parent)
         self.setWindowTitle("Edit Keybinding" if bind_string else "Add Keybinding")
         self.original = bind_string
         self._build_ui(bind_string)
-        self.resize(800, 300)
+        self.resize(820, 300)
+
+    @staticmethod
+    def _parse(bind_string: str) -> tuple[str, str, str]:
+        m = re.match(
+            r'hl\.bind\((.+?),\s*([\w.]+)\((".*?"|[^)]*)\)\s*\)',
+            bind_string.strip(),
+        )
+        if not m:
+            return "", "", ""
+        keys = m.group(1).strip()
+        action = m.group(2).strip()
+        param = m.group(3).strip().strip('"')
+        return keys, action, param
+
+    @staticmethod
+    def _build_result(keys: str, action: str, param: str) -> str:
+        param_lua = f'"{param}"' if param else '""'
+        return f'hl.bind({keys}", {action}({param_lua}))'
 
     def _build_ui(self, bind_string: str):
+        keys, action, param = self._parse(bind_string) if bind_string else ("", "", "")
+
         layout = QVBoxLayout(self)
-
-        if bind_string:
-            parts = [p.strip() for p in bind_string.split("=", 1)]
-            bind_type = parts[0].strip()
-            rest = parts[1] if len(parts) > 1 else ""
-            tokens = [t.strip() for t in rest.split(",")]
-        else:
-            bind_type = "bind"
-            tokens = []
-
+        layout.setSpacing(10)
         self._fields = {}
 
-        type_row = QHBoxLayout()
-        type_row.addWidget(QLabel("Typ:"))
-        self._type_combo = QComboBox()
-        self._type_combo.addItems(self.BIND_TYPES)
-        self._type_combo.setCurrentText(
-            bind_type if bind_type in self.BIND_TYPES else "bind"
-        )
-        type_row.addWidget(self._type_combo)
-        layout.addLayout(type_row)
-
         field_defs = [
-            ("Modifier", tokens[0] if len(tokens) > 0 else ""),
-            ("Key", tokens[1] if len(tokens) > 1 else ""),
-            ("Action", tokens[2] if len(tokens) > 2 else ""),
-            ("Parameter", ", ".join(tokens[3:]) if len(tokens) > 3 else ""),
+            (
+                "Keys",
+                keys,
+                'e.g. mainMod .. " + SPACE"  or  mainMod .. " + CTRL + SPACE"',
+            ),
+            ("Action", action, "e.g. hl.dsp.exec_cmd"),
+            ("Parameter", param, "e.g. walker-menu"),
         ]
 
-        for label_text, default in field_defs:
+        for label_text, default, placeholder in field_defs:
             row = QHBoxLayout()
-            row.addWidget(QLabel(f"{label_text}:"))
+            lbl = QLabel(f"{label_text}:")
+            lbl.setFixedWidth(90)
+            lbl.setAlignment(
+                Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+            )
+            row.addWidget(lbl)
             edit = QLineEdit(default)
-            edit.setPlaceholderText(label_text)
+            edit.setPlaceholderText(placeholder)
             row.addWidget(edit)
             self._fields[label_text] = edit
             layout.addLayout(row)
+
+        self._preview = QLabel()
+        self._preview.setStyleSheet(
+            "color: palette(mid); font-family: monospace; font-size: 11px;"
+        )
+        self._preview.setWordWrap(True)
+        layout.addWidget(self._preview)
+
+        for field in self._fields.values():
+            field.textChanged.connect(self._update_preview)
+        self._update_preview()
 
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -382,14 +400,174 @@ class EditKeybindingDialog(BaseDialog):
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
 
-    def get_result(self) -> str:
-        bind_type = self._type_combo.currentText()
-        mod = self._fields["Modifier"].text().strip()
-        key = self._fields["Key"].text().strip()
-        action = self._fields["Action"].text().strip()
-        params = self._fields["Parameter"].text().strip()
+    def _update_preview(self):
+        self._preview.setText(f"  ↳  {self.get_result()}")
 
-        parts = [mod, key, action]
-        if params:
-            parts.append(params)
-        return f"{bind_type} = {', '.join(parts)}"
+    def get_result(self) -> str:
+        keys = self._fields["Keys"].text().strip()
+        action = self._fields["Action"].text().strip()
+        param = self._fields["Parameter"].text().strip()
+        return self._build_result(keys, action, param)
+
+
+class EditLineDialog(BaseDialog):
+    def __init__(self, parent=None, on_added=None, widget=None):
+        self._on_added = on_added
+        self.item = widget
+        super().__init__(parent)
+        self.setWindowTitle("Edit Environment")
+        self.resize(800, 300)
+
+        env_label = QLabel("Edit Environment: ")
+        self.env_edit_line = QLineEdit()
+        self.env_edit_line.setText(self._on_added)
+        button_apply = QPushButton("Apply")
+        button_apply.clicked.connect(self.apply_new_env)
+
+        layout_h = QHBoxLayout()
+        layout_h.addWidget(env_label)
+        layout_h.addWidget(self.env_edit_line)
+
+        layout = QVBoxLayout()
+        layout.addLayout(layout_h)
+        layout.addWidget(button_apply)
+        self.setLayout(layout)
+
+    def apply_new_env(self):
+        new_text = self.env_edit_line.text()
+        old_text = self._on_added
+
+        if self.item is not None and old_text is not None:
+            self.item.setText(new_text)
+            self._update_config(old_text, new_text)
+            self.accept()
+        else:
+            pass
+
+    def _update_config(self, old_entry: str, new_entry: str):
+        old_line = f"hl.env({old_entry})\n"
+        new_line = f"hl.env({new_entry})\n"
+
+        try:
+            with open(app_config.CONFIG_FILE_LUA, "r") as f:
+                content = f.read()
+            content = content.replace(old_line, new_line, 1)
+            with open(app_config.CONFIG_FILE_LUA, "w") as f:
+                f.write(content)
+        except OSError as e:
+            print(f"Error writing config: {e}")
+
+
+class EditWindowRule(BaseDialog):
+    def __init__(self, rule_block: str = "", parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Edit Window Rule" if rule_block else "Add Window Rule")
+        self.original = rule_block
+        self._build_ui(rule_block)
+        self.resize(820, 420)
+
+    @staticmethod
+    def _parse(block: str) -> dict[str, str]:
+        def find(key: str) -> str:
+            m = re.search(rf'{key}\s*=\s*(".*?"|true|false|\{{[^}}]*\}}|\S+)', block)
+            return m.group(1).strip().strip('"') if m else ""
+
+        match_block = re.search(r"match\s*=\s*\{([^}]*)\}", block)
+        match_str = match_block.group(1).strip() if match_block else ""
+
+        return {
+            "name": find("name"),
+            "match": match_str,
+            "float": find("float"),
+            "animation": find("animation"),
+            "size": find("size"),
+        }
+
+    @staticmethod
+    def _build_result(fields: dict[str, str]) -> str:
+        lines = ["hl.window_rule({"]
+
+        if fields["name"]:
+            lines.append(f'    name      = "{fields["name"]}",')
+        if fields["match"]:
+            lines.append(f"    match     = {{ {fields['match']} }},")
+        if fields["float"]:
+            lines.append(f"    float     = {fields['float']},")
+        if fields["animation"]:
+            lines.append(f'    animation = "{fields["animation"]}",')
+        if fields["size"]:
+            lines.append(f"    size      = {fields['size']},")
+
+        lines.append("})")
+        return "\n".join(lines)
+
+    def _build_ui(self, block: str):
+        parsed = (
+            self._parse(block)
+            if block
+            else {
+                "name": "",
+                "match": "",
+                "float": "",
+                "animation": "",
+                "size": "",
+            }
+        )
+
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+        self._fields = {}
+
+        field_defs = [
+            ("Name", parsed["name"], "z.B. fileManager"),
+            ("Match", parsed["match"], 'z.B. class = "org.*"'),
+            ("Float", parsed["float"], "true oder false"),
+            ("Animation", parsed["animation"], "z.B. slide top"),
+            ("Size", parsed["size"], "z.B. {1200, 700}"),
+        ]
+
+        for label_text, default, placeholder in field_defs:
+            row = QHBoxLayout()
+            lbl = QLabel(f"{label_text}:")
+            lbl.setFixedWidth(90)
+            lbl.setAlignment(
+                Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+            )
+            row.addWidget(lbl)
+            edit = QLineEdit(default)
+            edit.setPlaceholderText(placeholder)
+            row.addWidget(edit)
+            self._fields[label_text] = edit
+            layout.addLayout(row)
+
+        self._preview = QLabel()
+        self._preview.setStyleSheet(
+            "color: palette(mid); font-family: monospace; font-size: 11px;"
+        )
+        self._preview.setWordWrap(True)
+        layout.addWidget(self._preview)
+
+        for field in self._fields.values():
+            field.textChanged.connect(self._update_preview)
+        self._update_preview()
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def _update_preview(self):
+        self._preview.setText(f"  ↳  {self.get_result()}")
+
+    def get_result(self) -> str:
+        return self._build_result(
+            {
+                "name": self._fields["Name"].text().strip(),
+                "match": self._fields["Match"].text().strip(),
+                "float": self._fields["Float"].text().strip(),
+                "animation": self._fields["Animation"].text().strip(),
+                "size": self._fields["Size"].text().strip(),
+            }
+        )

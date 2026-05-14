@@ -1,7 +1,6 @@
 from PySide6.QtCore import (
     Property,
     QEasingCurve,
-    QPoint,
     QPropertyAnimation,
     QSize,
     Qt,

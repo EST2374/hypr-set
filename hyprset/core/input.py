@@ -5,7 +5,7 @@ from typing import Callable
 import hyprset.config as app_config
 
 from .config_utils import replace_in_config
-from .look import _find_block_span, _read_value_in_block, _replace_key_in_block
+from .look import _find_block_span, _replace_key_in_block
 
 
 @dataclass
@@ -101,7 +101,6 @@ def get_cur_follow_mouse() -> str:
 
 
 def follow_mouse_change(text: str):
-    import re
 
     code = FOLLOW_MOUSE[text]
     try:

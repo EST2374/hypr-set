@@ -30,6 +30,7 @@ BOOL_DEFAULTS: dict[str, str] = {
     "shadow_enable": "true",
 }
 
+
 LUA_SETTING_MAP: dict[str, tuple[str, str]] = {
     "gaps_in": ("general", "gaps_in"),
     "gaps_out": ("general", "gaps_out"),
@@ -123,11 +124,11 @@ def better_cur_value(setting: str) -> int | float:
     block, lua_key = LUA_SETTING_MAP[setting]
     value = _read_value_in_block(block, lua_key)
     if value is None:
-        return DEFAULTS.get(setting, 0.0)
+        return 0.0
     try:
         return float(value)
     except ValueError:
-        return DEFAULTS.get(setting, 0.0)
+        return 0.0
 
 
 def better_cur_status(setting: str) -> str:
@@ -155,9 +156,9 @@ def read_bool_lua(setting: str) -> bool:
 def get_angle() -> int:
     value = _read_value_in_block("active_border", "angle")
     try:
-        return int(value) if value is not None else int(DEFAULTS["angle"])
+        return int(value) if value is not None else 45
     except ValueError:
-        return int(DEFAULTS["angle"])
+        return 45
 
 
 def change_angle_value(value: int):
@@ -224,3 +225,14 @@ def change_bool_lua(setting: str):
 
     with open(app_config.CONFIG_FILE_LUA, "w") as f:
         f.write(content)
+
+
+def reset_to_defaults():
+    for setting, value in DEFAULTS.items():
+        write_setting_lua(setting, value)
+    for setting in BOOL_DEFAULTS:
+        block, lua_key = LUA_BOOL_MAP[setting]
+        current = _read_bool_lua(block, lua_key)
+        target = BOOL_DEFAULTS[setting] == "true"
+        if current != target:
+            change_bool_lua(setting)

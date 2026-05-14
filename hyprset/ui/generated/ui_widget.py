@@ -27,7 +27,7 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(835, 660)
+        Widget.resize(835, 679)
         self.dark_theme_button = QAction(Widget)
         self.dark_theme_button.setObjectName(u"dark_theme_button")
         self.light_theme_button = QAction(Widget)
@@ -45,6 +45,7 @@ class Ui_Widget(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.listWidget = QListWidget(self.centralwidget)
+        QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
         QListWidgetItem(self.listWidget)
@@ -308,7 +309,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 657, 664))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 471, 678))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -996,14 +997,55 @@ class Ui_Widget(object):
         self.Hyprland_Menu_Settings.addTab(self.keybinds_tab, "")
         self.windowrules_tab = QWidget()
         self.windowrules_tab.setObjectName(u"windowrules_tab")
-        self.verticalLayout_9 = QVBoxLayout(self.windowrules_tab)
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout_9.setContentsMargins(24, 24, 24, 24)
-        self.windowrules_placeholder_label = QLabel(self.windowrules_tab)
-        self.windowrules_placeholder_label.setObjectName(u"windowrules_placeholder_label")
-        self.windowrules_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.windowrules_outer_vl = QVBoxLayout(self.windowrules_tab)
+        self.windowrules_outer_vl.setSpacing(16)
+        self.windowrules_outer_vl.setObjectName(u"windowrules_outer_vl")
+        self.windowrules_outer_vl.setContentsMargins(24, 24, 24, 24)
+        self.windowrules_group = QGroupBox(self.windowrules_tab)
+        self.windowrules_group.setObjectName(u"windowrules_group")
+        self.windowrules_inner_vl = QVBoxLayout(self.windowrules_group)
+        self.windowrules_inner_vl.setSpacing(12)
+        self.windowrules_inner_vl.setObjectName(u"windowrules_inner_vl")
+        self.windowrules_inner_vl.setContentsMargins(16, 24, 16, 16)
+        self.window_rule_listWidget = QListWidget(self.windowrules_group)
+        self.window_rule_listWidget.setObjectName(u"window_rule_listWidget")
 
-        self.verticalLayout_9.addWidget(self.windowrules_placeholder_label)
+        self.windowrules_inner_vl.addWidget(self.window_rule_listWidget)
+
+        self.windowrules_btn_hl = QHBoxLayout()
+        self.windowrules_btn_hl.setSpacing(8)
+        self.windowrules_btn_hl.setObjectName(u"windowrules_btn_hl")
+        self.add_window_rule_button = QPushButton(self.windowrules_group)
+        self.add_window_rule_button.setObjectName(u"add_window_rule_button")
+        self.add_window_rule_button.setMinimumSize(QSize(0, 34))
+
+        self.windowrules_btn_hl.addWidget(self.add_window_rule_button)
+
+        self.windowrules_btn_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.windowrules_btn_hl.addItem(self.windowrules_btn_spacer)
+
+        self.edit_window_rule_button = QPushButton(self.windowrules_group)
+        self.edit_window_rule_button.setObjectName(u"edit_window_rule_button")
+        self.edit_window_rule_button.setMinimumSize(QSize(0, 34))
+
+        self.windowrules_btn_hl.addWidget(self.edit_window_rule_button)
+
+        self.delete_window_rule_button = QPushButton(self.windowrules_group)
+        self.delete_window_rule_button.setObjectName(u"delete_window_rule_button")
+        self.delete_window_rule_button.setMinimumSize(QSize(0, 34))
+
+        self.windowrules_btn_hl.addWidget(self.delete_window_rule_button)
+
+
+        self.windowrules_inner_vl.addLayout(self.windowrules_btn_hl)
+
+
+        self.windowrules_outer_vl.addWidget(self.windowrules_group)
+
+        self.windowrules_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.windowrules_outer_vl.addItem(self.windowrules_bottom_spacer)
 
         self.Hyprland_Menu_Settings.addTab(self.windowrules_tab, "")
         self.files_tab = QWidget()
@@ -1293,6 +1335,9 @@ class Ui_Widget(object):
         self.verticalLayout_6.addLayout(self.wallpaper_layout)
 
         self.stackedWidget.addWidget(self.wallpaper_page)
+        self.font_cursor_page = QWidget()
+        self.font_cursor_page.setObjectName(u"font_cursor_page")
+        self.stackedWidget.addWidget(self.font_cursor_page)
         self.plugins_page = QWidget()
         self.plugins_page.setObjectName(u"plugins_page")
         self.verticalLayout_7 = QVBoxLayout(self.plugins_page)
@@ -1392,7 +1437,7 @@ class Ui_Widget(object):
         self.retranslateUi(Widget)
 
         self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(0)
+        self.Hyprland_Menu_Settings.setCurrentIndex(6)
         self.keybinds_tabWidget.setCurrentIndex(0)
         self.ecosystem_tabWidget.setCurrentIndex(1)
 
@@ -1421,9 +1466,11 @@ class Ui_Widget(object):
         ___qlistwidgetitem4 = self.listWidget.item(4)
         ___qlistwidgetitem4.setText(QCoreApplication.translate("Widget", u"Wallpaper", None))
         ___qlistwidgetitem5 = self.listWidget.item(5)
-        ___qlistwidgetitem5.setText(QCoreApplication.translate("Widget", u"Plugins", None))
+        ___qlistwidgetitem5.setText(QCoreApplication.translate("Widget", u"Cursor & Fonts", None))
         ___qlistwidgetitem6 = self.listWidget.item(6)
-        ___qlistwidgetitem6.setText(QCoreApplication.translate("Widget", u"Update", None))
+        ___qlistwidgetitem6.setText(QCoreApplication.translate("Widget", u"Plugins", None))
+        ___qlistwidgetitem7 = self.listWidget.item(7)
+        ___qlistwidgetitem7.setText(QCoreApplication.translate("Widget", u"Update", None))
         self.listWidget.setSortingEnabled(__sortingEnabled)
 
         self.monitor_group.setTitle(QCoreApplication.translate("Widget", u"Display Configuration", None))
@@ -1507,7 +1554,10 @@ class Ui_Widget(object):
         self.delete_multimedia_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.keybinds_tabWidget.setTabText(self.keybinds_tabWidget.indexOf(self.multimedia_tab), QCoreApplication.translate("Widget", u"Multimedia", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.keybinds_tab), QCoreApplication.translate("Widget", u"Keybindings", None))
-        self.windowrules_placeholder_label.setText(QCoreApplication.translate("Widget", u"Window Rules \u2014 coming soon", None))
+        self.windowrules_group.setTitle(QCoreApplication.translate("Widget", u"Window Rules", None))
+        self.add_window_rule_button.setText(QCoreApplication.translate("Widget", u"Add", None))
+        self.edit_window_rule_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
+        self.delete_window_rule_button.setText(QCoreApplication.translate("Widget", u"Delete", None))
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.windowrules_tab), QCoreApplication.translate("Widget", u"Window Rules", None))
         self.config_files_group.setTitle(QCoreApplication.translate("Widget", u"Config File Paths", None))
         self.current_config_file_label.setText(QCoreApplication.translate("Widget", u"Hyprland:", None))
@@ -1542,14 +1592,14 @@ class Ui_Widget(object):
 
         __sortingEnabled1 = self.plugins_list.isSortingEnabled()
         self.plugins_list.setSortingEnabled(False)
-        ___qlistwidgetitem7 = self.plugins_list.item(0)
-        ___qlistwidgetitem7.setText(QCoreApplication.translate("Widget", u"Hyprbars", None))
-        ___qlistwidgetitem8 = self.plugins_list.item(1)
-        ___qlistwidgetitem8.setText(QCoreApplication.translate("Widget", u"Hy3", None))
-        ___qlistwidgetitem9 = self.plugins_list.item(2)
-        ___qlistwidgetitem9.setText(QCoreApplication.translate("Widget", u"Hyprexpo", None))
-        ___qlistwidgetitem10 = self.plugins_list.item(3)
-        ___qlistwidgetitem10.setText(QCoreApplication.translate("Widget", u"Hyprgrass", None))
+        ___qlistwidgetitem8 = self.plugins_list.item(0)
+        ___qlistwidgetitem8.setText(QCoreApplication.translate("Widget", u"Hyprbars", None))
+        ___qlistwidgetitem9 = self.plugins_list.item(1)
+        ___qlistwidgetitem9.setText(QCoreApplication.translate("Widget", u"Hy3", None))
+        ___qlistwidgetitem10 = self.plugins_list.item(2)
+        ___qlistwidgetitem10.setText(QCoreApplication.translate("Widget", u"Hyprexpo", None))
+        ___qlistwidgetitem11 = self.plugins_list.item(3)
+        ___qlistwidgetitem11.setText(QCoreApplication.translate("Widget", u"Hyprgrass", None))
         self.plugins_list.setSortingEnabled(__sortingEnabled1)
 
         self.install_button.setText(QCoreApplication.translate("Widget", u"Install", None))

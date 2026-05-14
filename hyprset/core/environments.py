@@ -10,9 +10,11 @@ def get_current_env() -> list[str]:
         with open(app_config.CONFIG_FILE, "r") as file:
             for line in file:
                 line = line.strip()
-                if line.startswith("hl.env") and not line.startswith("#"):
-                    command = line.split("(", 1)[-1].split(")", 1)[0].strip(" \"'")
-                    all_env.append(command)
+                if line.startswith("hl.env") and not line.startswith("--"):
+                    inner = line.split("(", 1)[-1].split(")", 1)[0]
+                    parts = re.findall(r'"([^"]*)"', inner)
+                    if parts:
+                        all_env.append(", ".join(f'"{p}"' for p in parts))
         return all_env
     except FileNotFoundError:
         print(f"Error: {app_config.CONFIG_FILE} not found.")
@@ -24,12 +26,13 @@ def add_env(command: str) -> bool:
         with open(app_config.CONFIG_FILE, "r") as f:
             content = f.read()
 
-        if f"hl.env({command})" in content:
+        entry_inner = command
+        new_entry = f"hl.env({entry_inner})\n"
+
+        if f"hl.env({entry_inner})" in content:
             return False
 
-        new_entry = f'hl.env("{command}")\n'
         pattern = r"(.*hl\.env\(.*\)\s*\n)(?![\s\S]*hl\.env)"
-
         match = re.search(pattern, content)
         if match:
             content = re.sub(pattern, r"\1" + new_entry, content)
@@ -45,14 +48,18 @@ def add_env(command: str) -> bool:
 
 
 def del_env(entry: str) -> bool:
-    target = f'hl.env("{entry}")'
+    entry_normalized = re.sub(r"\s*,\s*", ",", entry)
     try:
         with open(app_config.CONFIG_FILE, "r") as f:
             lines = f.readlines()
         with open(app_config.CONFIG_FILE, "w") as f:
             for line in lines:
-                if not line.strip().startswith(target):
-                    f.write(line)
+                inner = re.search(r"hl\.env\((.+)\)", line.strip())
+                if inner:
+                    inner_normalized = re.sub(r"\s*,\s*", ",", inner.group(1))
+                    if inner_normalized == entry_normalized:
+                        continue
+                f.write(line)
         return True
     except Exception:
         return False
