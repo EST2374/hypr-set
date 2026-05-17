@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Protocol, cast
 
 from PySide6.QtWidgets import (
     QMessageBox,
+    QWidget,
 )
 
 from hyprset.core.keybindings import (
@@ -115,7 +116,7 @@ class KeybindControllerMixin(_Base):
 
     def set_default_keybinds_config(self):
         reply = QMessageBox.question(
-            self,
+            cast(QWidget, self),
             "Reset to Defaults",
             "Are you sure you want to reset all keybindings to default?\nThis cannot be undone.",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel,

@@ -1,14 +1,18 @@
 import os
 import sys
 import webbrowser
+from pathlib import Path
 
-from PySide6.QtCore import QSettings
 from PySide6.QtWidgets import QApplication, QMainWindow
 
 import hyprset.config as app_config
 
 from ..styles import Theme, toggle_theme
 from .controllers.autostart_and_env_controller import AutostartControllerMixin
+from .controllers.cursor_controller import CursorControllerMixin
+from .controllers.hypridle_controller import HypridleControllerMixin
+from .controllers.hyprpaper_controller import HyprpaperControllerMixin
+from .controllers.hyprsunset_controller import HyprsunsetControllerMixin
 from .controllers.input_controller import InputControllerMixin
 from .controllers.keybindings_controller import KeybindControllerMixin
 from .controllers.look_controller import LookControllerMixin
@@ -45,6 +49,10 @@ class Widget(
     MonitorControllerMixin,
     WallpaperMixin,
     WindowRuleControllerMixin,
+    HyprpaperControllerMixin,
+    HyprsunsetControllerMixin,
+    HypridleControllerMixin,
+    CursorControllerMixin,
 ):
     def __init__(self):
         super().__init__()
@@ -53,6 +61,7 @@ class Widget(
 
         # Sidebar
         self.listWidget.currentRowChanged.connect(self.stackedWidget.setCurrentIndex)
+        self.listWidget.currentRowChanged.connect(self._on_sidebar_changed)
 
         # Menu bar
         self.quit_program.triggered.connect(QApplication.quit)
@@ -80,6 +89,10 @@ class Widget(
         self._setup_windowrule_tab()
         self._setup_network_tab()
         self._setup_wallpaper_tab()
+        self._setup_hyprpaper_tab()
+        self._setup_hyprsunset_tab()
+        self._setup_hypridle_tab()
+        self._setup_cursor_tab()
 
         # Update Button
         self.update_pushButton.clicked.connect(self.update_menu)
@@ -99,9 +112,35 @@ class Widget(
         QApplication.quit()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-    def update_menu(self):
-        from .dialogs import Update
+    def _on_sidebar_changed(self, index: int):
+        if index == 2:
+            self._ensure_hyprpaper_conf()
 
+    def _ensure_hyprpaper_conf(self):
+        from ..core.monitor import get_monitor_names
+
+        path = Path(app_config.HYPRPAPER_FILE)
+        if path.exists():
+            return
+
+        monitors = get_monitor_names()
+        if not monitors:
+            monitors = [""]
+
+        lines = []
+        for name in monitors:
+            lines.append(
+                f"wallpaper {{\n"
+                f"    monitor  = {name}\n"
+                f"    path     = \n"
+                f"    fit_mode = cover\n"
+                f"}}\n"
+            )
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("\n".join(lines))
+
+    def update_menu(self):
         dialog = Update(self)
         dialog.center_on_parent()
         dialog.exec()

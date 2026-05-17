@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.11.0
+## Created by: Qt User Interface Compiler version 6.11.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,11 +17,12 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox,
-    QFormLayout, QFrame, QGroupBox, QHBoxLayout,
-    QLabel, QListWidget, QListWidgetItem, QMainWindow,
-    QMenu, QMenuBar, QPushButton, QScrollArea,
-    QSizePolicy, QSpacerItem, QSpinBox, QStackedWidget,
-    QStatusBar, QTabWidget, QVBoxLayout, QWidget)
+    QFormLayout, QFrame, QGridLayout, QGroupBox,
+    QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
+    QStackedWidget, QStatusBar, QTabWidget, QVBoxLayout,
+    QWidget)
 
 class Ui_Widget(object):
     def setupUi(self, Widget):
@@ -59,8 +60,8 @@ class Ui_Widget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.listWidget.sizePolicy().hasHeightForWidth())
         self.listWidget.setSizePolicy(sizePolicy)
-        self.listWidget.setMinimumSize(QSize(160, 0))
-        self.listWidget.setMaximumSize(QSize(160, 16777215))
+        self.listWidget.setMinimumSize(QSize(190, 0))
+        self.listWidget.setMaximumSize(QSize(190, 16777215))
         self.listWidget.setFrameShape(QFrame.Shape.NoFrame)
         self.listWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.listWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
@@ -309,7 +310,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 471, 678))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 627, 678))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -1223,29 +1224,112 @@ class Ui_Widget(object):
         self.ecosystem_tabWidget.addTab(self.hyprlock_tab, "")
         self.hypridle_tab = QWidget()
         self.hypridle_tab.setObjectName(u"hypridle_tab")
+        self.verticalLayout_18 = QVBoxLayout(self.hypridle_tab)
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.verticalLayout_17 = QVBoxLayout()
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.hypridle_listWidget = QListWidget(self.hypridle_tab)
+        self.hypridle_listWidget.setObjectName(u"hypridle_listWidget")
+
+        self.verticalLayout_17.addWidget(self.hypridle_listWidget)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.hypridle_install_button = QPushButton(self.hypridle_tab)
+        self.hypridle_install_button.setObjectName(u"hypridle_install_button")
+
+        self.horizontalLayout_5.addWidget(self.hypridle_install_button)
+
+        self.hypridle_add_button = QPushButton(self.hypridle_tab)
+        self.hypridle_add_button.setObjectName(u"hypridle_add_button")
+
+        self.horizontalLayout_5.addWidget(self.hypridle_add_button)
+
+        self.hypridle_edit_button = QPushButton(self.hypridle_tab)
+        self.hypridle_edit_button.setObjectName(u"hypridle_edit_button")
+
+        self.horizontalLayout_5.addWidget(self.hypridle_edit_button)
+
+        self.hypridle_remove_button = QPushButton(self.hypridle_tab)
+        self.hypridle_remove_button.setObjectName(u"hypridle_remove_button")
+
+        self.horizontalLayout_5.addWidget(self.hypridle_remove_button)
+
+
+        self.verticalLayout_17.addLayout(self.horizontalLayout_5)
+
+
+        self.verticalLayout_18.addLayout(self.verticalLayout_17)
+
         self.ecosystem_tabWidget.addTab(self.hypridle_tab, "")
         self.hyprsunset_tab = QWidget()
         self.hyprsunset_tab.setObjectName(u"hyprsunset_tab")
-        self.hyprsunset_tab_vl = QVBoxLayout(self.hyprsunset_tab)
-        self.hyprsunset_tab_vl.setObjectName(u"hyprsunset_tab_vl")
-        self.hyprsunset_tab_vl.setContentsMargins(24, 24, 24, 24)
-        self.hyprsunset_placeholder_label = QLabel(self.hyprsunset_tab)
-        self.hyprsunset_placeholder_label.setObjectName(u"hyprsunset_placeholder_label")
-        self.hyprsunset_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_13 = QVBoxLayout(self.hyprsunset_tab)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_12 = QVBoxLayout()
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.hyprsunset_listWidget = QListWidget(self.hyprsunset_tab)
+        self.hyprsunset_listWidget.setObjectName(u"hyprsunset_listWidget")
 
-        self.hyprsunset_tab_vl.addWidget(self.hyprsunset_placeholder_label)
+        self.verticalLayout_12.addWidget(self.hyprsunset_listWidget)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.install_hyprsunset_button = QPushButton(self.hyprsunset_tab)
+        self.install_hyprsunset_button.setObjectName(u"install_hyprsunset_button")
+
+        self.horizontalLayout_4.addWidget(self.install_hyprsunset_button)
+
+        self.add_hyprsunset_button = QPushButton(self.hyprsunset_tab)
+        self.add_hyprsunset_button.setObjectName(u"add_hyprsunset_button")
+
+        self.horizontalLayout_4.addWidget(self.add_hyprsunset_button)
+
+        self.edit_hyprsunset_button = QPushButton(self.hyprsunset_tab)
+        self.edit_hyprsunset_button.setObjectName(u"edit_hyprsunset_button")
+
+        self.horizontalLayout_4.addWidget(self.edit_hyprsunset_button)
+
+        self.pushButton_4 = QPushButton(self.hyprsunset_tab)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+
+        self.horizontalLayout_4.addWidget(self.pushButton_4)
+
+
+        self.verticalLayout_12.addLayout(self.horizontalLayout_4)
+
+
+        self.verticalLayout_13.addLayout(self.verticalLayout_12)
 
         self.ecosystem_tabWidget.addTab(self.hyprsunset_tab, "")
         self.hyprpaper_tab = QWidget()
         self.hyprpaper_tab.setObjectName(u"hyprpaper_tab")
-        self.hyprpaper_tab_vl = QVBoxLayout(self.hyprpaper_tab)
-        self.hyprpaper_tab_vl.setObjectName(u"hyprpaper_tab_vl")
-        self.hyprpaper_tab_vl.setContentsMargins(24, 24, 24, 24)
-        self.hyprpaper_placeholder_label = QLabel(self.hyprpaper_tab)
-        self.hyprpaper_placeholder_label.setObjectName(u"hyprpaper_placeholder_label")
-        self.hyprpaper_placeholder_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_11 = QVBoxLayout(self.hyprpaper_tab)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_9 = QVBoxLayout()
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.hyprpaper_listWidget = QListWidget(self.hyprpaper_tab)
+        self.hyprpaper_listWidget.setObjectName(u"hyprpaper_listWidget")
 
-        self.hyprpaper_tab_vl.addWidget(self.hyprpaper_placeholder_label)
+        self.verticalLayout_9.addWidget(self.hyprpaper_listWidget)
+
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.hyprpaper_install_button = QPushButton(self.hyprpaper_tab)
+        self.hyprpaper_install_button.setObjectName(u"hyprpaper_install_button")
+
+        self.horizontalLayout_3.addWidget(self.hyprpaper_install_button)
+
+        self.edit_wp_button = QPushButton(self.hyprpaper_tab)
+        self.edit_wp_button.setObjectName(u"edit_wp_button")
+
+        self.horizontalLayout_3.addWidget(self.edit_wp_button)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_3)
+
+
+        self.verticalLayout_11.addLayout(self.verticalLayout_9)
 
         self.ecosystem_tabWidget.addTab(self.hyprpaper_tab, "")
 
@@ -1323,6 +1407,11 @@ class Ui_Widget(object):
 
         self.choose_folder_layout.addItem(self.choose_folder_horizontalSpacer)
 
+        self.wp_monitor_comboBox = QComboBox(self.wallpaper_page)
+        self.wp_monitor_comboBox.setObjectName(u"wp_monitor_comboBox")
+
+        self.choose_folder_layout.addWidget(self.wp_monitor_comboBox)
+
 
         self.wallpaper_layout.addLayout(self.choose_folder_layout)
 
@@ -1337,6 +1426,81 @@ class Ui_Widget(object):
         self.stackedWidget.addWidget(self.wallpaper_page)
         self.font_cursor_page = QWidget()
         self.font_cursor_page.setObjectName(u"font_cursor_page")
+        self.cursor_page_hl = QHBoxLayout(self.font_cursor_page)
+        self.cursor_page_hl.setSpacing(16)
+        self.cursor_page_hl.setObjectName(u"cursor_page_hl")
+        self.cursor_page_hl.setContentsMargins(24, 20, 24, 24)
+        self.cursor_left_vl = QVBoxLayout()
+        self.cursor_left_vl.setSpacing(12)
+        self.cursor_left_vl.setObjectName(u"cursor_left_vl")
+        self.cursor_listWidget = QListWidget(self.font_cursor_page)
+        self.cursor_listWidget.setObjectName(u"cursor_listWidget")
+
+        self.cursor_left_vl.addWidget(self.cursor_listWidget)
+
+        self.cursor_btn_hl = QHBoxLayout()
+        self.cursor_btn_hl.setSpacing(8)
+        self.cursor_btn_hl.setObjectName(u"cursor_btn_hl")
+        self.set_default_cursor_button = QPushButton(self.font_cursor_page)
+        self.set_default_cursor_button.setObjectName(u"set_default_cursor_button")
+        self.set_default_cursor_button.setMinimumSize(QSize(0, 34))
+
+        self.cursor_btn_hl.addWidget(self.set_default_cursor_button)
+
+        self.select_cursor_button = QPushButton(self.font_cursor_page)
+        self.select_cursor_button.setObjectName(u"select_cursor_button")
+        self.select_cursor_button.setMinimumSize(QSize(0, 34))
+
+        self.cursor_btn_hl.addWidget(self.select_cursor_button)
+
+        self.browse_cursor_button = QPushButton(self.font_cursor_page)
+        self.browse_cursor_button.setObjectName(u"browse_cursor_button")
+        self.browse_cursor_button.setMinimumSize(QSize(0, 34))
+
+        self.cursor_btn_hl.addWidget(self.browse_cursor_button)
+
+
+        self.cursor_left_vl.addLayout(self.cursor_btn_hl)
+
+
+        self.cursor_page_hl.addLayout(self.cursor_left_vl)
+
+        self.cursor_preview_group = QGroupBox(self.font_cursor_page)
+        self.cursor_preview_group.setObjectName(u"cursor_preview_group")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.cursor_preview_group.sizePolicy().hasHeightForWidth())
+        self.cursor_preview_group.setSizePolicy(sizePolicy4)
+        self.cursor_preview_group.setMinimumSize(QSize(220, 0))
+        self.cursor_preview_group.setMaximumSize(QSize(220, 16777215))
+        self.cursor_preview_vl = QVBoxLayout(self.cursor_preview_group)
+        self.cursor_preview_vl.setSpacing(12)
+        self.cursor_preview_vl.setObjectName(u"cursor_preview_vl")
+        self.cursor_preview_vl.setContentsMargins(12, 16, 12, 12)
+        self.cursor_theme_name_label = QLabel(self.cursor_preview_group)
+        self.cursor_theme_name_label.setObjectName(u"cursor_theme_name_label")
+        self.cursor_theme_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.cursor_preview_vl.addWidget(self.cursor_theme_name_label)
+
+        self.cursor_preview_frame = QFrame(self.cursor_preview_group)
+        self.cursor_preview_frame.setObjectName(u"cursor_preview_frame")
+        self.cursor_preview_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.cursor_grid_layout = QGridLayout(self.cursor_preview_frame)
+        self.cursor_grid_layout.setSpacing(8)
+        self.cursor_grid_layout.setObjectName(u"cursor_grid_layout")
+        self.cursor_grid_layout.setContentsMargins(8, 8, 8, 8)
+
+        self.cursor_preview_vl.addWidget(self.cursor_preview_frame)
+
+        self.cursor_preview_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.cursor_preview_vl.addItem(self.cursor_preview_spacer)
+
+
+        self.cursor_page_hl.addWidget(self.cursor_preview_group)
+
         self.stackedWidget.addWidget(self.font_cursor_page)
         self.plugins_page = QWidget()
         self.plugins_page.setObjectName(u"plugins_page")
@@ -1436,10 +1600,10 @@ class Ui_Widget(object):
 
         self.retranslateUi(Widget)
 
-        self.stackedWidget.setCurrentIndex(0)
-        self.Hyprland_Menu_Settings.setCurrentIndex(6)
+        self.stackedWidget.setCurrentIndex(5)
+        self.Hyprland_Menu_Settings.setCurrentIndex(0)
         self.keybinds_tabWidget.setCurrentIndex(0)
-        self.ecosystem_tabWidget.setCurrentIndex(1)
+        self.ecosystem_tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -1466,7 +1630,7 @@ class Ui_Widget(object):
         ___qlistwidgetitem4 = self.listWidget.item(4)
         ___qlistwidgetitem4.setText(QCoreApplication.translate("Widget", u"Wallpaper", None))
         ___qlistwidgetitem5 = self.listWidget.item(5)
-        ___qlistwidgetitem5.setText(QCoreApplication.translate("Widget", u"Cursor & Fonts", None))
+        ___qlistwidgetitem5.setText(QCoreApplication.translate("Widget", u"Cursor", None))
         ___qlistwidgetitem6 = self.listWidget.item(6)
         ___qlistwidgetitem6.setText(QCoreApplication.translate("Widget", u"Plugins", None))
         ___qlistwidgetitem7 = self.listWidget.item(7)
@@ -1579,16 +1743,29 @@ class Ui_Widget(object):
         self.label.setText(QCoreApplication.translate("Widget", u"Defaul Apps - coming soon", None))
         self.hyprlock_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprlock configuration \u2014 coming soon", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprlock_tab), QCoreApplication.translate("Widget", u"Hyprlock", None))
+        self.hypridle_install_button.setText(QCoreApplication.translate("Widget", u"Install Hypridle", None))
+        self.hypridle_add_button.setText(QCoreApplication.translate("Widget", u"Add", None))
+        self.hypridle_edit_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
+        self.hypridle_remove_button.setText(QCoreApplication.translate("Widget", u"Remove", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hypridle_tab), QCoreApplication.translate("Widget", u"Hypridle", None))
-        self.hyprsunset_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprsunset configuration \u2014 coming soon", None))
+        self.install_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Install Hyprsunset", None))
+        self.add_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Add", None))
+        self.edit_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
+        self.pushButton_4.setText(QCoreApplication.translate("Widget", u"Remove", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprsunset_tab), QCoreApplication.translate("Widget", u"Hyprsunset", None))
-        self.hyprpaper_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprpaper configuration \u2014 coming soon", None))
+        self.hyprpaper_install_button.setText(QCoreApplication.translate("Widget", u"Install Hyprpaper", None))
+        self.edit_wp_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprpaper_tab), QCoreApplication.translate("Widget", u"Hyprpaper", None))
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
         self.wifi_refresh_button.setText(QCoreApplication.translate("Widget", u"Refresh", None))
         self.wifi_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
         self.choose_folder_button.setText(QCoreApplication.translate("Widget", u"Choose Folder", None))
         self.folder_label.setText("")
+        self.set_default_cursor_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.select_cursor_button.setText(QCoreApplication.translate("Widget", u"Select", None))
+        self.browse_cursor_button.setText(QCoreApplication.translate("Widget", u"Browse Themes", None))
+        self.cursor_preview_group.setTitle(QCoreApplication.translate("Widget", u"Preview", None))
+        self.cursor_theme_name_label.setText(QCoreApplication.translate("Widget", u"\u2014", None))
 
         __sortingEnabled1 = self.plugins_list.isSortingEnabled()
         self.plugins_list.setSortingEnabled(False)

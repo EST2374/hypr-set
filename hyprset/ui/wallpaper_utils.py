@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Protocol
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
+    QComboBox,
     QFileDialog,
     QLabel,
     QListWidget,
@@ -15,6 +16,8 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
+from ..core.monitor import get_monitor_names
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QListWidget
@@ -25,6 +28,7 @@ if TYPE_CHECKING:
         gallery: QListWidget
         listWidget: QListWidget
         wallpaper_page: QWidget
+        wp_monitor_comboBox: QComboBox
 
     _Base = _WallpaperWidget
 else:
@@ -49,6 +53,7 @@ class WallpaperMixin(_Base):
         self.choose_folder_button.clicked.connect(self.browse_wallpaper_folder)
         self.gallery.itemDoubleClicked.connect(self.apply_wallpaper)
         self.listWidget.currentItemChanged.connect(self.deload_wps)
+        self.wp_monitor_comboBox.addItems(get_monitor_names())
 
     def setup_wallpaper_gallery(self):
         self.gallery.setViewMode(QListWidget.ViewMode.IconMode)
@@ -87,9 +92,10 @@ class WallpaperMixin(_Base):
 
     def apply_wallpaper(self, item):
         try:
+            mon_name = self.wp_monitor_comboBox.currentText()
             full_path = f"{self.folder_label.text()}/{item.text()}"
             subprocess.run(
-                ["hyprctl", "hyprpaper", "wallpaper", f",{full_path}"],
+                ["hyprctl", "hyprpaper", "wallpaper", f"{mon_name},{full_path}"],
                 capture_output=True,
                 text=True,
                 check=True,

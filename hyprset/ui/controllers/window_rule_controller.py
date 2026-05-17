@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol
 
 from ...core.window_rule import (
+    add_window_rule,
+    delete_window_rule,
     get_all_window_rules,
     get_window_rule_by_name,
     get_window_rule_names,
@@ -32,6 +34,21 @@ class WindowRuleControllerMixin(_Base):
             lambda: self._edit_window_rule(self.window_rule_listWidget.currentItem())
         )
         self.window_rule_listWidget.itemDoubleClicked.connect(self._edit_window_rule)
+        self.add_window_rule_button.clicked.connect(self._add_window_rule)
+        self.delete_window_rule_button.clicked.connect(self._delete_window_rule)
+
+    def _add_window_rule(self):
+        dialog = EditWindowRule(parent=self)
+        dialog.center_on_parent()
+        if dialog.exec():
+            add_window_rule(dialog.get_result())
+            self._refresh_window_rules()
+
+    def _refresh_window_rules(self):
+        self.window_rule_listWidget.clear()
+        self.window_rule_listWidget.addItems(
+            get_window_rule_names(get_all_window_rules())
+        )
 
     def _edit_window_rule(self, item: QListWidgetItem):
         name = item.text()
@@ -44,3 +61,12 @@ class WindowRuleControllerMixin(_Base):
         if dialog.exec():
             new_block = dialog.get_result()
             update_window_rule(old_block, new_block)
+
+    def _delete_window_rule(self):
+        item = self.window_rule_listWidget.currentItem()
+        if item is None:
+            return
+        block = get_window_rule_by_name(item.text())
+        if block:
+            delete_window_rule(block)
+            self._refresh_window_rules()

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Protocol, cast
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QColorDialog
+from PySide6.QtWidgets import QColorDialog, QWidget
 
 import hyprset.config as app_config
 
@@ -160,7 +160,7 @@ class LookControllerMixin(_Base):
     def _pick_and_save_color(self, index):
         color = QColorDialog.getColor(
             QColor("white"),
-            self,
+            cast(QWidget, self),
             f"Border Color {index}",
             QColorDialog.ColorDialogOption.ShowAlphaChannel,
         )

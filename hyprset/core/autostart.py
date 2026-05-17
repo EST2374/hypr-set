@@ -120,7 +120,7 @@ def del_autostart(command: str) -> bool:
         with open(app_config.CONFIG_FILE, "r") as f:
             lines = f.readlines()
 
-        new_lines = [l for l in lines if l.strip() not in targets]
+        new_lines = [line for line in lines if line.strip() not in targets]
 
         if len(new_lines) == len(lines):
             return False

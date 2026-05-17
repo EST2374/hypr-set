@@ -14,7 +14,7 @@ def parse_wifi_list(raw_output: str) -> list[dict]:
                 {
                     "ssid": parts[0],
                     "signal": parts[1],
-                    "security": parts[2] if len(parts) > 2 else "Open",
+                    "security": parts[2].strip() if len(parts) > 2 else "",
                 }
             )
     return networks

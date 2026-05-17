@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Protocol, cast
 
-from PySide6.QtCore import QProcess
+from PySide6.QtCore import QObject, QProcess
 from PySide6.QtWidgets import QHBoxLayout, QListWidget
 
 from ...core.network import (
@@ -11,9 +11,7 @@ from ...core.network import (
     parse_wifi_list,
     set_networking,
 )
-from ..dialogs import (
-    Connect_to_Wifi,
-)
+from ..dialogs import Connect_to_Wifi
 from ..toggle_switch import ToggleSwitch
 
 if TYPE_CHECKING:
@@ -32,14 +30,12 @@ else:
 
 class NetworkControllerMixin(_Base):
     def _setup_network_tab(self):
-        # Networking Tab
-        # TODO
-        # For different Security stuff
         self._networking_toggle = ToggleSwitch(self, active_color="#00b0ff")
         self._networking_toggle.setChecked(True)
         self._networking_toggle.stateChanged.connect(self._on_networking_toggled)
-
         self.network_layout.addWidget(self._networking_toggle)
+
+        self._networks: list[dict] = []
 
         self._start_wifi_scan()
         self.wifi_refresh_button.clicked.connect(self._refresh_wifi)
@@ -51,30 +47,34 @@ class NetworkControllerMixin(_Base):
         self._wifi_process.finished.connect(self._handle_wifi_output)
 
     def _handle_wifi_output(self):
-        process = self.sender()
+        process = cast(QObject, self).sender()
         if isinstance(process, QProcess):
             raw_data = process.readAllStandardOutput().data()
             raw = bytes(raw_data).decode("utf-8")
 
-            networks = parse_wifi_list(raw)
+            self._networks = parse_wifi_list(raw)
             self.wifi_list.clear()
             self.wifi_list.addItems(
-                [f"{n['ssid']}  {n['signal']}  {n['security']}" for n in networks]
+                [f"{n['ssid']}  {n['signal']}  {n['security']}" for n in self._networks]
             )
             process.deleteLater()
 
     def _refresh_wifi(self):
         self.wifi_list.clear()
+        self._networks = []
         self._start_wifi_scan()
-
-    def connect_to_wifi(self):
-        dialog = Connect_to_Wifi(ssid="", parent=self)
-        dialog.center_on_parent()
-        dialog.exec()
 
     def _open_wifi_connect_dialog(self, item):
         ssid = item.text().split("  ")[0]
-        dialog = Connect_to_Wifi(ssid, parent=self)
+        security = next(
+            (n["security"] for n in self._networks if n["ssid"] == ssid), ""
+        )
+        dialog = Connect_to_Wifi(ssid, security=security, parent=self)
+        dialog.center_on_parent()
+        dialog.exec()
+
+    def connect_to_wifi(self):
+        dialog = Connect_to_Wifi(ssid="", parent=self)
         dialog.center_on_parent()
         dialog.exec()
 
@@ -86,6 +86,7 @@ class NetworkControllerMixin(_Base):
                 self._start_wifi_scan()
             else:
                 self.wifi_list.clear()
+                self._networks = []
 
         set_networking(enabled=bool(state), on_done=_done)
 

@@ -4,7 +4,6 @@ import hyprset.config as app_config
 
 # TODO
 # Imporve the dialog
-# Add Buttona and delete
 
 
 def get_all_window_rules():
@@ -17,8 +16,8 @@ def get_all_window_rules():
     active_blocks = []
     for block in all_blocks:
         lines = block.splitlines()
-        content_lines = [l.strip() for l in lines[1:] if l.strip()]
-        if any(not l.startswith("--") for l in content_lines):
+        content_lines = [line.strip() for line in lines[1:] if line.strip()]
+        if any(not line.startswith("--") for line in content_lines):
             active_blocks.append(block)
 
     return active_blocks
@@ -41,6 +40,31 @@ def get_window_rule_by_name(name: str) -> str | None:
         if match and match.group(1) == name:
             return block
     return None
+
+
+def add_window_rule(new_block: str) -> bool:
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "a") as f:
+            f.write("\n" + new_block + "\n")
+        return True
+    except OSError as e:
+        print(f"add_window_rule: Error: {e}")
+        return False
+
+
+def delete_window_rule(block: str) -> bool:
+    try:
+        with open(app_config.CONFIG_FILE_LUA, "r") as f:
+            content = f.read()
+        if block not in content:
+            return False
+        content = content.replace(block, "", 1)
+        with open(app_config.CONFIG_FILE_LUA, "w") as f:
+            f.write(content)
+        return True
+    except OSError as e:
+        print(f"delete_window_rule: Error: {e}")
+        return False
 
 
 def update_window_rule(old_block: str, new_block: str) -> bool:

@@ -14,7 +14,7 @@ QWidget {
     background-color: #1a1b26;
     color: #c0caf5;
     font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "FiraCode Nerd Font", "Fira Code", "Cascadia Code", monospace;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 QMainWindow {
@@ -25,7 +25,7 @@ QMainWindow {
 QLabel {
     color: #a9b1d6;
     background: transparent;
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: 0.2px;
 }
 
@@ -36,7 +36,7 @@ QPushButton {
     border: 1px solid #3b4261;
     border-radius: 7px;
     padding: 7px 18px;
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: 0.2px;
     outline: none;
     min-height: 30px;
@@ -425,7 +425,7 @@ QListWidget#listWidget {
     border-radius: 0;
     padding: 10px 0;
     outline: none;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.4px;
 }
@@ -462,7 +462,7 @@ QTabWidget#Hyprland_Menu_Settings > QTabBar::tab {
     border-radius: 7px 7px 0 0;
     padding: 8px 20px;
     margin-right: 3px;
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: 0.3px;
 }
 
@@ -495,7 +495,7 @@ QTabWidget#ecosystem_tabWidget > QTabBar::tab {
     border-radius: 6px 6px 0 0;
     padding: 6px 16px;
     margin-right: 3px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 QTabWidget#keybinds_tabWidget > QTabBar::tab:selected,
@@ -519,7 +519,7 @@ QListWidget {
     color: #c0caf5;
     padding: 4px;
     outline: none;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 QListWidget::item {
@@ -614,7 +614,7 @@ QLineEdit:focus {
 QCheckBox {
     color: #a9b1d6;
     spacing: 9px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 QCheckBox::indicator {
@@ -716,7 +716,7 @@ QToolTip {
     border: 1px solid #414868;
     border-radius: 5px;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 /* ── Menu Bar ───────────────────────────────────────────── */
@@ -725,7 +725,7 @@ QMenuBar {
     color: #a9b1d6;
     border-bottom: 1px solid #24283b;
     padding: 2px 8px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 QMenuBar::item {
@@ -751,7 +751,7 @@ QMenu {
 QMenu::item {
     padding: 7px 22px 7px 14px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 QMenu::item:selected {
@@ -772,7 +772,7 @@ QGroupBox {
     border-radius: 10px;
     margin-top: 18px;
     padding-top: 8px;
-    font-size: 11px;
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -791,7 +791,7 @@ QGroupBox::title {
 
 QGroupBox QLabel {
     color: #a9b1d6;
-    font-size: 12px;
+    font-size: 15px;
     min-width: 110px;
     letter-spacing: 0;
 }
@@ -819,7 +819,7 @@ QGroupBox QPushButton:hover {
 
 QGroupBox QCheckBox {
     color: #c0caf5;
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: 0;
 }
 
@@ -829,8 +829,105 @@ QLabel#hyprlock_placeholder_label,
 QLabel#hyprsunset_placeholder_label,
 QLabel#hyprpaper_placeholder_label {
     color: #414868;
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: 0.3px;
+}
+
+/* ── Theme toggle buttons ───────────────────────────────── */
+QPushButton#dark_theme_button,
+QPushButton#light_theme_button {
+    background-color: #24283b;
+    color: #c0caf5;
+    border: 1px solid #3b4261;
+    border-radius: 7px;
+    font-weight: 500;
+    padding: 7px 18px;
+    min-height: 30px;
+}
+
+QPushButton#dark_theme_button:hover,
+QPushButton#light_theme_button:hover {
+    background-color: #2a2e45;
+    border-color: #7aa2f7;
+    color: #a9b8ff;
+}
+
+QPushButton#dark_theme_button:pressed,
+QPushButton#light_theme_button:pressed {
+    background-color: #5d7bd4;
+    color: #ffffff;
+    border-color: #7aa2f7;
+}
+
+QPushButton#dark_theme_button:checked,
+QPushButton#light_theme_button:checked {
+    background-color: #2d3d7a;
+    color: #7aa2f7;
+    border-color: #7aa2f7;
+}
+
+/* ── Hyprpaper / Hyprsunset install & edit buttons ──────── */
+QPushButton#hyprpaper_install_button,
+QPushButton#install_hyprsunset_button {
+    background-color: #142018;
+    color: #9ece6a;
+    border: 1px solid #264d2e;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#hyprpaper_install_button:hover,
+QPushButton#install_hyprsunset_button:hover {
+    background-color: #1e3326;
+    border-color: #9ece6a;
+    color: #b9e08a;
+}
+
+QPushButton#hyprpaper_install_button:pressed,
+QPushButton#install_hyprsunset_button:pressed {
+    background-color: #264535;
+    border-color: #9ece6a;
+}
+
+QPushButton#add_hyprsunset_button {
+    background-color: #1c2240;
+    color: #7aa2f7;
+    border: 1px solid #2f3f70;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#add_hyprsunset_button:hover {
+    background-color: #243060;
+    border-color: #7aa2f7;
+    color: #a9b8ff;
+}
+
+QPushButton#add_hyprsunset_button:pressed {
+    background-color: #2d3d7a;
+    border-color: #7aa2f7;
+}
+
+QPushButton#edit_hyprsunset_button,
+QPushButton#edit_wp_button {
+    background-color: #24283b;
+    color: #c0caf5;
+    border: 1px solid #3b4261;
+    border-radius: 7px;
+    font-weight: 500;
+}
+
+QPushButton#edit_hyprsunset_button:hover,
+QPushButton#edit_wp_button:hover {
+    background-color: #2a2e45;
+    border-color: #7aa2f7;
+    color: #a9b8ff;
+}
+
+QPushButton#edit_hyprsunset_button:pressed,
+QPushButton#edit_wp_button:pressed {
+    background-color: #2d3d7a;
+    border-color: #7aa2f7;
 }
 
 /* ── Status Bar ─────────────────────────────────────────── */
@@ -838,7 +935,7 @@ QStatusBar {
     background-color: #16161e;
     color: #565f89;
     border-top: 1px solid #24283b;
-    font-size: 11px;
+    font-size: 15px;
     padding: 0 10px;
 }
 
