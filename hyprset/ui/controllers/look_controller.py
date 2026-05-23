@@ -25,6 +25,7 @@ from ...core.look import (
     write_setting_lua,
 )
 from ..constants import INPUT_SETTINGS, LOOK_SETTINGS
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QCheckBox, QComboBox, QDoubleSpinBox, QPushButton
@@ -128,6 +129,7 @@ class LookControllerMixin(_Base):
 
     def _reset_look_to_defaults(self):
         reset_to_defaults()
+        hyprland_notification("Look set to default")
 
         for setting, widget_attr in LOOK_SETTINGS.items():
             if setting not in DEFAULTS:
@@ -212,3 +214,5 @@ class LookControllerMixin(_Base):
 
         with open(app_config.CONFIG_FILE_LUA, "w") as f:
             f.write(content)
+
+        hyprland_notification("Border Color changed")

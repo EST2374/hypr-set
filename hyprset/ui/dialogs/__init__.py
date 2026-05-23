@@ -1,7 +1,7 @@
 from .autostart import AddProgramDialog, AddScriptDialog
 from .base import BaseDialog
 from .environment import AddEnvDialog, EditLineDialog
-from .hypridle import EditHypridle
+from .hypridle import EditHypridle, EditHypridleGeneral
 from .hyprpaper import EditHyprpaper
 from .hyprsunset import EditHyprsunset
 from .keybinding import EditKeybindingDialog
@@ -23,4 +23,5 @@ __all__ = [
     "EditHyprpaper",
     "EditHyprsunset",
     "EditHypridle",
+    "EditHypridleGeneral",
 ]

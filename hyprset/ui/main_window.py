@@ -7,11 +7,14 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 
 import hyprset.config as app_config
 
-from ..styles import Theme, toggle_theme
+from ..styles import Theme, apply_theme
 from .controllers.autostart_and_env_controller import AutostartControllerMixin
+from .controllers.bluetooth_controller import BluetoothControllerMixin
 from .controllers.cursor_controller import CursorControllerMixin
+from .controllers.default_apps_controller import DefaultAppsControllerMixin
 from .controllers.hypridle_controller import HypridleControllerMixin
 from .controllers.hyprpaper_controller import HyprpaperControllerMixin
+from .controllers.hyprplugins_controller import HyprpluginControllerMixin
 from .controllers.hyprsunset_controller import HyprsunsetControllerMixin
 from .controllers.input_controller import InputControllerMixin
 from .controllers.keybindings_controller import KeybindControllerMixin
@@ -26,7 +29,7 @@ from .wallpaper_utils import WallpaperMixin
 
 # TODO Overall
 # Make it for the LUA conf (90% complete)
-# Network config -> Wlan, DNS, ... / Bluetooth (Make for more securtity settings)
+# Network config -> Wlan, DNS, ... / Bluetooth
 # Wallpaper works but memory heavy
 # ?Users?
 # Update better and more reliable
@@ -35,7 +38,7 @@ from .wallpaper_utils import WallpaperMixin
 # load custom config
 # UI reload after a new config
 # Statusbar and tooltips for the user
-# Add Font and Cursor settings
+# Add Cursor settings
 
 
 class Widget(
@@ -53,6 +56,9 @@ class Widget(
     HyprsunsetControllerMixin,
     HypridleControllerMixin,
     CursorControllerMixin,
+    HyprpluginControllerMixin,
+    DefaultAppsControllerMixin,
+    BluetoothControllerMixin,
 ):
     def __init__(self):
         super().__init__()
@@ -69,11 +75,15 @@ class Widget(
         self.actionRestart.triggered.connect(self.trigger_restart)
 
         # Theme
-        self.dark_theme_button.triggered.connect(
-            lambda: toggle_theme(self, Theme.LIGHT)
+        app = QApplication.instance()
+        self.actionDefault.triggered.connect(lambda: apply_theme(app, Theme.SYSTEM))
+        self.dark_theme_button.triggered.connect(lambda: apply_theme(app, Theme.DARK))
+        self.light_theme_button.triggered.connect(lambda: apply_theme(app, Theme.LIGHT))
+        self.actionMini_Dark.triggered.connect(
+            lambda: apply_theme(app, Theme.MINI_DARK)
         )
-        self.light_theme_button.triggered.connect(
-            lambda: toggle_theme(self, Theme.DARK)
+        self.actionMini_Light.triggered.connect(
+            lambda: apply_theme(app, Theme.MINI_LIGHT)
         )
 
         # Config Paths
@@ -93,6 +103,9 @@ class Widget(
         self._setup_hyprsunset_tab()
         self._setup_hypridle_tab()
         self._setup_cursor_tab()
+        self._setup_hyprplugin_tab()
+        self._setup_default_apps_tab()
+        self._setup_bluetooth_tab()
 
         # Update Button
         self.update_pushButton.clicked.connect(self.update_menu)
@@ -113,7 +126,7 @@ class Widget(
         os.execl(sys.executable, sys.executable, *sys.argv)
 
     def _on_sidebar_changed(self, index: int):
-        if index == 2:
+        if index == 1:
             self._ensure_hyprpaper_conf()
 
     def _ensure_hyprpaper_conf(self):

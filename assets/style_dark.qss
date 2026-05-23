@@ -93,6 +93,8 @@ QPushButton#delete_keybind_button,
 QPushButton#delete_movement_button,
 QPushButton#delete_workspace_button,
 QPushButton#delete_multimedia_button,
+QPushButton#remove_hyprsunset_button,
+QPushButton#hypridle_remove_button,
 QPushButton#wifi_disconnect_button {
     background-color: #2a1520;
     color: #f7768e;
@@ -106,6 +108,8 @@ QPushButton#delete_keybind_button:hover,
 QPushButton#delete_movement_button:hover,
 QPushButton#delete_workspace_button:hover,
 QPushButton#delete_multimedia_button:hover,
+QPushButton#remove_hyprsunset_button:hover,
+QPushButton#hypridle_remove_button:hover,
 QPushButton#wifi_disconnect_button:hover {
     background-color: #3d1a28;
     border-color: #f7768e;
@@ -118,6 +122,8 @@ QPushButton#delete_keybind_button:pressed,
 QPushButton#delete_movement_button:pressed,
 QPushButton#delete_workspace_button:pressed,
 QPushButton#delete_multimedia_button:pressed,
+QPushButton#remove_hyprsunset_button:pressed,
+QPushButton#hypridle_remove_button:pressed,
 QPushButton#wifi_disconnect_button:pressed {
     background-color: #521c2c;
 }
@@ -130,6 +136,7 @@ QPushButton#set_default_general_keybind_button,
 QPushButton#set_default_movement_button,
 QPushButton#set_default_workspace_button,
 QPushButton#set_default_multimedia_button,
+QPushButton#set_default_cursor_button,
 QPushButton#update_pushButton {
     min-width: 120px;
     min-height: 34px;
@@ -149,6 +156,7 @@ QPushButton#set_default_general_keybind_button:hover,
 QPushButton#set_default_movement_button:hover,
 QPushButton#set_default_workspace_button:hover,
 QPushButton#set_default_multimedia_button:hover,
+QPushButton#set_default_cursor_button:hover,
 QPushButton#update_pushButton:hover {
     background-color: #2a2e45;
     border-color: #7aa2f7;
@@ -163,6 +171,7 @@ QPushButton#multimedia_add_button,
 QPushButton#add_program_button,
 QPushButton#add_script_button,
 QPushButton#add_env_button,
+QPushButton#select_cursor_button,
 QPushButton#wifi_refresh_button {
     background-color: #1c2240;
     color: #7aa2f7;
@@ -178,6 +187,7 @@ QPushButton#multimedia_add_button:hover,
 QPushButton#add_program_button:hover,
 QPushButton#add_script_button:hover,
 QPushButton#add_env_button:hover,
+QPushButton#select_cursor_button:hover,
 QPushButton#wifi_refresh_button:hover {
     background-color: #243060;
     border-color: #7aa2f7;
@@ -191,6 +201,7 @@ QPushButton#multimedia_add_button:pressed,
 QPushButton#add_program_button:pressed,
 QPushButton#add_script_button:pressed,
 QPushButton#add_env_button:pressed,
+QPushButton#select_cursor_button:pressed,
 QPushButton#wifi_refresh_button:pressed {
     background-color: #2d3d7a;
     border-color: #7aa2f7;
@@ -257,7 +268,8 @@ QPushButton#choose_config_file_button,
 QPushButton#choose_hyprlock_button,
 QPushButton#choose_hypersunset_button,
 QPushButton#choose_hyperpaper_file_button,
-QPushButton#choose_hypridle_button {
+QPushButton#choose_hypridle_button,
+QPushButton#browse_cursor_button {
     background-color: #24283b;
     color: #c0caf5;
     border: 1px solid #3b4261;
@@ -271,7 +283,8 @@ QPushButton#choose_config_file_button:hover,
 QPushButton#choose_hyprlock_button:hover,
 QPushButton#choose_hypersunset_button:hover,
 QPushButton#choose_hyperpaper_file_button:hover,
-QPushButton#choose_hypridle_button:hover {
+QPushButton#choose_hypridle_button:hover,
+QPushButton#browse_cursor_button:hover {
     background-color: #2a2e45;
     border-color: #7aa2f7;
     color: #c0caf5;
@@ -281,14 +294,14 @@ QPushButton#choose_config_file_button:pressed,
 QPushButton#choose_hyprlock_button:pressed,
 QPushButton#choose_hypersunset_button:pressed,
 QPushButton#choose_hyperpaper_file_button:pressed,
-QPushButton#choose_hypridle_button:pressed {
+QPushButton#choose_hypridle_button:pressed,
+QPushButton#browse_cursor_button:pressed {
     background-color: #2d3d7a;
     border-color: #7aa2f7;
 }
 
 /* ── Success / Install / Enable buttons ─────────────────── */
 QPushButton#choose_folder_button,
-QPushButton#install_button,
 QPushButton#enable_button {
     background-color: #142018;
     color: #9ece6a;
@@ -298,7 +311,6 @@ QPushButton#enable_button {
 }
 
 QPushButton#choose_folder_button:hover,
-QPushButton#install_button:hover,
 QPushButton#enable_button:hover {
     background-color: #1e3326;
     border-color: #9ece6a;
@@ -306,14 +318,12 @@ QPushButton#enable_button:hover {
 }
 
 QPushButton#choose_folder_button:pressed,
-QPushButton#install_button:pressed,
 QPushButton#enable_button:pressed {
     background-color: #264535;
     border-color: #9ece6a;
 }
 
-/* ── Neutral-danger / Uninstall / Disable buttons ───────── */
-QPushButton#uninstall_button,
+/* ── Neutral-danger / Disable buttons ───────────────────── */
 QPushButton#disable_button {
     background-color: #2a1520;
     color: #f7768e;
@@ -322,14 +332,12 @@ QPushButton#disable_button {
     font-weight: 500;
 }
 
-QPushButton#uninstall_button:hover,
 QPushButton#disable_button:hover {
     background-color: #3d1a28;
     border-color: #f7768e;
     color: #ff9ea8;
 }
 
-QPushButton#uninstall_button:pressed,
 QPushButton#disable_button:pressed {
     background-color: #521c2c;
     border-color: #f7768e;
@@ -535,6 +543,32 @@ QListWidget::item:selected {
 }
 
 QListWidget::item:hover:!selected {
+    background-color: #2a2e45;
+    color: #c0caf5;
+}
+
+/* ── Current Connection (single-row list) ───────────────── */
+QListWidget#current_connection_list {
+    background-color: #1f2235;
+    border: 1px solid #3b4261;
+    border-radius: 7px;
+    padding: 2px 6px;
+    font-size: 14px;
+}
+
+QListWidget#current_connection_list::item {
+    color: #9ece6a;
+    padding: 4px 10px;
+    margin: 0 2px;
+    border-radius: 4px;
+}
+
+QListWidget#current_connection_list::item:selected {
+    background-color: #2d3d7a;
+    color: #7aa2f7;
+}
+
+QListWidget#current_connection_list::item:hover:!selected {
     background-color: #2a2e45;
     color: #c0caf5;
 }
@@ -868,7 +902,9 @@ QPushButton#light_theme_button:checked {
 
 /* ── Hyprpaper / Hyprsunset install & edit buttons ──────── */
 QPushButton#hyprpaper_install_button,
-QPushButton#install_hyprsunset_button {
+QPushButton#install_hyprsunset_button,
+QPushButton#install_cursor_button,
+QPushButton#hypridle_install_button {
     background-color: #142018;
     color: #9ece6a;
     border: 1px solid #264d2e;
@@ -877,19 +913,24 @@ QPushButton#install_hyprsunset_button {
 }
 
 QPushButton#hyprpaper_install_button:hover,
-QPushButton#install_hyprsunset_button:hover {
+QPushButton#install_hyprsunset_button:hover,
+QPushButton#install_cursor_button:hover,
+QPushButton#hypridle_install_button:hover {
     background-color: #1e3326;
     border-color: #9ece6a;
     color: #b9e08a;
 }
 
 QPushButton#hyprpaper_install_button:pressed,
-QPushButton#install_hyprsunset_button:pressed {
+QPushButton#install_hyprsunset_button:pressed,
+QPushButton#install_cursor_button:pressed,
+QPushButton#hypridle_install_button:pressed {
     background-color: #264535;
     border-color: #9ece6a;
 }
 
-QPushButton#add_hyprsunset_button {
+QPushButton#add_hyprsunset_button,
+QPushButton#hypridle_add_button {
     background-color: #1c2240;
     color: #7aa2f7;
     border: 1px solid #2f3f70;
@@ -897,13 +938,15 @@ QPushButton#add_hyprsunset_button {
     font-weight: 500;
 }
 
-QPushButton#add_hyprsunset_button:hover {
+QPushButton#add_hyprsunset_button:hover,
+QPushButton#hypridle_add_button:hover {
     background-color: #243060;
     border-color: #7aa2f7;
     color: #a9b8ff;
 }
 
-QPushButton#add_hyprsunset_button:pressed {
+QPushButton#add_hyprsunset_button:pressed,
+QPushButton#hypridle_add_button:pressed {
     background-color: #2d3d7a;
     border-color: #7aa2f7;
 }

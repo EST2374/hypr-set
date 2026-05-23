@@ -17,7 +17,7 @@ class ToggleSwitch(QCheckBox):
         bg_color: str = "#777",
         active_color: str = "#00b0ff",
         circle_color: str = "#fff",
-        animation_curve: QEasingCurve.Type = QEasingCurve.Type.OutBounce,
+        animation_curve: QEasingCurve.Type = QEasingCurve.Type.OutQuad,
     ):
         super().__init__(parent)
         self.setFixedSize(width, 28)
@@ -31,7 +31,7 @@ class ToggleSwitch(QCheckBox):
 
         self._animation = QPropertyAnimation(self, b"circle_pos", self)
         self._animation.setEasingCurve(animation_curve)
-        self._animation.setDuration(300)
+        self._animation.setDuration(150)
 
         self.stateChanged.connect(self._start_animation)
 
@@ -53,6 +53,9 @@ class ToggleSwitch(QCheckBox):
 
     def sizeHint(self):
         return QSize(60, 28)
+
+    def hitButton(self, pos):
+        return self.rect().contains(pos)
 
     def paintEvent(self, event):
         p = QPainter(self)

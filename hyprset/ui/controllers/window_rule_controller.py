@@ -11,6 +11,7 @@ from ...core.window_rule import (
     update_window_rule,
 )
 from ..dialogs import EditWindowRule
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QListWidget, QListWidgetItem, QPushButton
@@ -43,6 +44,7 @@ class WindowRuleControllerMixin(_Base):
         if dialog.exec():
             add_window_rule(dialog.get_result())
             self._refresh_window_rules()
+        hyprland_notification("Window Rule added")
 
     def _refresh_window_rules(self):
         self.window_rule_listWidget.clear()
@@ -61,6 +63,7 @@ class WindowRuleControllerMixin(_Base):
         if dialog.exec():
             new_block = dialog.get_result()
             update_window_rule(old_block, new_block)
+        hyprland_notification("Window Rule edited")
 
     def _delete_window_rule(self):
         item = self.window_rule_listWidget.currentItem()
@@ -70,3 +73,4 @@ class WindowRuleControllerMixin(_Base):
         if block:
             delete_window_rule(block)
             self._refresh_window_rules()
+        hyprland_notification("Window Rule removed")

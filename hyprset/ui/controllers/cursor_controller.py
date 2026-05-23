@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import tempfile
+import webbrowser
 import zipfile
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol
 
-from ...core.cursor import get_all_cursors, select_cursor
+from ...core.cursor import get_all_cursors, select_cursor, set_default_cursor
+from ..dialogs import InstallHyprStuff
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import (
@@ -25,6 +28,7 @@ if TYPE_CHECKING:
         cursor_theme_name_label: QLabel
         cursor_preview_frame: QFrame
         cursor_grid_layout: QGridLayout
+        install_cursor_button: QPushButton
 
     _Base = _Cursors__Widgets
 else:
@@ -88,9 +92,19 @@ class CursorControllerMixin(_Base):
         self.select_cursor_button.clicked.connect(
             lambda: self._select_cursor(self.cursor_listWidget.currentItem())
         )
+        self.browse_cursor_button.clicked.connect(
+            lambda: webbrowser.open(
+                "https://sakshatshinde.github.io/hyprcursor-themes/"
+            )
+        )
+        self.set_default_cursor_button.clicked.connect(
+            lambda: set_default_cursor(self.cursor_listWidget.currentItem().text())
+        )
+        self.install_cursor_button.clicked.connect(self._install_hyprcursor)
 
     def _select_cursor(self, item: QListWidgetItem):
         select_cursor(item.text())
+        hyprland_notification(f"Cursor changed to: {item.text()}")
 
     def _update_cursor_preview(self, theme_name: str):
         from PySide6.QtCore import Qt
@@ -100,6 +114,9 @@ class CursorControllerMixin(_Base):
         while (child := layout.takeAt(0)) is not None:
             if widget := child.widget():
                 widget.deleteLater()
+
+        layout.setColumnStretch(0, 1)
+        layout.setColumnStretch(1, 1)
 
         self.cursor_theme_name_label.setText(theme_name)
 
@@ -135,9 +152,15 @@ class CursorControllerMixin(_Base):
 
             cell = QWidget()
             cell_vl = QVBoxLayout(cell)
-            cell_vl.setSpacing(2)
+            cell_vl.setSpacing(4)
             cell_vl.setContentsMargins(4, 4, 4, 4)
-            cell_vl.addWidget(icon, alignment=Qt.AlignmentFlag.AlignCenter)
-            cell_vl.addWidget(name_label)
+            cell_vl.addWidget(icon, alignment=Qt.AlignmentFlag.AlignHCenter)
+            cell_vl.addWidget(name_label, alignment=Qt.AlignmentFlag.AlignHCenter)
 
-            layout.addWidget(cell, row, col)
+            layout.addWidget(cell, row, col, Qt.AlignmentFlag.AlignCenter)
+
+    def _install_hyprcursor(self):
+        dialog = InstallHyprStuff(parent=self, pkg="hyprcursor")
+        dialog.center_on_parent()
+        dialog.exec()
+        hyprland_notification("Hyprcursor installed!")

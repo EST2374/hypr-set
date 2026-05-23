@@ -16,19 +16,19 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox,
-    QFormLayout, QFrame, QGridLayout, QGroupBox,
-    QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
-    QStackedWidget, QStatusBar, QTabWidget, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
+    QDoubleSpinBox, QFormLayout, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QListView,
+    QListWidget, QListWidgetItem, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QScrollArea, QSizePolicy,
+    QSpacerItem, QSpinBox, QStackedWidget, QStatusBar,
+    QTabWidget, QVBoxLayout, QWidget)
 
 class Ui_Widget(object):
     def setupUi(self, Widget):
         if not Widget.objectName():
             Widget.setObjectName(u"Widget")
-        Widget.resize(835, 679)
+        Widget.resize(879, 679)
         self.dark_theme_button = QAction(Widget)
         self.dark_theme_button.setObjectName(u"dark_theme_button")
         self.light_theme_button = QAction(Widget)
@@ -39,6 +39,12 @@ class Ui_Widget(object):
         self.actionHelp.setObjectName(u"actionHelp")
         self.actionRestart = QAction(Widget)
         self.actionRestart.setObjectName(u"actionRestart")
+        self.actionMini_Dark = QAction(Widget)
+        self.actionMini_Dark.setObjectName(u"actionMini_Dark")
+        self.actionMini_Light = QAction(Widget)
+        self.actionMini_Light.setObjectName(u"actionMini_Light")
+        self.actionDefault = QAction(Widget)
+        self.actionDefault.setObjectName(u"actionDefault")
         self.centralwidget = QWidget(Widget)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -246,10 +252,6 @@ class Ui_Widget(object):
 
         self.auto_outer_vl.addWidget(self.autostart_group)
 
-        self.auto_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.auto_outer_vl.addItem(self.auto_bottom_spacer)
-
         self.Hyprland_Menu_Settings.addTab(self.auto_tab, "")
         self.env_tab = QWidget()
         self.env_tab.setObjectName(u"env_tab")
@@ -293,10 +295,6 @@ class Ui_Widget(object):
 
         self.env_outer_vl.addWidget(self.env_group)
 
-        self.env_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.env_outer_vl.addItem(self.env_bottom_spacer)
-
         self.Hyprland_Menu_Settings.addTab(self.env_tab, "")
         self.look_tab = QWidget()
         self.look_tab.setObjectName(u"look_tab")
@@ -310,7 +308,7 @@ class Ui_Widget(object):
         self.look_scroll_area.setWidgetResizable(True)
         self.look_scroll_contents = QWidget()
         self.look_scroll_contents.setObjectName(u"look_scroll_contents")
-        self.look_scroll_contents.setGeometry(QRect(0, 0, 627, 678))
+        self.look_scroll_contents.setGeometry(QRect(0, 0, 471, 678))
         self.look_contents_vl = QVBoxLayout(self.look_scroll_contents)
         self.look_contents_vl.setSpacing(16)
         self.look_contents_vl.setObjectName(u"look_contents_vl")
@@ -781,10 +779,6 @@ class Ui_Widget(object):
 
         self.input_outer_vl.addLayout(self.input_row1_hl)
 
-        self.input_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.input_outer_vl.addItem(self.input_bottom_spacer)
-
         self.Hyprland_Menu_Settings.addTab(self.input_tab, "")
         self.keybinds_tab = QWidget()
         self.keybinds_tab.setObjectName(u"keybinds_tab")
@@ -837,10 +831,6 @@ class Ui_Widget(object):
 
         self.verticalLayout_8.addLayout(self.general_layout)
 
-        self.general_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_8.addItem(self.general_bottom_spacer)
-
         self.keybinds_tabWidget.addTab(self.general_tab, "")
         self.movement_tab = QWidget()
         self.movement_tab.setObjectName(u"movement_tab")
@@ -886,10 +876,6 @@ class Ui_Widget(object):
 
 
         self.verticalLayout_14.addLayout(self.movement_layout)
-
-        self.movement_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_14.addItem(self.movement_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.movement_tab, "")
         self.workspaces_tab = QWidget()
@@ -937,10 +923,6 @@ class Ui_Widget(object):
 
         self.verticalLayout_15.addLayout(self.workspace_layout)
 
-        self.workspace_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_15.addItem(self.workspace_bottom_spacer)
-
         self.keybinds_tabWidget.addTab(self.workspaces_tab, "")
         self.multimedia_tab = QWidget()
         self.multimedia_tab.setObjectName(u"multimedia_tab")
@@ -986,10 +968,6 @@ class Ui_Widget(object):
 
 
         self.verticalLayout_16.addLayout(self.multimedia_layout)
-
-        self.multimedia_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_16.addItem(self.multimedia_bottom_spacer)
 
         self.keybinds_tabWidget.addTab(self.multimedia_tab, "")
 
@@ -1043,10 +1021,6 @@ class Ui_Widget(object):
 
 
         self.windowrules_outer_vl.addWidget(self.windowrules_group)
-
-        self.windowrules_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.windowrules_outer_vl.addItem(self.windowrules_bottom_spacer)
 
         self.Hyprland_Menu_Settings.addTab(self.windowrules_tab, "")
         self.files_tab = QWidget()
@@ -1184,10 +1158,6 @@ class Ui_Widget(object):
 
         self.verticalLayout_5.addWidget(self.config_files_group)
 
-        self.files_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_5.addItem(self.files_bottom_spacer)
-
 
         self.verticalLayout_10.addLayout(self.verticalLayout_5)
 
@@ -1198,9 +1168,314 @@ class Ui_Widget(object):
         self.stackedWidget.addWidget(self.hyprland_page)
         self.defaul_apps_page = QWidget()
         self.defaul_apps_page.setObjectName(u"defaul_apps_page")
-        self.label = QLabel(self.defaul_apps_page)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(220, 270, 191, 41))
+        self.default_apps_outer_vl = QVBoxLayout(self.defaul_apps_page)
+        self.default_apps_outer_vl.setSpacing(0)
+        self.default_apps_outer_vl.setObjectName(u"default_apps_outer_vl")
+        self.default_apps_outer_vl.setContentsMargins(0, 0, 0, 0)
+        self.default_apps_group = QGroupBox(self.defaul_apps_page)
+        self.default_apps_group.setObjectName(u"default_apps_group")
+        self.default_apps_group_vl = QVBoxLayout(self.default_apps_group)
+        self.default_apps_group_vl.setSpacing(14)
+        self.default_apps_group_vl.setObjectName(u"default_apps_group_vl")
+        self.default_apps_group_vl.setContentsMargins(20, 24, 20, 20)
+        self.hl_browser_combo = QHBoxLayout()
+        self.hl_browser_combo.setSpacing(12)
+        self.hl_browser_combo.setObjectName(u"hl_browser_combo")
+        self.label_browser_combo = QLabel(self.default_apps_group)
+        self.label_browser_combo.setObjectName(u"label_browser_combo")
+        self.label_browser_combo.setMinimumSize(QSize(130, 0))
+        self.label_browser_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_browser_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_browser_combo.addWidget(self.label_browser_combo)
+
+        self.browser_combo = QComboBox(self.default_apps_group)
+        self.browser_combo.setObjectName(u"browser_combo")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy4.setHorizontalStretch(1)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.browser_combo.sizePolicy().hasHeightForWidth())
+        self.browser_combo.setSizePolicy(sizePolicy4)
+        self.browser_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_browser_combo.addWidget(self.browser_combo)
+
+        self.browser_apply_button = QPushButton(self.default_apps_group)
+        self.browser_apply_button.setObjectName(u"browser_apply_button")
+        self.browser_apply_button.setMinimumSize(QSize(80, 0))
+        self.browser_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_browser_combo.addWidget(self.browser_apply_button)
+
+        self.browser_status_label = QLabel(self.default_apps_group)
+        self.browser_status_label.setObjectName(u"browser_status_label")
+        self.browser_status_label.setMinimumSize(QSize(80, 0))
+        self.browser_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_browser_combo.addWidget(self.browser_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_browser_combo)
+
+        self.hl_filemanager_combo = QHBoxLayout()
+        self.hl_filemanager_combo.setSpacing(12)
+        self.hl_filemanager_combo.setObjectName(u"hl_filemanager_combo")
+        self.label_filemanager_combo = QLabel(self.default_apps_group)
+        self.label_filemanager_combo.setObjectName(u"label_filemanager_combo")
+        self.label_filemanager_combo.setMinimumSize(QSize(130, 0))
+        self.label_filemanager_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_filemanager_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_filemanager_combo.addWidget(self.label_filemanager_combo)
+
+        self.filemanager_combo = QComboBox(self.default_apps_group)
+        self.filemanager_combo.setObjectName(u"filemanager_combo")
+        sizePolicy4.setHeightForWidth(self.filemanager_combo.sizePolicy().hasHeightForWidth())
+        self.filemanager_combo.setSizePolicy(sizePolicy4)
+        self.filemanager_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_filemanager_combo.addWidget(self.filemanager_combo)
+
+        self.filemanager_apply_button = QPushButton(self.default_apps_group)
+        self.filemanager_apply_button.setObjectName(u"filemanager_apply_button")
+        self.filemanager_apply_button.setMinimumSize(QSize(80, 0))
+        self.filemanager_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_filemanager_combo.addWidget(self.filemanager_apply_button)
+
+        self.filemanager_status_label = QLabel(self.default_apps_group)
+        self.filemanager_status_label.setObjectName(u"filemanager_status_label")
+        self.filemanager_status_label.setMinimumSize(QSize(80, 0))
+        self.filemanager_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_filemanager_combo.addWidget(self.filemanager_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_filemanager_combo)
+
+        self.hl_terminal_combo = QHBoxLayout()
+        self.hl_terminal_combo.setSpacing(12)
+        self.hl_terminal_combo.setObjectName(u"hl_terminal_combo")
+        self.label_terminal_combo = QLabel(self.default_apps_group)
+        self.label_terminal_combo.setObjectName(u"label_terminal_combo")
+        self.label_terminal_combo.setMinimumSize(QSize(130, 0))
+        self.label_terminal_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_terminal_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_terminal_combo.addWidget(self.label_terminal_combo)
+
+        self.terminal_combo = QComboBox(self.default_apps_group)
+        self.terminal_combo.setObjectName(u"terminal_combo")
+        sizePolicy4.setHeightForWidth(self.terminal_combo.sizePolicy().hasHeightForWidth())
+        self.terminal_combo.setSizePolicy(sizePolicy4)
+        self.terminal_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_terminal_combo.addWidget(self.terminal_combo)
+
+        self.terminal_apply_button = QPushButton(self.default_apps_group)
+        self.terminal_apply_button.setObjectName(u"terminal_apply_button")
+        self.terminal_apply_button.setMinimumSize(QSize(80, 0))
+        self.terminal_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_terminal_combo.addWidget(self.terminal_apply_button)
+
+        self.terminal_status_label = QLabel(self.default_apps_group)
+        self.terminal_status_label.setObjectName(u"terminal_status_label")
+        self.terminal_status_label.setMinimumSize(QSize(80, 0))
+        self.terminal_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_terminal_combo.addWidget(self.terminal_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_terminal_combo)
+
+        self.hl_editor_combo = QHBoxLayout()
+        self.hl_editor_combo.setSpacing(12)
+        self.hl_editor_combo.setObjectName(u"hl_editor_combo")
+        self.label_editor_combo = QLabel(self.default_apps_group)
+        self.label_editor_combo.setObjectName(u"label_editor_combo")
+        self.label_editor_combo.setMinimumSize(QSize(130, 0))
+        self.label_editor_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_editor_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_editor_combo.addWidget(self.label_editor_combo)
+
+        self.editor_combo = QComboBox(self.default_apps_group)
+        self.editor_combo.setObjectName(u"editor_combo")
+        sizePolicy4.setHeightForWidth(self.editor_combo.sizePolicy().hasHeightForWidth())
+        self.editor_combo.setSizePolicy(sizePolicy4)
+        self.editor_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_editor_combo.addWidget(self.editor_combo)
+
+        self.editor_apply_button = QPushButton(self.default_apps_group)
+        self.editor_apply_button.setObjectName(u"editor_apply_button")
+        self.editor_apply_button.setMinimumSize(QSize(80, 0))
+        self.editor_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_editor_combo.addWidget(self.editor_apply_button)
+
+        self.editor_status_label = QLabel(self.default_apps_group)
+        self.editor_status_label.setObjectName(u"editor_status_label")
+        self.editor_status_label.setMinimumSize(QSize(80, 0))
+        self.editor_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_editor_combo.addWidget(self.editor_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_editor_combo)
+
+        self.hl_image_combo = QHBoxLayout()
+        self.hl_image_combo.setSpacing(12)
+        self.hl_image_combo.setObjectName(u"hl_image_combo")
+        self.label_image_combo = QLabel(self.default_apps_group)
+        self.label_image_combo.setObjectName(u"label_image_combo")
+        self.label_image_combo.setMinimumSize(QSize(130, 0))
+        self.label_image_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_image_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_image_combo.addWidget(self.label_image_combo)
+
+        self.image_combo = QComboBox(self.default_apps_group)
+        self.image_combo.setObjectName(u"image_combo")
+        sizePolicy4.setHeightForWidth(self.image_combo.sizePolicy().hasHeightForWidth())
+        self.image_combo.setSizePolicy(sizePolicy4)
+        self.image_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_image_combo.addWidget(self.image_combo)
+
+        self.image_apply_button = QPushButton(self.default_apps_group)
+        self.image_apply_button.setObjectName(u"image_apply_button")
+        self.image_apply_button.setMinimumSize(QSize(80, 0))
+        self.image_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_image_combo.addWidget(self.image_apply_button)
+
+        self.image_status_label = QLabel(self.default_apps_group)
+        self.image_status_label.setObjectName(u"image_status_label")
+        self.image_status_label.setMinimumSize(QSize(80, 0))
+        self.image_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_image_combo.addWidget(self.image_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_image_combo)
+
+        self.hl_video_combo = QHBoxLayout()
+        self.hl_video_combo.setSpacing(12)
+        self.hl_video_combo.setObjectName(u"hl_video_combo")
+        self.label_video_combo = QLabel(self.default_apps_group)
+        self.label_video_combo.setObjectName(u"label_video_combo")
+        self.label_video_combo.setMinimumSize(QSize(130, 0))
+        self.label_video_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_video_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_video_combo.addWidget(self.label_video_combo)
+
+        self.video_combo = QComboBox(self.default_apps_group)
+        self.video_combo.setObjectName(u"video_combo")
+        sizePolicy4.setHeightForWidth(self.video_combo.sizePolicy().hasHeightForWidth())
+        self.video_combo.setSizePolicy(sizePolicy4)
+        self.video_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_video_combo.addWidget(self.video_combo)
+
+        self.video_apply_button = QPushButton(self.default_apps_group)
+        self.video_apply_button.setObjectName(u"video_apply_button")
+        self.video_apply_button.setMinimumSize(QSize(80, 0))
+        self.video_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_video_combo.addWidget(self.video_apply_button)
+
+        self.video_status_label = QLabel(self.default_apps_group)
+        self.video_status_label.setObjectName(u"video_status_label")
+        self.video_status_label.setMinimumSize(QSize(80, 0))
+        self.video_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_video_combo.addWidget(self.video_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_video_combo)
+
+        self.hl_audio_combo = QHBoxLayout()
+        self.hl_audio_combo.setSpacing(12)
+        self.hl_audio_combo.setObjectName(u"hl_audio_combo")
+        self.label_audio_combo = QLabel(self.default_apps_group)
+        self.label_audio_combo.setObjectName(u"label_audio_combo")
+        self.label_audio_combo.setMinimumSize(QSize(130, 0))
+        self.label_audio_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_audio_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_audio_combo.addWidget(self.label_audio_combo)
+
+        self.audio_combo = QComboBox(self.default_apps_group)
+        self.audio_combo.setObjectName(u"audio_combo")
+        sizePolicy4.setHeightForWidth(self.audio_combo.sizePolicy().hasHeightForWidth())
+        self.audio_combo.setSizePolicy(sizePolicy4)
+        self.audio_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_audio_combo.addWidget(self.audio_combo)
+
+        self.audio_apply_button = QPushButton(self.default_apps_group)
+        self.audio_apply_button.setObjectName(u"audio_apply_button")
+        self.audio_apply_button.setMinimumSize(QSize(80, 0))
+        self.audio_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_audio_combo.addWidget(self.audio_apply_button)
+
+        self.audio_status_label = QLabel(self.default_apps_group)
+        self.audio_status_label.setObjectName(u"audio_status_label")
+        self.audio_status_label.setMinimumSize(QSize(80, 0))
+        self.audio_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_audio_combo.addWidget(self.audio_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_audio_combo)
+
+        self.hl_pdf_combo = QHBoxLayout()
+        self.hl_pdf_combo.setSpacing(12)
+        self.hl_pdf_combo.setObjectName(u"hl_pdf_combo")
+        self.label_pdf_combo = QLabel(self.default_apps_group)
+        self.label_pdf_combo.setObjectName(u"label_pdf_combo")
+        self.label_pdf_combo.setMinimumSize(QSize(130, 0))
+        self.label_pdf_combo.setMaximumSize(QSize(130, 16777215))
+        self.label_pdf_combo.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.hl_pdf_combo.addWidget(self.label_pdf_combo)
+
+        self.pdf_combo = QComboBox(self.default_apps_group)
+        self.pdf_combo.setObjectName(u"pdf_combo")
+        sizePolicy4.setHeightForWidth(self.pdf_combo.sizePolicy().hasHeightForWidth())
+        self.pdf_combo.setSizePolicy(sizePolicy4)
+        self.pdf_combo.setMinimumSize(QSize(200, 0))
+
+        self.hl_pdf_combo.addWidget(self.pdf_combo)
+
+        self.pdf_apply_button = QPushButton(self.default_apps_group)
+        self.pdf_apply_button.setObjectName(u"pdf_apply_button")
+        self.pdf_apply_button.setMinimumSize(QSize(80, 0))
+        self.pdf_apply_button.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_pdf_combo.addWidget(self.pdf_apply_button)
+
+        self.pdf_status_label = QLabel(self.default_apps_group)
+        self.pdf_status_label.setObjectName(u"pdf_status_label")
+        self.pdf_status_label.setMinimumSize(QSize(80, 0))
+        self.pdf_status_label.setMaximumSize(QSize(80, 16777215))
+
+        self.hl_pdf_combo.addWidget(self.pdf_status_label)
+
+
+        self.default_apps_group_vl.addLayout(self.hl_pdf_combo)
+
+        self.default_apps_spacer = QSpacerItem(17, 264, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.default_apps_group_vl.addItem(self.default_apps_spacer)
+
+
+        self.default_apps_outer_vl.addWidget(self.default_apps_group)
+
         self.stackedWidget.addWidget(self.defaul_apps_page)
         self.ecosystem_page = QWidget()
         self.ecosystem_page.setObjectName(u"ecosystem_page")
@@ -1290,10 +1565,10 @@ class Ui_Widget(object):
 
         self.horizontalLayout_4.addWidget(self.edit_hyprsunset_button)
 
-        self.pushButton_4 = QPushButton(self.hyprsunset_tab)
-        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.remove_hyprsunset_button = QPushButton(self.hyprsunset_tab)
+        self.remove_hyprsunset_button.setObjectName(u"remove_hyprsunset_button")
 
-        self.horizontalLayout_4.addWidget(self.pushButton_4)
+        self.horizontalLayout_4.addWidget(self.remove_hyprsunset_button)
 
 
         self.verticalLayout_12.addLayout(self.horizontalLayout_4)
@@ -1342,16 +1617,30 @@ class Ui_Widget(object):
         self.verticalLayout_3.setSpacing(16)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(24, 24, 24, 24)
-        self.wifi_group = QGroupBox(self.network_page)
+        self.connection_tabs = QTabWidget(self.network_page)
+        self.connection_tabs.setObjectName(u"connection_tabs")
+        self.wifi_tab = QWidget()
+        self.wifi_tab.setObjectName(u"wifi_tab")
+        self.wifi_tab_layout = QVBoxLayout(self.wifi_tab)
+        self.wifi_tab_layout.setObjectName(u"wifi_tab_layout")
+        self.wifi_group = QGroupBox(self.wifi_tab)
         self.wifi_group.setObjectName(u"wifi_group")
-        self.network_layout = QVBoxLayout(self.wifi_group)
-        self.network_layout.setSpacing(12)
-        self.network_layout.setObjectName(u"network_layout")
-        self.network_layout.setContentsMargins(16, 24, 16, 16)
+        self.verticalLayout_19 = QVBoxLayout(self.wifi_group)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.current_connection_list = QListWidget(self.wifi_group)
+        self.current_connection_list.setObjectName(u"current_connection_list")
+        self.current_connection_list.setMaximumSize(QSize(16777215, 40))
+        self.current_connection_list.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.current_connection_list.setHorizontalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+        self.current_connection_list.setFlow(QListView.Flow.LeftToRight)
+        self.current_connection_list.setProperty(u"isWrapping", False)
+
+        self.verticalLayout_19.addWidget(self.current_connection_list)
+
         self.wifi_list = QListWidget(self.wifi_group)
         self.wifi_list.setObjectName(u"wifi_list")
 
-        self.network_layout.addWidget(self.wifi_list)
+        self.verticalLayout_19.addWidget(self.wifi_list)
 
         self.wifi_btn_hl = QHBoxLayout()
         self.wifi_btn_hl.setSpacing(8)
@@ -1365,16 +1654,76 @@ class Ui_Widget(object):
 
         self.wifi_btn_hl.addItem(self.wifi_btn_spacer)
 
+        self.wifi_connect_button = QPushButton(self.wifi_group)
+        self.wifi_connect_button.setObjectName(u"wifi_connect_button")
+
+        self.wifi_btn_hl.addWidget(self.wifi_connect_button)
+
         self.wifi_disconnect_button = QPushButton(self.wifi_group)
         self.wifi_disconnect_button.setObjectName(u"wifi_disconnect_button")
 
         self.wifi_btn_hl.addWidget(self.wifi_disconnect_button)
 
 
-        self.network_layout.addLayout(self.wifi_btn_hl)
+        self.verticalLayout_19.addLayout(self.wifi_btn_hl)
 
 
-        self.verticalLayout_3.addWidget(self.wifi_group)
+        self.wifi_tab_layout.addWidget(self.wifi_group)
+
+        self.connection_tabs.addTab(self.wifi_tab, "")
+        self.bluetooth_tab = QWidget()
+        self.bluetooth_tab.setObjectName(u"bluetooth_tab")
+        self.bluetooth_tab_layout = QVBoxLayout(self.bluetooth_tab)
+        self.bluetooth_tab_layout.setObjectName(u"bluetooth_tab_layout")
+        self.groupBox = QGroupBox(self.bluetooth_tab)
+        self.groupBox.setObjectName(u"groupBox")
+        self.verticalLayout_22 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.current_bluetooth_list = QListWidget(self.groupBox)
+        self.current_bluetooth_list.setObjectName(u"current_bluetooth_list")
+
+        self.verticalLayout_22.addWidget(self.current_bluetooth_list)
+
+        self.bluetooth_list = QListWidget(self.groupBox)
+        self.bluetooth_list.setObjectName(u"bluetooth_list")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.bluetooth_list.sizePolicy().hasHeightForWidth())
+        self.bluetooth_list.setSizePolicy(sizePolicy5)
+
+        self.verticalLayout_22.addWidget(self.bluetooth_list)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.bluetooth_scan_button = QPushButton(self.groupBox)
+        self.bluetooth_scan_button.setObjectName(u"bluetooth_scan_button")
+
+        self.horizontalLayout_6.addWidget(self.bluetooth_scan_button)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer)
+
+        self.bluetooth_connect_button = QPushButton(self.groupBox)
+        self.bluetooth_connect_button.setObjectName(u"bluetooth_connect_button")
+
+        self.horizontalLayout_6.addWidget(self.bluetooth_connect_button)
+
+        self.bluetooth_disconnect_button = QPushButton(self.groupBox)
+        self.bluetooth_disconnect_button.setObjectName(u"bluetooth_disconnect_button")
+
+        self.horizontalLayout_6.addWidget(self.bluetooth_disconnect_button)
+
+
+        self.verticalLayout_22.addLayout(self.horizontalLayout_6)
+
+
+        self.bluetooth_tab_layout.addWidget(self.groupBox)
+
+        self.connection_tabs.addTab(self.bluetooth_tab, "")
+
+        self.verticalLayout_3.addWidget(self.connection_tabs)
 
         self.network_bottom_spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -1441,6 +1790,11 @@ class Ui_Widget(object):
         self.cursor_btn_hl = QHBoxLayout()
         self.cursor_btn_hl.setSpacing(8)
         self.cursor_btn_hl.setObjectName(u"cursor_btn_hl")
+        self.install_cursor_button = QPushButton(self.font_cursor_page)
+        self.install_cursor_button.setObjectName(u"install_cursor_button")
+
+        self.cursor_btn_hl.addWidget(self.install_cursor_button)
+
         self.set_default_cursor_button = QPushButton(self.font_cursor_page)
         self.set_default_cursor_button.setObjectName(u"set_default_cursor_button")
         self.set_default_cursor_button.setMinimumSize(QSize(0, 34))
@@ -1467,11 +1821,11 @@ class Ui_Widget(object):
 
         self.cursor_preview_group = QGroupBox(self.font_cursor_page)
         self.cursor_preview_group.setObjectName(u"cursor_preview_group")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.cursor_preview_group.sizePolicy().hasHeightForWidth())
-        self.cursor_preview_group.setSizePolicy(sizePolicy4)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.cursor_preview_group.sizePolicy().hasHeightForWidth())
+        self.cursor_preview_group.setSizePolicy(sizePolicy6)
         self.cursor_preview_group.setMinimumSize(QSize(220, 0))
         self.cursor_preview_group.setMaximumSize(QSize(220, 16777215))
         self.cursor_preview_vl = QVBoxLayout(self.cursor_preview_group)
@@ -1522,27 +1876,15 @@ class Ui_Widget(object):
 
         self.plugins_button_layout = QHBoxLayout()
         self.plugins_button_layout.setObjectName(u"plugins_button_layout")
-        self.install_button = QPushButton(self.plugins_page)
-        self.install_button.setObjectName(u"install_button")
-        self.install_button.setMinimumSize(QSize(0, 36))
-
-        self.plugins_button_layout.addWidget(self.install_button)
-
-        self.uninstall_button = QPushButton(self.plugins_page)
-        self.uninstall_button.setObjectName(u"uninstall_button")
-        self.uninstall_button.setMinimumSize(QSize(0, 36))
-
-        self.plugins_button_layout.addWidget(self.uninstall_button)
-
-        self.plugins_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.plugins_button_layout.addItem(self.plugins_button_spacer)
-
         self.enable_button = QPushButton(self.plugins_page)
         self.enable_button.setObjectName(u"enable_button")
         self.enable_button.setMinimumSize(QSize(0, 36))
 
         self.plugins_button_layout.addWidget(self.enable_button)
+
+        self.plugins_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.plugins_button_layout.addItem(self.plugins_button_spacer)
 
         self.disable_button = QPushButton(self.plugins_page)
         self.disable_button.setObjectName(u"disable_button")
@@ -1580,7 +1922,7 @@ class Ui_Widget(object):
         Widget.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Widget)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 835, 19))
+        self.menubar.setGeometry(QRect(0, 0, 879, 19))
         self.menuTheme = QMenu(self.menubar)
         self.menuTheme.setObjectName(u"menuTheme")
         self.menu_Application = QMenu(self.menubar)
@@ -1592,18 +1934,22 @@ class Ui_Widget(object):
 
         self.menubar.addAction(self.menuTheme.menuAction())
         self.menubar.addAction(self.menu_Application.menuAction())
+        self.menuTheme.addAction(self.actionDefault)
         self.menuTheme.addAction(self.dark_theme_button)
+        self.menuTheme.addAction(self.actionMini_Dark)
         self.menuTheme.addAction(self.light_theme_button)
+        self.menuTheme.addAction(self.actionMini_Light)
         self.menu_Application.addAction(self.actionRestart)
         self.menu_Application.addAction(self.actionHelp)
         self.menu_Application.addAction(self.quit_program)
 
         self.retranslateUi(Widget)
 
-        self.stackedWidget.setCurrentIndex(5)
+        self.stackedWidget.setCurrentIndex(3)
         self.Hyprland_Menu_Settings.setCurrentIndex(0)
         self.keybinds_tabWidget.setCurrentIndex(0)
-        self.ecosystem_tabWidget.setCurrentIndex(0)
+        self.ecosystem_tabWidget.setCurrentIndex(2)
+        self.connection_tabs.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Widget)
@@ -1616,6 +1962,9 @@ class Ui_Widget(object):
         self.quit_program.setText(QCoreApplication.translate("Widget", u"Quit", None))
         self.actionHelp.setText(QCoreApplication.translate("Widget", u"Help", None))
         self.actionRestart.setText(QCoreApplication.translate("Widget", u"Restart", None))
+        self.actionMini_Dark.setText(QCoreApplication.translate("Widget", u"Mini_Dark", None))
+        self.actionMini_Light.setText(QCoreApplication.translate("Widget", u"Mini_Light", None))
+        self.actionDefault.setText(QCoreApplication.translate("Widget", u"Default", None))
 
         __sortingEnabled = self.listWidget.isSortingEnabled()
         self.listWidget.setSortingEnabled(False)
@@ -1740,7 +2089,31 @@ class Ui_Widget(object):
         self.choose_hypridle_button.setText(QCoreApplication.translate("Widget", u"Choose File\u2026", None))
         self.cur_hypridle_label.setText("")
         self.Hyprland_Menu_Settings.setTabText(self.Hyprland_Menu_Settings.indexOf(self.files_tab), QCoreApplication.translate("Widget", u"Config Files", None))
-        self.label.setText(QCoreApplication.translate("Widget", u"Defaul Apps - coming soon", None))
+        self.default_apps_group.setTitle(QCoreApplication.translate("Widget", u"Default Applications", None))
+        self.label_browser_combo.setText(QCoreApplication.translate("Widget", u"Web Browser", None))
+        self.browser_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.browser_status_label.setText("")
+        self.label_filemanager_combo.setText(QCoreApplication.translate("Widget", u"File Manager", None))
+        self.filemanager_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.filemanager_status_label.setText("")
+        self.label_terminal_combo.setText(QCoreApplication.translate("Widget", u"Terminal", None))
+        self.terminal_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.terminal_status_label.setText("")
+        self.label_editor_combo.setText(QCoreApplication.translate("Widget", u"Text Editor", None))
+        self.editor_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.editor_status_label.setText("")
+        self.label_image_combo.setText(QCoreApplication.translate("Widget", u"Image Viewer", None))
+        self.image_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.image_status_label.setText("")
+        self.label_video_combo.setText(QCoreApplication.translate("Widget", u"Video Player", None))
+        self.video_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.video_status_label.setText("")
+        self.label_audio_combo.setText(QCoreApplication.translate("Widget", u"Music Player", None))
+        self.audio_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.audio_status_label.setText("")
+        self.label_pdf_combo.setText(QCoreApplication.translate("Widget", u"PDF Viewer", None))
+        self.pdf_apply_button.setText(QCoreApplication.translate("Widget", u"Apply", None))
+        self.pdf_status_label.setText("")
         self.hyprlock_placeholder_label.setText(QCoreApplication.translate("Widget", u"Hyprlock configuration \u2014 coming soon", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprlock_tab), QCoreApplication.translate("Widget", u"Hyprlock", None))
         self.hypridle_install_button.setText(QCoreApplication.translate("Widget", u"Install Hypridle", None))
@@ -1751,17 +2124,25 @@ class Ui_Widget(object):
         self.install_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Install Hyprsunset", None))
         self.add_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Add", None))
         self.edit_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
-        self.pushButton_4.setText(QCoreApplication.translate("Widget", u"Remove", None))
+        self.remove_hyprsunset_button.setText(QCoreApplication.translate("Widget", u"Remove", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprsunset_tab), QCoreApplication.translate("Widget", u"Hyprsunset", None))
         self.hyprpaper_install_button.setText(QCoreApplication.translate("Widget", u"Install Hyprpaper", None))
         self.edit_wp_button.setText(QCoreApplication.translate("Widget", u"Edit", None))
         self.ecosystem_tabWidget.setTabText(self.ecosystem_tabWidget.indexOf(self.hyprpaper_tab), QCoreApplication.translate("Widget", u"Hyprpaper", None))
         self.wifi_group.setTitle(QCoreApplication.translate("Widget", u"Wi-Fi", None))
         self.wifi_refresh_button.setText(QCoreApplication.translate("Widget", u"Refresh", None))
+        self.wifi_connect_button.setText(QCoreApplication.translate("Widget", u"Connect", None))
         self.wifi_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
+        self.connection_tabs.setTabText(self.connection_tabs.indexOf(self.wifi_tab), QCoreApplication.translate("Widget", u"Wi-Fi", None))
+        self.groupBox.setTitle(QCoreApplication.translate("Widget", u"Bluetooth", None))
+        self.bluetooth_scan_button.setText(QCoreApplication.translate("Widget", u"Scan", None))
+        self.bluetooth_connect_button.setText(QCoreApplication.translate("Widget", u"Connect", None))
+        self.bluetooth_disconnect_button.setText(QCoreApplication.translate("Widget", u"Disconnect", None))
+        self.connection_tabs.setTabText(self.connection_tabs.indexOf(self.bluetooth_tab), QCoreApplication.translate("Widget", u"Bluetooth", None))
         self.choose_folder_button.setText(QCoreApplication.translate("Widget", u"Choose Folder", None))
         self.folder_label.setText("")
-        self.set_default_cursor_button.setText(QCoreApplication.translate("Widget", u"Set Default", None))
+        self.install_cursor_button.setText(QCoreApplication.translate("Widget", u"Install Hyprcursor", None))
+        self.set_default_cursor_button.setText(QCoreApplication.translate("Widget", u"Set to Default", None))
         self.select_cursor_button.setText(QCoreApplication.translate("Widget", u"Select", None))
         self.browse_cursor_button.setText(QCoreApplication.translate("Widget", u"Browse Themes", None))
         self.cursor_preview_group.setTitle(QCoreApplication.translate("Widget", u"Preview", None))
@@ -1779,8 +2160,6 @@ class Ui_Widget(object):
         ___qlistwidgetitem11.setText(QCoreApplication.translate("Widget", u"Hyprgrass", None))
         self.plugins_list.setSortingEnabled(__sortingEnabled1)
 
-        self.install_button.setText(QCoreApplication.translate("Widget", u"Install", None))
-        self.uninstall_button.setText(QCoreApplication.translate("Widget", u"Uninstall", None))
         self.enable_button.setText(QCoreApplication.translate("Widget", u"Enable", None))
         self.disable_button.setText(QCoreApplication.translate("Widget", u"Disable", None))
         self.update_pushButton.setText(QCoreApplication.translate("Widget", u"Check for Updates", None))

@@ -88,9 +88,19 @@ class Connect_to_Wifi(BaseDialog):
 
         self._eap_combo.currentTextChanged.connect(self._on_eap_changed)
 
-        self._identity_edit = QLineEdit()
-        self._identity_edit.setPlaceholderText("username@domain")
-        form.addRow("Identity:", self._identity_edit)
+        self._anonymous_identity_edit = QLineEdit()
+        self._anonymous_identity_edit.setPlaceholderText(
+            "optional: anonymous@domain (sent in clear)"
+        )
+        form.addRow("Anonymous Identity:", self._anonymous_identity_edit)
+
+        self._username_edit = QLineEdit()
+        self._username_edit.setPlaceholderText("username")
+        form.addRow("Username:", self._username_edit)
+
+        self._domain_edit = QLineEdit()
+        self._domain_edit.setPlaceholderText("optional: domain (e.g. example.com)")
+        form.addRow("Domain:", self._domain_edit)
 
         self._eap_password_edit = QLineEdit()
         self._eap_password_edit.setEchoMode(QLineEdit.EchoMode.Password)
@@ -101,7 +111,7 @@ class Connect_to_Wifi(BaseDialog):
         self._ca_cert_edit.setPlaceholderText("optional: /path/to/ca.crt")
         form.addRow("CA Cert:", self._ca_cert_edit)
 
-        self.resize(460, 310)
+        self.resize(460, 380)
 
     def _on_eap_changed(self, method: str):
         has_phase2 = method in ("PEAP", "TTLS", "FAST")
@@ -133,18 +143,24 @@ class Connect_to_Wifi(BaseDialog):
 
     def _start_enterprise(self):
         eap = self._eap_combo.currentText().lower()
-        identity = self._identity_edit.text().strip()
+        username = self._username_edit.text().strip()
+        domain = self._domain_edit.text().strip()
+        anonymous_identity = self._anonymous_identity_edit.text().strip()
         password = self._eap_password_edit.text().strip()
         phase2 = (
             self._phase2_combo.currentText() if self._phase2_combo.isVisible() else ""
         )
         ca_cert = self._ca_cert_edit.text().strip()
 
+        identity = f"{username}@{domain}" if domain else username
+
         add_args = [
             "connection",
             "add",
             "type",
             "wifi",
+            "con-name",
+            self.ssid,
             "ssid",
             self.ssid,
             "wifi-sec.key-mgmt",
@@ -156,6 +172,8 @@ class Connect_to_Wifi(BaseDialog):
             "802-1x.password",
             password,
         ]
+        if anonymous_identity:
+            add_args += ["802-1x.anonymous-identity", anonymous_identity]
         if phase2:
             add_args += ["802-1x.phase2-auth", phase2]
         if ca_cert:
@@ -168,7 +186,13 @@ class Connect_to_Wifi(BaseDialog):
 
     def _bring_up_enterprise(self, add_exit_code: int):
         if add_exit_code != 0:
-            self._status_label.setText("Failed to add connection profile.")
+            err = (
+                bytes(self._add_proc.readAllStandardError().data())
+                .decode("utf-8", errors="replace")
+                .strip()
+            )
+            reason = err or "unknown error"
+            self._status_label.setText(f"Failed to add profile: {reason}")
             self._connect_btn.setEnabled(True)
             return
         self._process.start("nmcli", ["connection", "up", self.ssid])

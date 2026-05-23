@@ -12,6 +12,7 @@ from ...core.autostart import (
 )
 from ...core.environments import del_env, get_current_env
 from ..dialogs import AddEnvDialog, AddProgramDialog, AddScriptDialog, EditLineDialog
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QListWidget, QPushButton
@@ -57,11 +58,13 @@ class AutostartControllerMixin(_Base):
         dialog = AddProgramDialog(self, on_added=self.current_autostart.addItem)
         dialog.center_on_parent()
         dialog.exec()
+        hyprland_notification("Autostart Program added")
 
     def add_new_script(self):
         dialog = AddScriptDialog(self, on_added=self.current_autostart.addItem)
         dialog.center_on_parent()
         dialog.exec()
+        hyprland_notification("Autostart Script added")
 
     def del_selected_autostart(self):
         current_row = self.current_autostart.currentRow()
@@ -70,11 +73,13 @@ class AutostartControllerMixin(_Base):
         item = self.current_autostart.currentItem()
         if del_autostart(item.text()):
             self.current_autostart.takeItem(current_row)
+        hyprland_notification("Autostart removed")
 
     def add_new_env(self):
         dialog = AddEnvDialog(self, on_added=self.current_env.addItem)
         dialog.center_on_parent()
         dialog.exec()
+        hyprland_notification("Environment added")
 
     # Environemnt
     def del_selected_env(self):
@@ -84,6 +89,7 @@ class AutostartControllerMixin(_Base):
         item = self.current_env.currentItem()
         if del_env(item.text()):
             self.current_env.takeItem(current_row)
+        hyprland_notification("Environment removed")
 
     def edit_env(self):
         curren_item = self.current_env.currentItem()
@@ -94,6 +100,7 @@ class AutostartControllerMixin(_Base):
         )
         dialog.center_on_parent()
         dialog.exec()
+        hyprland_notification("Environment edited")
 
     def _reload_autostart(self):
         self.current_autostart.clear()

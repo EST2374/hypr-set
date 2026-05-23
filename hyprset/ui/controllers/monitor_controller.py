@@ -9,6 +9,7 @@ from ...core.monitor import (
     get_monitor_resolution,
     set_default_monitors_button,
 )
+from ..notification import hyprland_notification
 
 ROTATION_OPTIONS = [
     "Normal",
@@ -59,7 +60,7 @@ class MonitorControllerMixin(_Base):
 
         self.monitors_box.currentIndexChanged.connect(self._on_monitor_changed)
         self.apply_button.clicked.connect(self._apply_monitor_settings)
-        self.set_default_monitor_button.clicked.connect(set_default_monitors_button)
+        self.set_default_monitor_button.clicked.connect(self._set_default_monitors)
 
     def _on_monitor_changed(self, index):
         self.resolution_box.clear()
@@ -77,3 +78,8 @@ class MonitorControllerMixin(_Base):
             self.mirror_comboBox.currentText(),
             self.rotation_comboBox.currentText(),
         )
+        hyprland_notification("Monitor settings updated!")
+
+    def _set_default_monitors(self):
+        set_default_monitors_button()
+        hyprland_notification("Monitor(s) set to default")

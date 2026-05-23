@@ -1,4 +1,6 @@
 import re
+import shutil
+import subprocess
 
 import hyprset.config as app_config
 
@@ -62,3 +64,59 @@ def update_hyprsunset(old_block: str, new_block: str) -> bool:
         return True
     except OSError:
         return False
+
+
+def remove_profile(block: str) -> bool:
+    try:
+        with open(app_config.HYPRSUNSET_FILE, "r") as f:
+            content = f.read()
+
+        if block not in content:
+            return False
+
+        content = content.replace(block, "", 1)
+        content = re.sub(r"\n{3,}", "\n\n", content)
+
+        with open(app_config.HYPRSUNSET_FILE, "w") as f:
+            f.write(content)
+        return True
+    except OSError:
+        return False
+
+
+def restart_hyprsunset() -> bool:
+    if not shutil.which("hyprsunset"):
+        return False
+
+    subprocess.run(["pkill", "-x", "hyprsunset"], capture_output=True)
+
+    try:
+        subprocess.Popen(
+            ["hyprsunset"],
+            start_new_session=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return True
+    except OSError:
+        return False
+
+
+def extract_profile_time(block: str) -> str | None:
+    m = re.search(r"^\s*time\s*=\s*(\S+)", block, flags=re.MULTILINE)
+    return m.group(1) if m else None
+
+
+def format_profile_label(block: str, index: int) -> str:
+    time_v = extract_profile_time(block)
+    temp = re.search(r"^\s*temperature\s*=\s*(\S+)", block, flags=re.MULTILINE)
+    identity = re.search(r"^\s*identity\s*=\s*(\S+)", block, flags=re.MULTILINE)
+
+    parts: list[str] = [f"Profile {index}", time_v if time_v else "?"]
+
+    if temp:
+        parts.append(f"{temp.group(1)} K")
+    elif identity and identity.group(1).strip().lower() == "true":
+        parts.append("identity")
+
+    return "  ·  ".join(parts)

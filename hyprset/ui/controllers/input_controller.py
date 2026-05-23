@@ -13,6 +13,7 @@ from ...core.input import (
 )
 from ...core.look import change_bool_lua, read_bool_lua
 from ..constants import INPUT_SETTINGS
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QCheckBox, QComboBox, QDoubleSpinBox
@@ -48,7 +49,7 @@ class InputControllerMixin(_Base):
         self.kb_layout_comboBox.currentTextChanged.connect(self.update_variant)
         self.follow_mouse_comboBox.addItems(follow_mouse_options)
         self.follow_mouse_comboBox.setCurrentText(get_cur_follow_mouse())
-        self.follow_mouse_comboBox.currentTextChanged.connect(follow_mouse_change)
+        self.follow_mouse_comboBox.currentTextChanged.connect(self.changed_follow_mouse)
         self.mouse_sens_doubleSpinBox.setRange(-1.0, 1.0)
 
         if read_bool_lua("global_natural_scroll"):
@@ -63,6 +64,7 @@ class InputControllerMixin(_Base):
         )
 
     def update_variant(self):
+        hyprland_notification("Keyboard Layout changed")
         variants = get_kb_variants()
         self.kb_variant_comboBox.clear()
         self.kb_variant_comboBox.addItem("")
@@ -70,3 +72,7 @@ class InputControllerMixin(_Base):
 
     def _reload_input(self):
         self.follow_mouse_comboBox.setCurrentText(get_cur_follow_mouse())
+
+    def changed_follow_mouse(self, value):
+        follow_mouse_change(value)
+        hyprland_notification(f"Follow mouse option changed to: {value}")

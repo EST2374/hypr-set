@@ -110,7 +110,6 @@ def set_default_monitors_in_config():
             content += "\n\n" + "\n\n".join(new_blocks) + "\n"
             with open(app_config.CONFIG_FILE, "w") as f:
                 f.write(content)
-
     except OSError as e:
         print(f"Error writing config: {e}")
 

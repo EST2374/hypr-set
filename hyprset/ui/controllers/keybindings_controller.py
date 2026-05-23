@@ -19,6 +19,7 @@ from hyprset.core.keybindings import (
 )
 
 from ..dialogs import EditKeybindingDialog
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import (
@@ -105,6 +106,7 @@ class KeybindControllerMixin(_Base):
             new_line = dialog.get_result()
             if update_keybinding(item.text(), new_line):
                 item.setText(new_line)
+        hyprland_notification("Keybindings edited")
 
     def add_keybinding(self):
         dialog = EditKeybindingDialog(parent=self)
@@ -113,6 +115,7 @@ class KeybindControllerMixin(_Base):
             new_line = dialog.get_result()
             if add_keybinding(new_line):
                 self._reload_keybinding_lists()
+        hyprland_notification("Keybindings added")
 
     def set_default_keybinds_config(self):
         reply = QMessageBox.question(
@@ -124,6 +127,7 @@ class KeybindControllerMixin(_Base):
         if reply == QMessageBox.StandardButton.Yes:
             if reset_to_defaults_keybindings():
                 self._reload_keybinding_lists()
+        hyprland_notification("Keybindings set to default")
 
     def del_selected_keybinding(self, list_widget):
         current_row = list_widget.currentRow()
@@ -132,6 +136,7 @@ class KeybindControllerMixin(_Base):
         item = list_widget.currentItem()
         if del_keybinding(item.text()):
             list_widget.takeItem(current_row)
+        hyprland_notification("Keybindings removed")
 
     def _reload_keybinding_lists(self):
         self.general_list.clear()

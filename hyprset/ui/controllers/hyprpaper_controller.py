@@ -9,6 +9,7 @@ from ...core.hyprpaper import (
     update_hyprpaper,
 )
 from ..dialogs import EditHyprpaper, InstallHyprStuff
+from ..notification import hyprland_notification
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QListWidget, QListWidgetItem, QPushButton
@@ -41,6 +42,7 @@ class HyprpaperControllerMixin(_Base):
         dialog = InstallHyprStuff(parent=self, pkg="hyprpaper")
         dialog.center_on_parent()
         dialog.exec()
+        hyprland_notification("Hyprpaper installed")
 
     def _edit_hyprpaper(self, item: QListWidgetItem):
         name = item.text()
@@ -53,5 +55,6 @@ class HyprpaperControllerMixin(_Base):
         if dialog.exec():
             new_block = dialog.get_result()
             update_hyprpaper(old_block, new_block)
+            hyprland_notification("Profile edited")
             self.hyprpaper_listWidget.clear()
             self.hyprpaper_listWidget.addItems(get_wp_names(get_all_wallpapers()))
